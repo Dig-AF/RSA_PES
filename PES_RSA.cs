@@ -1180,7 +1180,7 @@ namespace NEAR
         ////////////////////
         ////////////////////
 
-        public static bool SA2PES(byte[] input, ref string output, ref string errors)
+        public static bool RSA2PES(byte[] input, ref string output, ref string errors)
         {
             IEnumerable<Thing> things = new List<Thing>();
             IEnumerable<Thing> tuple_types = new List<Thing>();

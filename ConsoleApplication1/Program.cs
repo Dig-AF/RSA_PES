@@ -18,7 +18,7 @@ namespace ConsoleApplication
             bool test;
 
             input = @"C:\GitHub\test\IBM_SAR_Tgt4_ChildDiags_SubordDefs.xml";
-            test = NEAR.PES_RSA.SA2PES(File.ReadAllBytes(input),ref output, ref errors);
+            test = NEAR.PES_RSA.RSA2PES(File.ReadAllBytes(input),ref output, ref errors);
             if (!test)
                 System.IO.File.WriteAllText(@"C:\GitHub\test\error.csv", errors);
                 
