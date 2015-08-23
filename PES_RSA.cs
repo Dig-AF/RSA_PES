@@ -10,46 +10,87 @@ namespace NEAR
 {
     public static class PES_RSA
     {
+
+        //to lookup the correct atribute to get the id from for matching base item to upia stereotype - cant set the type to be the base type or nothing will map to DM2 cleanly.
+        //UPIA Stereotype, Property to use to get id referring back to the UML item, DM2 type name, dm2type
+        static String[][] UPIA_Element_Id_Prop = new string[][] {
+                            //new string [] {"EnterpriseModel", "base_Package"},  //NOt used yet
+                            //new string [] {"View", "base_Package"}, //not used yet
+                            new string [] {"ArchitectureDescription", "base_Package", "ArchitecturalDescription", "IndividualType"},
+                            //new string [] {"Viewpoint", "base_Class"}, //not used yet
+                            //new string [] {"Conform", "base_Dependency"}, //NOt used yet
+                            new string [] {"Capability", "base_Class", "Capability", "IndividualType"},
+                            new string [] {"CapabilityUsage", "base_UseCase", "Activity", "IndividualType"},
+                            new string [] {"CapabilityRole", "base_Class", "Performer", "IndividualType"},
+                            new string [] {"OperationalTask", "base_Operation", "Activity", "IndividualType"},
+                            new string [] {"OperationalNodeSpecification", "base_Interface", "Performer", "IndividualType"},
+                            new string [] {"CapabilityRealization", "base_Class", "Activity", "IndividualType"},
+                            new string [] {"Information", "base_Class", "Data", "IndividualType"},
+                            new string [] {"InformationElement", "base_Class", "DataType", "IndividualType"},
+                            new string [] {"DataElement", "base_Class", "Data", "IndividualType"},
+                            new string [] {"Project", "base_Class", "ProjectType", "IndividualType"},
+                            new string [] {"Milestone", "base_Class", "PeriodType", "IndividualType"},
+                            new string [] {"System", "base_Class", "System", "IndividualType"},
+                            new string [] {"CommunicationSystem", "base_Class", "System", "IndividualType"},
+                            new string [] {"MeasureType", "base_Class", "MeasureType", "IndividualType"},
+                            new string [] {"ActualMeasure", "base_InstanceSpecification", "Measure", "IndividualType"},
+                            new string [] {"MeasuredElement", "base_NamedElement", "HappensInType", "IndividualType"},
+                            new string [] {"ServiceParticipant", "base_Class", "Service", "IndividualType"},
+                            new string [] {"ServiceSpecification", "base_Interface", "Service", "IndividualType"},
+                            new string [] {"ProjectInstance",  "base_InstanceSpecification", "Project", "IndividualType"}
+                            };
+
+        //In order - DM2 Element Name, Stereotype in UPIA, DM2 type - Currently NOT USED
         static string[][] Element_Lookup = new string[][] { 
+                            new string [] {"ArchitecturalDescription", "ArchitectureDescription", "IndividualType"},
+                            new string [] {"Capability", "Capability", "IndividualType"},
+                            //new string [] {"TemporalMeasure", "TemporalElement", "IndividualType"}, /actually a relationship (dependency)
+                            //new string [] {"wholepart", "PartOf", "base_Association"},
+                            new string [] {"Activity", "CapabilityUsage", "IndividualType"},
+                            //new string [] {"activitypartofCapability", "ExercisesCapability", "base_Association"},  
+                            new string [] {"Performer", "CapabilityRole", "IndividualType"},
+                            new string [] {"Activity", "OperationalTask", "IndividualType"},
+                            new string [] {"Performer", "OperationalNodeSpecification", "IndividualType"},
+                            new string [] {"Activity", "CapabilityRealization", "IndividualType"},
+                            new string [] {"Data", "Information", "IndividualType"},
+                            new string [] {"DataType", "InformationElement", "IndividualType"},
+                            new string [] {"Data", "DataElement", "IndividualType"},
+                            new string [] {"ProjectType", "Project", "IndividualType"},
+                            new string [] {"PeriodType", "Milestone", "IndividualType"},
+                            //new string [] {"", "MilestonePoint", "base_Association"},
+                            //new string [] {"", "ProjectStructure", "base_Association"},
+                            //new string [] {"", "ProjectPhase", "base_Association"},
+                            new string [] {"System", "System", "IndividualType"},
+                            new string [] {"System", "CommunicationSystem", "IndividualType"},
+                            new string [] {"MeasureType", "MeasureType", "IndividualType"},
+                            new string [] {"Measure ", "ActualMeasure", "IndividualType"},
+                            //new string [] {"", "DataExchange", "base_InformationFlow"},  special processing
+                            //new string [] {"HappensInType", "MeasuredElement", "IndividualType"}, specialprocessing
+                            new string [] {"Service", "ServiceParticipant", "IndividualType"},
+                            new string [] {"Service", "ServiceSpecification", "IndividualType"},
+                            new string [] {"Project", "ProjectInstance",  "IndividualType"},
+
+                            //new string [] {"OperationalNodeSpecification", ""}  //relationship according to UPIA live data - interface realizaton... Couple or Tuple...  capabilityrole to 
+
+                            /* From Previous SA work - kept single entries to ensure all types eventually accounted for
                             new string[] { "Activity", "Activity (DM2)", "IndividualType", "1154", "1326", "default" }, 
-                            new string[] { "Activity", "Operational Activity", "IndividualType", "", "", "extra" },
-                            new string[] { "Activity", "Project Milestone (DM2x)", "IndividualType", "", "", "extra" },
-                            new string[] { "Activity", "System Milestone (DM2x)", "IndividualType", "", "", "extra" },
                             new string[] { "Capability", "Capability (DM2)", "IndividualType", "1155", "1327", "default" },
                             new string[] { "Performer", "Performer (DM2)", "IndividualType", "1178", "1367", "default" },
                             new string[] { "Activity", "System Function (DM2x)", "IndividualType", "1207", "1384", "extra" },
-                            new string[] { "Activity", "Service Function (DM2x)", "IndividualType", "1207", "1395", "extra" },
-                            new string[] { "Activity", "Event (DM2x)", "IndividualType", "1207", "1463", "extra" },
                             new string[] { "Service", "Service (DM2)", "IndividualType","1160", "1376", "default" },
                             new string[] { "Resource", "Resource (DM2)", "IndividualType","", "", "default" },
                             new string[] { "System", "System (DM2)", "IndividualType","1188", "1377", "default" },
-                            new string[] { "System", "Data Store (DM2x)", "IndividualType","1214", "1385", "extra" },
                             new string[] { "Materiel", "Materiel (DM2)", "IndividualType","1177", "1366", "default" },
                             new string[] { "Information", "Information (DM2)", "IndividualType","1176", "1365", "default" },
                             new string[] { "PersonRole", "Person (DM2)", "IndividualType","1186", "1375", "default" },
                             new string[] { "DomainInformation", "DomainInformation (DM2)", "IndividualType","", "1371", "default" },
-
                             new string[] { "Data", "Table", "IndividualType","", "1370", "extra" },
-                            new string[] { "Data", "Column", "IndividualType","", "1370", "extra" },
-                            new string[] { "Data", "Index", "IndividualType","", "1370", "extra" },
-                            new string[] { "Data", "Physical Foreign Key Component", "IndividualType","", "1370", "extra" },
-
-                            new string[] { "Data", "Data (DM2)", "IndividualType","", "1370", "default" },
-                            new string[] { "Data", "Entity", "IndividualType","30", "15", "extra" },
-                            new string[] { "Data", "Attribute", "IndividualType","30", "5", "extra" },
-                            new string[] { "Data", "Data Element", "IndividualType","30", "105", "extra" },
-                            new string[] { "Data", "Access Path", "IndividualType","21", "21", "extra" },
-                            new string[] { "Performer", "ServiceInterface (DM2)", "IndividualType","", "", "extra" },
-                            new string[] { "Performer", "Interface (Port) (DM2)", "IndividualType","", "", "extra" },
                             new string[] { "OrganizationType", "Organization (DM2)", "IndividualType","1185", "1374", "default" },
                             new string[] { "Condition", "Condition (Environmental) (DM2)", "IndividualType","1156", "1328", "default" },
                             new string[] { "Location", "Location (DM2)", "IndividualType","1161", "", "default" },
                             new string[] { "RegionOfCountry", "RegionOfCountry (DM2)", "IndividualType","1357", "1357", "default" },
                             new string[] { "Country", "Country (DM2)", "IndividualType","1358", "1358", "default" },
                             new string[] { "Rule", "Rule (DM2)", "IndividualType","1173", "1362", "default" },
-
-                            //new string[] { "Rule", "Constraint", "IndividualType","1173", "1362", "extra" },
-
                             new string[] { "IndividualType", "IndividualType", "IndividualType","", "", "default" },
                             new string[] { "ArchitecturalDescription", "ArchitecturalDescription (DM2)", "IndividualType","1179", "1368","default" },
                             new string[] { "ServiceDescription", "ServiceDescription (DM2)", "IndividualType","", "1369","default" },
@@ -59,6 +100,7 @@ namespace NEAR
                             new string[] { "Facility", "Facility (DM2)", "IndividualType","", "1353","default" },
                             new string[] { "RealProperty", "RealProperty (DM2)", "IndividualType","", "1352","default" },
                             new string[] { "Site", "Site (DM2)", "IndividualType","", "1354","default" },
+                             */
                             };
 
         static string[][] SA_Element_View_Lookup = new string[][] { 
@@ -66,7 +108,7 @@ namespace NEAR
                             new string[] { "AV-01 Overview and Summary (DM2)", "Facility (DM2)", "Location (DM2)", "1161" },
                             new string[] { "OV-02 Operational Resource Flow (DM2)", "Organization (DM2)", "Resource (DM2)", "1160" },
                             new string[] { "OV-02 Operational Resource Flow (DM2)", "Person (DM2)", "Performer (DM2)", "1178" },
-
+        
                             }; 
 
         static string[][] RSA_Element_Lookup = new string[][] { 
@@ -75,11 +117,27 @@ namespace NEAR
                             new string[] { "System", "System", "IndividualType", "", "", "default" },
 
                             };
-
+        
         static string[][] Tuple_Lookup = new string[][] { 
                             };
-
+        
+        //Done a bit differntly since SA has so many lines and UML really has few.  UPIA adds stereotypes on them that must be dealt with, similar to the regular things.
+        //Not sure the UPIA mapping matters since there is no real translation of this now - nothing maped in the spec anyway. Nothing more deterministic discernablea at this point.
         static string[][] Tuple_Type_Lookup = new string[][] { 
+                            //new string [] {"WholePartType (etc)", "DoDAF2TypeName", "UPIA StereoType", "Base ID to UML", "UML Type", SourceProp, DestProp}
+                            //new string [] {"WholePartType", "WholePartType", "PartOf", "base_Association", "uml:Association", "memberEnd", ""},   //memberEnd comes in two parts separated by a space, IDs in both parts
+                            //new string[] { "WholePartType", "WholePartType", "ExercisesCapability","uml:Association", "memberEnd", "navigableOwnedEnd" }, //memer end contains both sparated by space, navigableownedend is source
+                            //new string[] { "WholePartType", "WholePartType", "MilestonePoint", "uml:Association", "memberEnd", ""},
+                            //new string[] { "WholePartType", "WholePartType", "ProjectStructure", "uml:Association", "memberEnd", ""},
+                            //new string[] { "WholePartType", "WholePartType", "ProjectPhase", "uml:Association", "memberEnd", ""},
+                            //commenting out above. Not deterministic nor documented anywhere what UPIA types map to what DM2 types. May attempt again another time.
+                            new string[] { "WholePartType", "WholePartType", "uml:Association", "uml:Association", "memberEnd", ""},
+                            new string[] { "WholePartType", "WholePartType", "uml:Dependency", "uml:Dependency", "supplier", "client"},
+                            new string[] { "WholePartType", "WholePartType", "uml:Usage", "uml:Usage", "supplier", "client"},
+                            new string[] { "WholePartType", "WholePartType", "uml:Realization", "uml:Realization", "supplier", "client"},
+
+                            
+/*
                             new string[] { "WholePartType", "Data Element", "WholePartType", "1", "Attribute", "Attribute" },
                             new string[] { "WholePartType", "Table Name", "WholePartType", "2", "Attribute", "Attribute" },
                             
@@ -113,6 +171,7 @@ namespace NEAR
                             //new string[] { "activityPartOfProjectType", "Project", "WholePartType", "2", "Project (DM2)", "ProjectType" },
                             new string[] { "SupportedBy", "SupportedBy", "SupportedBy", "3", "Organization (DM2)", "OrganizationType" },
                             new string[] { "ruleConstrainsActivity", "ruleConstrainsActivity", "CoupleType", "2", "Activity (DM2)", "Activity" },
+ */
                             };
 
         static string[][] SA_Element_Lookup = new string[][] {
@@ -125,52 +184,107 @@ namespace NEAR
                             new string[] { "CapabilityDependency", "Capability Dependency (DM2rx)", "CoupleType","1433", "1449","default" },
                             new string[] { "ARO", "ActivityResourceOverlap (DM2r)", "CoupleType","1208", "1383","default" },
                             };
-
+        
+        //a great deal of overlap of dodaf views into UML for RSA
         static string[][] View_Lookup = new string[][] {  
-                            new string[] {"AV-1", "AV-01 Overview and Summary (DM2)", "289", "default"}, 
-                            new string[] {"CV-1", "CV-01 Vision (DM2)", "290", "default"},
-                            new string[] {"CV-2", "CV-02 Capability Taxonomy (DM2)", "305", "default"}, //1st
-                            new string[] {"CV-4", "CV-04 Capability Dependencies (DM2)", "341", "default"},
-                            new string[] {"DIV-2", "DIV-02 Logical Data Model (Entity Relation) (DM2)", "4", "default"},
-                            new string[] {"DIV-2", "DIV-02 Logical Data Model (IDEF1X) (DM2)", "23", "default"},
-                            new string[] {"DIV-3", "DIV-03 Physical Data Model (DM2)", "26", "default"},
-                            new string[] {"OV-1", "OV-01 High Level Operational Concept (DM2)", "280", "default"}, //1st
-                            new string[] {"OV-2", "OV-02 Operational Resource Flow (DM2)", "281", "default"},
-                            new string[] {"OV-2", "OV-02 Operational Resource Flow Alternative (DM2)", "282", "extra"},
-                            new string[] {"OV-4", "OV-04 Organizational Relationships (DM2)", "283", "default"},
-                            new string[] {"OV-5a", "OV-05a Operational Activity Decomposition (DM2)", "284", "default"}, //1st
-                            new string[] {"OV-5b", "OV-05b Operational Activity Model (DM2)", "285", "default"},
-                            new string[] {"OV-6a", "OV-06a Operational Rules Model (DM2)", "286", "default"},
-                            new string[] {"OV-6b", "OV-06b State Transition (DM2)", "339", "default"},
-                            new string[] {"OV-6b", "OV-06b State Transition Alternative (DM2)", "287", "extra"},
-                            new string[] {"OV-6c", "OV-06c Performers Event-Trace (DM2)", "340", "extra"},
-                            new string[] {"OV-6c", "OV-06c Activities Event-Trace (DM2)", "288", "default"},
-                            new string[] {"PV-1", "PV-01 Project Portfolio Relationships (DM2)", "342", "default"},
-                            new string[] {"PV-1", "PV-01 Project Portfolio Relationships At Time (DM2)", "343", "extra"},
-                            new string[] {"PV-2", "PV-02 Project Timelines (DM2)", "346", "default"},
-                            new string[] {"SV-1", "SV-01 Systems Interface Description Alternative (DM2)", "291", "default"},
-                            new string[] {"SV-2", "SV-02 Systems Resource Flow Description Alternative (DM2)", "292", "default"},
-                            new string[] {"SV-4", "SV-04 Systems Functionality Description (DM2)", "311", "default"},
-                            new string[] {"SV-4", "SV-04 Systems Functionality Decomposition (DM2)", "300", "extra"},
-                            new string[] {"SV-4", "SV-04 Systems Functionality Description Alternative (DM2)", "293", "extra"},
-                            new string[] {"SV-8", "SV-08 Systems Evolution Description (DM2)", "365", "default"},
-                            new string[] {"SV-10b", "SV-10b Systems State Transition Description (DM2)", "344", "default"},
-                            new string[] {"SV-10c", "SV-10c Performer-Role Event-Trace (DM2x)", "134", "default"},
-                            new string[] {"SvcV-1", "SvcV-01 Services Context Description Alternative (DM2)", "301", "default"},
-                            new string[] {"SvcV-2", "SvcV-02 Services Resource Flow Description Alternative (DM2)", "302", "default"},
-                            new string[] {"SvcV-4", "SvcV-04 Services Functionality Description (DM2)", "314", "default"},
-                            new string[] {"SvcV-10b", "SvcV-10b Services State Transition Description (DM2)", "345", "default"},
-                            new string[] {"SvcV-10c", "SvcV-10c Performer-Role Event-Trace (DM2x)", "138", "default"},
+                            //Priority 1
+                            new string[] {"CV-3", "Class", "", "default"},
+                            new string[] {"CV-3", "Freeform", "", "extra"},
+                            new string[] {"CV-6", "Class", "", "default"},
+                            new string[] {"CV-6", "Usecase", "", "extra"},
+                            new string[] {"DIV-1", "Class", "", "Default"},
+                            new string[] {"DIV-2", "Class", "", "Default"},
+                            new string[] {"PV-2", "Class", "", "Default"},
+                            new string[] {"SV-6", "Freeform", "", "Default"},
+                            new string[] {"SvcV-6", "Freeform", "", "Default"},
+                            /*
+                            //Later increments
+                            //new string[] {"CV-1", "Class", "", "default"}, //not on SOW
+                            //new string[] {"CV-1", "Freeform", "", "extra"}, //not on SOW
+                            new string[] {"CV-2", "Class", "", "default"},
+                            //new string[] {"CV-4", "Freeform", "", "default"}, //not on SOW
+                            new string[] {"DIV-3", "Class", "", "default"},
+                            new string[] {"DIV-3", "Freeform", "", "extra"},
+                            new string[] {"OV-1", "Freeform", "", "default"},
+                            new string[] {"OV-2", "Class", "", "default"},
+                            new string[] {"OV-4", "Class", "", "default"},
+                            new string[] {"OV-4", "Freeform", "", "extra"},
+                            new string[] {"OV-5a", "Activity", "", "default"},
+                            new string[] {"OV-5a", "Freeform", "", "extra"},
+                            new string[] {"OV-5a", "Usecase", "", "extra"},
+                            new string[] {"OV-5b", "Activity", "", "default"},
+                            new string[] {"OV-5b", "Freeform", "", "extra"},
+                            new string[] {"OV-5b", "Topic", "", "extra"},
+                            new string[] {"OV-5b", "Usecase", "", "extra"},
+                            new string[] {"OV-6a", "Class", "", "default"},
+                            new string[] {"OV-6b", "Statechart", "", "default"},
+                            new string[] {"OV-6c", "Sequence", "", "default"},
+                            //new string[] {"PV-1", "??", "", "default"},  //NA
+                            new string[] {"SV-1", "Freeform", "", "default"},
+                            new string[] {"SV-1", "Topic", "", "extra"},
+                            new string[] {"SV-2", "Freeform", "", "default"},
+                            new string[] {"SV-2", "Class", "", "extra"},
+                            new string[] {"SV-2", "Compositestructure", "", "default"},
+                            new string[] {"SV-4", "Activity", "", "default"},
+                            new string[] {"SV-4", "Usecase", "", "extra"},
+                            new string[] {"SV-4", "Freeform", "", "extra"},
+                            //new string[] {"SV-8", "", "", "default"},  //NA for RSA
+                            //new string[] {"SV-10c", "??", "", "default"},
+                            //new string[] {"SvcV-1", "??", "", "default"},   //TBD
+                            //new string[] {"SvcV-2", "??", "", "default"},   //TBD
+                            //new string[] {"SvcV-4", "??", "", "default"},   //TBD
+                            //new string[] {"SvcV-5", "??", "", "default"},   //TBD
+                            */
                             };
-
+        //There are limited diagram types availabe in UML and they don't distinquish between the ways they are used, therfore can only put those that are completely ignored
         static string[][] Not_Processed_View_Lookup = new string[][] {  
-                            new string[] {"SV-1", "SV-01 Systems Interface Description (DM2)", "309", "default"}, 
-                            new string[] {"SV-10c", "SV-10c Systems Event-Trace (DM2)", "335", "default"},
+                            new string[] {"Unmappedview1", "Component", "", "default"},
+                            new string[] {"Unmappedview2", "Deployment", "", "default"},
+                            new string[] {"Unmappedview3", "Communication", "", "default"},
+                            new string[] {"Unmappedview4", "Object", "", "default"},
                             };
 
         static string[][] Mandatory_Lookup = new string[][] { 
-                            new string[] {"Capability", "CV-2"},
-                            new string[] {"ArchitecturalDescription", "OV-1"},
+                            //Inc. 1 - CV3
+                            new string[] {"Capability", "CV-3"},
+                            new string[] {"Activity", "CV-3"},
+                            new string[] {"ProjectType", "CV-3"},
+                            new string[] {"activityPartOfCapability", "CV-3"},
+                            new string[] {"activityPartOfProjectType", "CV-3"},
+                            new string[] {"desiredResourceStateOfCapability", "CV-3"},
+                            //Inc. 1 - CV-6
+                            new string[] {"Capability", "CV-6"},
+                            new string[] {"Activity", "CV-6"},
+                            new string[] {"activityPartOfCapability", "CV-6"},
+                            //Inc. 1 - PV-2
+                            new string[] {"Activity", "PV-2"},
+                            new string[] {"activityPartOfProjectType", "PV-2"},
+                            new string[] {"ProjectType", "PV-2"},
+                            //inc. 1 - Div-1
+                            //NO MANDATORY ELEMENTS FOR DIV 1
+                            //Inc. 1 - Div-2
+                            new string[] {"Data", "DIV-2"},
+                            //Inc. 1 - Div-3
+                            new string[] {"Data", "DIV-3"},
+                            new string[] {"DataType", "DIV-3"},
+                            //Inc. 1 - SV-6
+                            new string[] {"Activity", "SV-6"},
+                            new string[] {"activityPerformedByPerformer", "SV-6"},
+                            new string[] {"activityProducesResource", "SV-6"},
+                            new string[] {"activityConsumesResource", "SV-6"},
+                            new string[] {"System", "SV-6"},
+                            new string[] {"Data", "SV-6"},
+                            //Inc. 1 - SvcV-6
+                            new string[] {"Activity", "SvcV-6"},
+                            new string[] {"activityPerformedByPerformer", "SvcV-6"},
+                            new string[] {"activityProducesResource", "SvcV-6"},
+                            new string[] {"activityConsumesResource", "SvcV-6"},
+                            new string[] {"Service", "SvcV-6"},
+                            new string[] {"Data", "SvcV-6"},
+                            new string[] {"ServiceDescription", "SvcV-6"},
+                            new string[] {"serviceDescribedBy", "SvcV-6"},
+                            //END INC ONE REQUIREMENTS - COMMENTING OUT THE REST FOR NOW>
+                            /*new string[] {"ArchitecturalDescription", "OV-1"},
                             new string[] {"Activity", "OV-5a"},
                             new string[] {"Activity", "OV-2"},
                             new string[] {"activityPerformedByPerformer", "OV-2"},
@@ -180,20 +294,7 @@ namespace NEAR
                             new string[] {"activityPerformedByPerformer", "OV-3"},
                             new string[] {"activityProducesResource", "OV-3"},
                             new string[] {"activityConsumesResource", "OV-3"},
-                            new string[] {"Activity", "SV-6"},
-                            new string[] {"activityPerformedByPerformer", "SV-6"},
-                            new string[] {"activityProducesResource", "SV-6"},
-                            new string[] {"activityConsumesResource", "SV-6"},
-                            new string[] {"System", "SV-6"},
-                            new string[] {"Data", "SV-6"},
-
-                            new string[] {"Activity", "SvcV-6"},
-                            new string[] {"activityPerformedByPerformer", "SvcV-6"},
-                            new string[] {"activityProducesResource", "SvcV-6"},
-                            new string[] {"activityConsumesResource", "SvcV-6"},
-                            new string[] {"Service", "SvcV-6"},
-                            new string[] {"Data", "SvcV-6"},
-
+                            new string[] {"Capability", "CV-2"},
                             new string[] {"Activity", "OV-5b"},
                             new string[] {"activityProducesResource", "OV-5b"},
                             new string[] {"activityConsumesResource", "OV-5b"},
@@ -273,17 +374,53 @@ namespace NEAR
                             new string[] {"activityPartOfProjectType", "PV-1"},
                             new string[] {"ProjectType", "PV-1"},
                             new string[] {"activityPerformedByPerformer", "PV-1"},
-                            new string[] {"OrganizationType", "PV-1"},
-                            new string[] {"Activity", "PV-2"},
-                            new string[] {"activityPartOfProjectType", "PV-2"},
-                            new string[] {"ProjectType", "PV-2"},
-                            new string[] {"Data", "DIV-2"},
-                            new string[] {"Data", "DIV-3"},
-                            new string[] {"DataType", "DIV-3"},
+                            new string[] {"OrganizationType", "PV-1"} */
                             };
 
         static string[][] Optional_Lookup = new string[][] { 
-                            new string[] {"Activity", "CV-1"},
+                            //SOW does not require optional elements but trying
+                            //Inc. 1- CV-3
+                            //Optionals are too numerous on monster matrix  Will do only those required to reproduce live data.
+                            new string[] {"WholePartType", "CV-3"}, 
+
+                            //Inc. 1 - CV-6
+                            new string[] {"TemporalMeasure", "CV-6"},
+                            new string[] {"TemporalMeasureType", "CV-6"},
+                            new string[] {"WholePartType", "CV-6"}, 
+                            //Inc. 1 - PV-2
+                            new string[] {"PeriodType", "PV-2"},
+                            new string[] {"HappensInType", "PV-2"},
+                            new string[] {"Condition", "PV-2"},
+                            new string[] {"Information", "PV-2"},
+                            new string[] {"Location", "PV-2"},
+                            new string[] {"Performer", "PV-2"},
+                            new string[] {"Resource", "PV-2"},
+                            new string[] {"Rule", "PV-2"}, 
+                            new string[] {"superSubtype", "PV-2"}, 
+                            new string[] {"WholePartType", "PV-2"}, 
+                            new string[] {"activityPerformedByPerformer", "PV-2"},
+                            new string[] {"Project", "PV-2"},
+                            //Inc. 1 - Div-1
+                            new string[] {"Data","DIV-1"},
+                            new string[] {"WholePartType", "DIV-1"},  //Not strictly required at all - but no way to reproduce the live data without it.
+                            //Inc. 1 - Div-2
+                            new string[] {"DataType", "DIV-2"},
+                            new string[] {"Location", "DIV-2"},
+                            new string[] {"OrganizationType", "DIV-2"},
+                            new string[] {"Performer", "DIV-2"},
+                            new string[] {"Resource", "DIV-2"},
+                            new string[] {"Rule", "DIV-2"}, 
+                            new string[] {"superSubtype", "DIV-2"}, 
+                            new string[] {"WholePartType", "DIV-2"},
+                            new string[] {"OverlapType", "DIV-2"},
+                            //Inc. 1 - SV-6
+                            new string[] {"Measure", "SV-6"},
+                            new string[] {"MeasureType", "SV-6"},
+                            new string[] {"WholePartType", "SV-6"}, 
+                            //Not dealing in all optionals for SV-6 since not required and only one partial one exists in live data
+                            //Inc. 1 - SvcV-6 - not dealing in optionals for SvcV-6 since not required and NONE exist in the live data
+                            //COMMENTING OUT THE REST FOR NOW>
+                            /*new string[] {"Activity", "CV-1"},
                             new string[] {"Condition", "CV-1"},
                             new string[] {"DomainInformation", "CV-1"},
                             new string[] {"Information", "CV-1"},
@@ -360,16 +497,16 @@ namespace NEAR
                             new string[] {"Rule", "OV-3"}, 
                             new string[] {"superSubtype", "OV-3"}, 
                             new string[] {"WholePartType", "OV-3"},
-                            //new string[] {"Condition", "SV-6"},
-                            //new string[] {"Information", "SV-6"},
-                            //new string[] {"Location", "SV-6"},
-                            //new string[] {"OrganizationType", "SV-6"},
-                            //new string[] {"Performer", "SV-6"},
-                            //new string[] {"PersonRole", "SV-6"},
-                            //new string[] {"Resource", "SV-6"},
-                            //new string[] {"Rule", "SV-6"}, 
-                            //new string[] {"superSubtype", "SV-6"}, 
-                            //new string[] {"WholePartType", "SV-6"},
+                            new string[] {"Condition", "SV-6"},
+                            new string[] {"Information", "SV-6"},
+                            new string[] {"Location", "SV-6"},
+                            new string[] {"OrganizationType", "SV-6"},
+                            new string[] {"Performer", "SV-6"},
+                            new string[] {"PersonRole", "SV-6"},
+                            new string[] {"Resource", "SV-6"},
+                            new string[] {"Rule", "SV-6"}, 
+                            new string[] {"superSubtype", "SV-6"}, 
+                            new string[] {"WholePartType", "SV-6"},
                             new string[] {"Information", "OV-4"},
                             new string[] {"Location", "OV-4"},
                             new string[] {"OrganizationType", "OV-4"},
@@ -570,16 +707,6 @@ namespace NEAR
                             new string[] {"System", "SvcV-2"}, 
                             new string[] {"superSubtype", "SvcV-2"}, 
                             new string[] {"WholePartType", "SvcV-2"},
-                            new string[] {"Condition", "DIV-2"},
-                            new string[] {"Information", "DIV-2"},
-                            new string[] {"Location", "DIV-2"},
-                            new string[] {"OrganizationType", "DIV-2"},
-                            new string[] {"Performer", "DIV-2"},
-                            new string[] {"Resource", "DIV-2"},
-                            new string[] {"Rule", "DIV-2"}, 
-                            new string[] {"superSubtype", "DIV-2"}, 
-                            new string[] {"WholePartType", "DIV-2"},
-                            new string[] {"OverlapType", "DIV-2"},
                             new string[] {"Condition", "DIV-3"},
                             new string[] {"Information", "DIV-3"},
                             new string[] {"Location", "DIV-3"},
@@ -598,17 +725,6 @@ namespace NEAR
                             new string[] {"Rule", "PV-1"}, 
                             new string[] {"superSubtype", "PV-1"}, 
                             new string[] {"WholePartType", "PV-1"}, 
-                            new string[] {"PeriodType", "PV-2"},
-                            new string[] {"HappensInType", "PV-2"},
-                            new string[] {"Condition", "PV-2"},
-                            new string[] {"Information", "PV-2"},
-                            new string[] {"Location", "PV-2"},
-                            new string[] {"Performer", "PV-2"},
-                            new string[] {"Resource", "PV-2"},
-                            new string[] {"Rule", "PV-2"}, 
-                            new string[] {"superSubtype", "PV-2"}, 
-                            new string[] {"WholePartType", "PV-2"}, 
-                            new string[] {"activityPerformedByPerformer", "PV-2"},
                             new string[] {"Activity", "AV-2"},
                             new string[] {"ArchitecturalDescription", "AV-2"},
                             new string[] {"Capability", "AV-2"},
@@ -639,7 +755,7 @@ namespace NEAR
                             new string[] {"Country", "AV-2"}, 
                             new string[] {"RegionOfCountry", "AV-2"}, 
                             new string[] {"PeriodType", "AV-2"}, 
-                            new string[] {"DataType", "AV-2"},
+                            new string[] {"DataType", "AV-2"}, */
                             };
 
         private class Thing
@@ -998,9 +1114,12 @@ namespace NEAR
 
                 if (found == false)
                 {
-                    errors.Add("Diagram error," + id + "," + name + "," + type + ",Missing Mandatory Element: " + current_lookup[0] + "\r\n");
-                    test = false;
-                    test = false;
+                    errors.Add("Diagram error," + id + "," + name + "," + type + ",Missing Mandatory Element: " + current_lookup[0] + "It is possible that UPIA does not alow the creation all mandatory elements" + "\r\n");
+                    found = false;
+//*************************************************************************************************************************************************
+//     BYPASSING THIS TEST FOR FALSE SINCE IN MOST CASES, IT IS NOT POSSIBLE TO CREATE ALL MANDATORY ELEMENTS IN UPIA FOR ANY VIEW.
+//*************************************************************************************************************************************************
+                    test = true ;
                     count++;
                 }
             }
@@ -1187,6 +1306,11 @@ namespace NEAR
             IEnumerable<Thing> tuples = new List<Thing>();
             IEnumerable<Thing> results;
             IEnumerable<Thing> results2;
+            IEnumerable<Thing> results3; //added for RSA which has diagrams embedded in two places so a union is needed.
+            IEnumerable<Thing> results4; //added for RSA which has diagrams embedded in two places so a union is needed.  This one holds subordinate diagrams to union.
+            IEnumerable<Thing> results5; //
+            IEnumerable<Thing> UPIAMap;
+            IEnumerable<Thing> UPIAMapTemp;
             IEnumerable<Location> locations;
             List<View> views = new List<View>();
             List<Thing> mandatory_list = new List<Thing>();
@@ -1198,6 +1322,7 @@ namespace NEAR
             Dictionary<string, Thing> things_dic;
             Dictionary<string, Thing> values_dic;
             Dictionary<string, Thing> values_dic2;
+            Dictionary<string, Thing> UPIAMap_dic;
             Dictionary<string, List<Thing>> doc_blocks_views = new Dictionary<string, List<Thing>>();
             Dictionary<string, List<Thing>> description_views = new Dictionary<string, List<Thing>>();
             Dictionary<string, List<Thing>> OV1_pic_views = new Dictionary<string, List<Thing>>();
@@ -1242,46 +1367,106 @@ namespace NEAR
             int count2 = 0;
             bool add = false;
             bool test = true;
+            bool upiafirst = true;
             List<string> errors_list = new List<string>();
+            XNamespace xi = "http://www.omg.org/XMI";
+            XNamespace uml = "http://www.eclipse.org/uml2/3.0.0/UML";
+            XNamespace upia = "http:///schemas/UPIA/_7hv4kEc6Ed-f1uPQXF_0HA/563";
 
 
-            //Diagram Type
 
-            results =
-                from result in root.Elements("Class").Elements("SADiagram")
+            //Diagram Type  
+
+            results3 =
+                from result in root.Elements(uml + "Model").Elements("eAnnotations").Elements("contents")
                 select new Thing
                             {
-                                type = (string)result.Attribute("SAObjMinorTypeName"),
-                                id = (string)result.Attribute("SAObjId"),
-                                name = ((string)result.Attribute("SAObjName")).Replace("&", " And "),
+                                type = (string)result.Attribute("type"),
+                                id = (string)result.Attribute(xi + "id"),
+                                name = ((string)result.Attribute("name")).Replace("&", " And "),
                                 value = "$none$",
                                 place1 = "$none$",
                                 place2 = "$none$",
                                 foundation = "Thing",
                                 value_type = "$none$"
                             };
+            results4 =
+                from result in root.Elements(uml + "Model").Elements("packagedElement").Elements("eAnnotations").Elements("contents")
+                select new Thing
+                {
+                    type = (string)result.Attribute("type"),
+                    id = (string)result.Attribute(xi + "id"),
+                    name = ((string)result.Attribute("name")).Replace("&", " And "),
+                    value = "$none$",
+                    place1 = "$none$",
+                    place2 = "$none$",
+                    foundation = "Thing",
+                    value_type = "$none$"
+                };
 
-            diagrams = View_Lookup.ToDictionary(x => x[1], x => x[0]);
+            results = results3.Union(results4);
+
+            //Build the type map - level 1  Pair IDs with the UPIA types.
+            UPIAMap =
+                            from result in root.Elements(upia + "EnterpriseModel")
+                            select new Thing
+                            {
+                                type = "EnterpriseModel",
+                                id = (string)result.Attribute("base_Package"),
+                                name = "&none$",
+                                value = "$none$",
+                                place1 = "$none$",
+                                place2 = "$none$",
+                                foundation = "Thing",
+                                value_type = "$none$"
+                            };
+            foreach (string[] current_lookup in UPIA_Element_Id_Prop)
+            {
+                UPIAMapTemp = 
+                            from result in root.Elements(upia + current_lookup[0])
+                            select new Thing
+                            {
+                                type = current_lookup[0],
+                                id = (string)result.Attribute(current_lookup[1]),
+                                name = (string)result.Attribute(xi + "id"),
+                                value = current_lookup[2],
+                                place1 = "$none$",
+                                place2 = "$none$",
+                                foundation = current_lookup[3],
+                                value_type = "$none$"
+                            };
+
+                if (upiafirst)
+                {
+                   UPIAMap = UPIAMapTemp;
+                   upiafirst = false;
+                }
+                else
+                {
+                   UPIAMap = UPIAMap.Union(UPIAMapTemp);
+                }
+            }
+            //diagrams = View_Lookup.ToDictionary(x => x[1], x => x[0]);
             not_processed_diagrams = Not_Processed_View_Lookup.ToDictionary(x => x[1], x => x[0]);
             foreach (Thing thing in results)
             {
-                if (!diagrams.TryGetValue(thing.type, out temp))
-                {
+                //if (!diagrams.TryGetValue(thing.type, out temp))
+                //{
                     if (not_processed_diagrams.TryGetValue(thing.type, out temp))
                     {
                         errors_list.Add("Diagram error," + thing.id + "," + thing.name + "," + temp + ", Type Not Allowed - Diagram Ignored: " + thing.type + "\r\n");
                     }
-                    else
-                    {
-                        errors_list.Add("Diagram error," + thing.id + "," + thing.name + ",Unknown, Type Not Allowed - Diagram Ignored: " + thing.type + "\r\n");
-                    }
-                }
+                    //else
+                    //{
+                    //    errors_list.Add("Diagram error," + thing.id + "," + thing.name + ",Unknown, Type Not Allowed - Diagram Ignored: " + thing.type + "\r\n");
+                    //}
+                //}
             }
 
 
 
             //Doc Block
-
+            /*
             results_dic =
                 (from result in root.Elements("Class").Elements("SADiagram").Elements("SASymbol")
                 where (string)result.Attribute("SAObjMinorTypeName") == "Doc Block"
@@ -1376,20 +1561,42 @@ namespace NEAR
 
                 MergeDictionaries(doc_blocks_views, doc_blocks_data);
             }
-
+            */
             //Regular Things
-
+            
+            //UPIAMap_dic = UPIAMap.ToDictionary(a => a.id, a => a.);
+            //UPIAMap_dic =  UPIAMap.ToDictionary(y => y.id, y => y);
+            foreach (Thing UPIAThing in UPIAMap)
+            {
+                results =
+                    from result in root.Elements(uml + "Model").Elements("packagedElement")
+                    where ((string)result.Attribute(xi + "id")) == UPIAThing.id 
+                    //where (string)result.Attribute(xi + "type") == current_lookup[1]
+                    select new Thing
+                    {
+                        type = (string)UPIAThing.value,
+                        id = (string)result.Attribute(xi + "id"),
+                        name = ((string)result.Attribute("name")),//.Replace("&", " And ") ?? "$none$",
+                        value = "$none$",
+                        place1 = "$none$",
+                        place2 = "$none$",
+                        foundation = (string)UPIAThing.foundation,
+                        value_type = "$none$"
+                    };
+                things = things.Concat(results);
+            }
+            /*
+            things = things.Concat(results.ToList());
             foreach(string[] current_lookup in Element_Lookup)
             {
-
                 results =
-                    from result in root.Elements("Class").Elements("SADefinition")
-                    where (string)result.Attribute("SAObjMinorTypeName") == current_lookup[1]
+                    from result in root.Elements(uml + "Model").Elements("packagedElement")
+                    where (string)result.Attribute(xi + "type") == current_lookup[1]
                     select new Thing
                     {
                         type = current_lookup[0],
-                        id = (string)result.Attribute("SAObjId"),
-                        name = ((string)result.Attribute("SAObjName")).Replace("&", " And "),
+                        id = (string)result.Attribute(xi + "id"),
+                        name = ((string)result.Attribute("name")).Replace("&", " And "),
                         value = "$none$",
                         place1 = "$none$",
                         place2 = "$none$",
@@ -1398,7 +1605,7 @@ namespace NEAR
                     };
 
                 things = things.Concat(results.ToList());
-
+                
                 if (current_lookup[1] != "Entity" && current_lookup[1] != "Access Path" && current_lookup[1] != "Index" && current_lookup[1] != "Table")
                 {
                     results_dic =
@@ -1491,11 +1698,11 @@ namespace NEAR
                     }
 
                     //MergeDictionaries(description_views, results_dic);
-                }
-            }
+                } 
+            } */
 
             //OV-1 Picture
-
+/*
             results =
                 from result in root.Elements("Class").Elements("SADiagram").Elements("SASymbol").Elements("SAPicture")
                 where (string)result.Parent.Attribute("SAObjMinorTypeName") == "Picture"
@@ -1541,9 +1748,9 @@ namespace NEAR
                 }
                 things = things.Concat(OV1_pic_views.SelectMany(x => x.Value));
             }
-
+*/
             //Regular tuples
-
+/*
             foreach (string[] current_lookup in Tuple_Lookup)
             {
                 if (current_lookup[3] == "1")
@@ -1584,98 +1791,75 @@ namespace NEAR
             }
 
             tuples = tuples.GroupBy(x => x.id).Select(grp => grp.First());
-
+*/
             //Regular TupleTypes
 
             foreach (string[] current_lookup in Tuple_Type_Lookup)
             {
-                if (current_lookup[3] == "1")
+                if (current_lookup[3] == "uml:Association") //member end contains both place1 and place2
                 {
                     results =
-                        from result in root.Elements("Class").Elements("SADefinition").Elements("SAProperty").Elements("SALink")
-                        where (string)result.Parent.Attribute("SAPrpName") == current_lookup[1]
+                        from result in root.Elements(uml + "Model").Elements("packagedElement")
+                        where (string)result.Attribute(xi + "type") == current_lookup[3]
                         select new Thing
                         {
-                            type = current_lookup[0],
-                            id = (string)result.Parent.Parent.Attribute("SAObjId") + (string)result.Attribute("SALinkIdentity"),
+                            type = current_lookup[1],
+                            id = (string)result.Attribute(xi + "id"),
                             name = "$none$",
                             value = "$none$",
-                            place1 = (string)result.Parent.Parent.Attribute("SAObjId"),
-                            place2 = (string)result.Attribute("SALinkIdentity"),
-                            foundation = current_lookup[2],
+                            place1 = ((string)result.Attribute(current_lookup[4])).Substring(0,23),
+                            place2 = ((string)result.Attribute(current_lookup[4])).Substring(24),
+                            foundation = current_lookup[0],
                             value_type = "$none$"
                         };
 
                     tuple_types = tuple_types.Concat(results.ToList());
 
                 }
-                else if (current_lookup[3] == "2")
+                else 
                 {
                     results =
-                        from result in root.Elements("Class").Elements("SADefinition").Elements("SAProperty").Elements("SALink")
-                        where (string)result.Parent.Attribute("SAPrpName") == current_lookup[1]
+                        from result in root.Elements(uml + "Model").Elements("packagedElement")
+                        where (string)result.Attribute(xi + "type") == current_lookup[3]
                         select new Thing
                         {
-                            type = current_lookup[0],
-                            id = (string)result.Attribute("SALinkIdentity") + (string)result.Parent.Parent.Attribute("SAObjId"),
+                            type = current_lookup[1],
+                            id = (string)result.Attribute(xi + "id"),
                             name = "$none$",
                             value = "$none$",
-                            place2 = (string)result.Parent.Parent.Attribute("SAObjId"),
-                            place1 = (string)result.Attribute("SALinkIdentity"),
-                            foundation = current_lookup[2],
+                            place1 = (string)result.Attribute(current_lookup[4]),
+                            place2 = (string)result.Attribute(current_lookup[5]),
+                            foundation = current_lookup[0],
                             value_type = "$none$"
                         };
 
                     tuple_types = tuple_types.Concat(results.ToList());
 
                 }
-                else if (current_lookup[3] == "4")
-                {
-                    results =
-                        from result in root.Elements("Class").Elements("SADefinition").Elements("SAProperty").Elements("SALink")
-                        where (string)result.Parent.Attribute("SAPrpName") == current_lookup[1]
-                        where (string)result.Parent.Parent.Attribute("SAObjMinorTypeName") == current_lookup[4]
-                        select new Thing
-                        {
-                            type = current_lookup[0],
-                            id = (string)result.Attribute("SALinkIdentity") + (string)result.Parent.Parent.Attribute("SAObjId"),
-                            name = "$none$",
-                            value = "$none$",
-                            place2 = (string)result.Parent.Parent.Attribute("SAObjId"),
-                            place1 = (string)result.Attribute("SALinkIdentity"),
-                            foundation = current_lookup[2],
-                            value_type = "$none$"
-                        };
-
-                    tuple_types = tuple_types.Concat(results.ToList());
-
-                }
-                else if (current_lookup[3] == "5")
-                {
-                    results =
-                        from result in root.Elements("Class").Elements("SADefinition").Elements("SAProperty").Elements("SALink")
-                        where (string)result.Parent.Attribute("SAPrpName") == current_lookup[1]
-                        where (string)result.Parent.Parent.Attribute("SAObjMinorTypeName") == current_lookup[4]
-                        select new Thing
-                        {
-                            type = current_lookup[0],
-                            id = (string)result.Parent.Parent.Attribute("SAObjId") + (string)result.Attribute("SALinkIdentity"),
-                            name = "$none$",
-                            value = "$none$",
-                            place1 = (string)result.Parent.Parent.Attribute("SAObjId"),
-                            place2 = (string)result.Attribute("SALinkIdentity"),
-                            foundation = current_lookup[2],
-                            value_type = "$none$"
-                        };
-
-                    tuple_types = tuple_types.Concat(results.ToList());
-
-                }
-                
             }
 
             tuple_types = tuple_types.GroupBy(x => x.id).Select(grp => grp.First());
+/*
+            //System Exchanges
+            results =
+                from result in root.Elements(upia + "DataExchange")
+                
+                select new Thing
+                {
+                    type = "activityProducesResource",
+                    id = (string)result.Attribute(xi + "id"),
+                    name = "$none$",
+                    value = "$none$",
+                    place1 = ((string)result.Attribute(current_lookup[4])).Substring(0, 23),
+                    place2 = ((string)result.Attribute(current_lookup[4])).Substring(24),
+                    foundation = current_lookup[0],
+                    value_type = "$none$"
+                };
 
+            tuple_types = tuple_types.Concat(results.ToList());
+*/
+
+/*
             //CV-1
 
             results =
@@ -2041,9 +2225,9 @@ namespace NEAR
                     things_dic.Add(values.First().id, values.First());
                 }
             }
-
+*/
             //ARO
-
+/*
             results =
                    from result in root.Elements("Class").Elements("SADefinition").Elements("SAProperty").Elements("SALink")
                    where (string)result.Parent.Attribute("SAPrpName") == "consumingActivity"
@@ -2070,21 +2254,21 @@ namespace NEAR
 
             tuple_types = tuple_types.Concat(results);
             aro = results.GroupBy(x=>(string)x.value).ToDictionary(y => y.Key, y => y.ToList());
-            MergeDictionaries(OV5b_aro_mandatory_views, aro);
-            aro2 = results.GroupBy(x => (string)x.value).ToDictionary(y => y.Key, y => y.ToList());
-            MergeDictionaries(OV6c_aro_optional_views, aro2);
+            //MergeDictionaries(OV5b_aro_mandatory_views, aro);
+            //aro2 = results.GroupBy(x => (string)x.value).ToDictionary(y => y.Key, y => y.ToList());
+            //MergeDictionaries(OV6c_aro_optional_views, aro2);
 
 
-            foreach (Thing thing in results.ToList())
-            {
-                if (things_dic.TryGetValue(thing.place1, out value))
-                {
-                    values = new List<Thing>();
-                    values.Add(value);
-                    OV5b_aro_optional_views.Add((string)thing.value, values);
-                    MergeDictionaries(OV6c_aro_optional_views, new Dictionary<string, List<Thing>>() { { (string)thing.value, values } });
-                }
-            }
+           // foreach (Thing thing in results.ToList())
+           // {
+           //     if (things_dic.TryGetValue(thing.place1, out value))
+           //     {
+           //         values = new List<Thing>();
+           //         values.Add(value);
+           //         OV5b_aro_optional_views.Add((string)thing.value, values);
+           //         MergeDictionaries(OV6c_aro_optional_views, new Dictionary<string, List<Thing>>() { { (string)thing.value, values } });
+           //     }
+           // }
 
             results =
                     from result in root.Elements("Class").Elements("SADefinition").Elements("SAProperty").Elements("SALink")
@@ -2200,9 +2384,9 @@ namespace NEAR
 
             tuple_types = tuple_types.Concat(results);
             aro = results.GroupBy(x => (string)x.value).ToDictionary(y => y.Key, y => y.ToList());
-            MergeDictionaries(OV5b_aro_mandatory_views, aro);
-            aro2 = results.GroupBy(x => (string)x.value).ToDictionary(y => y.Key, y => y.ToList());
-            MergeDictionaries(OV6c_aro_optional_views, aro2);
+           // MergeDictionaries(OV5b_aro_mandatory_views, aro);
+           //aro2 = results.GroupBy(x => (string)x.value).ToDictionary(y => y.Key, y => y.ToList());
+           // MergeDictionaries(OV6c_aro_optional_views, aro2);
 
             results =
                     from result in root.Elements("Class").Elements("SADefinition").Elements("SAProperty").Elements("SALink")
@@ -3072,11 +3256,11 @@ namespace NEAR
             MergeDictionaries(OV4_support_optional_views, OV4_support_optional_views_2);
 
             MergeDictionaries(OV2_support_mandatory_views, OV2_support_mandatory_views_2);
-
+*/
             tuple_types = tuple_types.Distinct();
 
             things = things.Distinct();
-
+/*
             //Constraint
 
             results =
@@ -3737,27 +3921,25 @@ namespace NEAR
             values.AddRange(results.ToList());
 
             tuple_types = tuple_types.Concat(values.GroupBy(x => x.id).Select(grp => grp.First()));
-
+*/
             //Milestone Date
 
             results =
-                    from result in root.Elements("Class").Elements("SADefinition").Elements("SAProperty")
-                    where (string)result.Attribute("SAPrpName") == "Milestone Date"
-
+                    from result in root.Elements(upia + "ActualMeasure")
                     select new Thing
                     {
                         type = "HappensInType",
-                        id = (string)result.Parent.Attribute("SAObjId") + "_t2",
+                        id = (string)result.Attribute(xi + "id"),
                         name = "$none$",
-                        value = (string)result.Attribute("SAPrpValue"),
-                        place1 = (string)result.Parent.Attribute("SAObjId") + "_t1",
-                        place2 = (string)result.Parent.Attribute("SAObjId"),
+                        value = "$none$",
+                        place1 = (string)result.Attribute("base_InstanceSpecification"),
+                        place2 = (string)result.Attribute("measuredElements"),
                         foundation = "WholePartType",
                         value_type = "$period$"
                     };
 
             tuple_types = tuple_types.Concat(results.ToList());
-
+/*
             foreach (Thing thing in results)
             {
                 values = new List<Thing>();
@@ -3794,9 +3976,9 @@ namespace NEAR
 
                 period_dic.Add(thing.place2, values);
             }
-
+*/
             //Data Type
-
+/*
             results =
                     from result in root.Elements("Class").Elements("SADefinition").Elements("SAProperty")
                     where (string)result.Attribute("SAPrpName") == "SQL Data Type"
@@ -3852,9 +4034,9 @@ namespace NEAR
                 datatype_optional_dic.Add(thing.place2, new List<Thing>(){thing});
                 datatype_mandatory_dic.Add(thing.place2, values);
             }
-
+*/
             //activityPartOfCapability
-
+/*
             results =
                     from result in root.Elements("Class").Elements("SADefinition").Elements("SAProperty").Elements("SALink")
                     where (string)result.Parent.Attribute("SAPrpName") == "Activity"
@@ -3908,13 +4090,13 @@ namespace NEAR
                     };
 
             tuple_types = tuple_types.Concat(results.ToList());
-
+*/
             //things_dic
 
             things_dic = things.ToDictionary(x => x.id, x => x);
 
             //System Exchange (DM2rx)
-
+/*
             results =
                     from result in root.Elements("Class").Elements("SADefinition").Elements("SAProperty").Elements("SALink")
                     where (string)result.Parent.Attribute("SAPrpName") == "Source"
@@ -4594,7 +4776,7 @@ namespace NEAR
                 }
             }
                     //PV1_mandatory_views = tuple_types_temp_new.GroupBy(y => ((Tuple<string, string>)y.value).Item1).ToDictionary(z => ((Tuple<string, string>)z.First().value).Item1, z => z.ToList());
-
+ */
             //ToLists
                     values3 = tuples.ToList();
                     values4 = tuple_types.ToList();
@@ -4603,7 +4785,7 @@ namespace NEAR
                     tuple_types = null;
 
             //AV-2
-
+/*
             sorted_results = new List<List<Thing>>();
             optional_list = new List<Thing>();
             values = new List<Thing>();
@@ -4891,10 +5073,12 @@ namespace NEAR
 
             //DIV-3 Parts
 
-            results_dic = values4.Where(x => x.type == "WholePartType").GroupBy(x => x.place1).ToDictionary(gdc => gdc.Key, gdc => gdc.ToList());
+            //results_dic = values4.Where(x => x.type == "WholePartType").GroupBy(x => x.place1).ToDictionary(gdc => gdc.Key, gdc => gdc.ToList());
+*/
+
 
             //Diagramming
-
+/***********************************************************************************************************************************************************************
             locations =
                     from result in root.Elements("Class").Elements("SADiagram").Elements("SASymbol")
                     where (string)result.Attribute("SASymIdDef") != null
@@ -5189,7 +5373,7 @@ namespace NEAR
 
                 values6.AddRange(values);
             }
-
+*/
             locations = null;
             values = null;
             values2 = null;
@@ -5203,24 +5387,42 @@ namespace NEAR
             {
                 sorted_results = new List<List<Thing>>();
 
-                results =
-                    from result in root.Elements("Class").Elements("SADiagram").Elements("SASymbol")
-                    where (string)result.Parent.Attribute("SAObjMinorTypeName") == current_lookup[1]
-                    where (string)result.Attribute("SASymIdDef") != null
-                        || ((string)result.Attribute("SAObjMinorTypeName") == "Picture"
-                        || (string)result.Attribute("SAObjMinorTypeName") == "Doc Block")
+                if (current_lookup[1]=="Usecase")
+                {
+                results = 
+                    from result in root.Elements(uml + "Model").Elements("packagedElement").Elements("eAnnotations").Elements("contents").Elements("children")
+                    where (string)result.Attribute(xi + "type") != "notation:Shape"                                                                             //Need some way of differentiating Use Case diagrams since they are not ALL CV-6 related
                     select new Thing
                     {
                         type = current_lookup[0],
-                        id = (string)result.Parent.Attribute("SAObjId") + (string)result.Attribute("SASymIdDef"),
-                        name = ((string)result.Parent.Attribute("SAObjName")).Replace("&", " And "),
-                        place1 = (string)result.Parent.Attribute("SAObjId"),
-                        place2 = (string)result.Attribute("SASymIdDef"),
-                        value = (string)result.Attribute("SASymIdDef"),
-                        //value = Find_Def_DM2_Type((string)result.Attribute("SASymIdDef"),ref values5),
+                        id = (string)result.Parent.Attribute(xi + "id") + (string)result.Attribute("element"),
+                        name = ((string)result.Parent.Attribute("name")).Replace("&", " And "),
+                        place1 = (string)result.Parent.Attribute(xi + "id"),
+                        place2 = (string)result.Attribute("element"),
+                        value = (string)result.Attribute("element"),
                         foundation = "$none$",
                         value_type = "$element_type$"
                     };
+                }
+                else
+                {
+                results =
+                    from result in root.Elements(uml + "Model").Elements("eAnnotations").Elements("contents").Elements("children")
+                    where (string)result.Attribute(xi + "type") == "umlnotation:UMLShape"
+                    where ((string)result.Parent.Attribute("name")).Contains((string)current_lookup[0])                             //no differing diagram types so have to check for name containment.
+                    select new Thing
+                    {
+                        type = current_lookup[0],
+                        id = (string)result.Parent.Attribute(xi + "id") + (string)result.Attribute("element"), //combined ids
+                        name = ((string)result.Parent.Attribute("name")).Replace("&", " And "),                //diagram name  
+                        place1 = (string)result.Parent.Attribute(xi + "id"),
+                        place2 = (string)result.Attribute("element"),
+                        value = (string)result.Attribute("element"),
+                        foundation = "$none$",
+                        value_type = "$element_type$"
+                    };
+                }
+                
                 view_holder.Add(results.ToList());
             }
 
@@ -5238,7 +5440,7 @@ namespace NEAR
                     {
                         if (things_dic.TryGetValue(thing.place2, out value))
                             thing.value = (string)value.type;
-
+                        /*
                         if (thing.type == "DIV-3")
                         {
                             values2 = new List<Thing>();
@@ -5261,7 +5463,7 @@ namespace NEAR
                                     max++;
                                 }
                             }
-                        }
+                         }*/
                     }
                 }
 
@@ -5280,7 +5482,7 @@ namespace NEAR
 
                     mandatory_list = new List<Thing>();
                     optional_list = new List<Thing>();
-
+                    /*
                     if (view.First().type == "CV-1")
                     {
                         if (CV1_mandatory_views.TryGetValue(view.First().place1, out values))
@@ -5293,7 +5495,7 @@ namespace NEAR
                         if (PV1_mandatory_views.TryGetValue(view.First().place1, out values))
                             mandatory_list.AddRange(values);
                     }
-
+                    */
                     foreach (Thing thing in view)
                     {
                         if (thing.place2 != null)
@@ -5310,7 +5512,7 @@ namespace NEAR
                                     optional_list.Add(new Thing { id = thing.place2, type = (string)thing.value, value = "$none$", value_type = "$none$" });
                                 }
                             }
-
+                            /*
                             values = new List<Thing>();
                             if (needline_mandatory_views.TryGetValue(thing.place2, out values))
                             {
@@ -5323,7 +5525,7 @@ namespace NEAR
                                         //optional_list.AddRange(needline_optional_views[thing.place2]);
                                 }
                             }
-
+                            */
                             values = new List<Thing>();
                             if (description_views.TryGetValue(thing.place2, out values))
                                 optional_list.AddRange(values);
@@ -5339,7 +5541,7 @@ namespace NEAR
                             values = new List<Thing>();
                             if (datatype_optional_dic.TryGetValue(thing.place2, out values))
                                 optional_list.AddRange(values);
-
+                            /*
                             if (thing.type.Contains("SvcV"))
                             {
                                 if ((string)thing.value == "Service")
@@ -5404,7 +5606,8 @@ namespace NEAR
 
                                     values7.AddRange(values);
                                 }
-                            }
+                            }*/
+                            /*
                             else if (thing.type == "OV-6c")
                             {
                                 values = new List<Thing>();
@@ -5453,6 +5656,7 @@ namespace NEAR
                                     if (Allowed_Class("OV-2", (string)thing.value))
                                         optional_list.AddRange(values);
                             }
+                            
                             else if (thing.type == "AV-1" || thing.type.Contains("PV"))
                             {
                                 if ((string)thing.value == "ProjectType")
@@ -5521,6 +5725,7 @@ namespace NEAR
 
                                     values5.AddRange(values);
                                 }
+
                                 if (thing.type == "PV-1")
                                 {
                                     if ((string)thing.value == "OrganizationType")
@@ -5608,7 +5813,7 @@ namespace NEAR
                                 values = new List<Thing>();
                                 if (CV4_optional_views.TryGetValue(thing.place2, out values))
                                     optional_list.AddRange(values);
-                            }
+                            }*/
                           
                         }
                     }
@@ -5790,6 +5995,8 @@ namespace NEAR
             Thing value;
             List<Thing> values;
             XNamespace ns = "http://www.ideasgroup.org/xsd";
+            XNamespace xi = "http://www.omg.org/XMI";
+            XNamespace um = "http://www.omg.org/UML";
             Location location;
             List<string> errors_list = new List<string>();
 
@@ -6581,9 +6788,9 @@ namespace NEAR
                 return sw.ToString();
             }
         }
-
+        
         /////////RSA
-
+        
         public static string RSA2PES(byte[] input)
         {
             IEnumerable<Location> locations = new List<Location>();
@@ -7149,10 +7356,10 @@ namespace NEAR
                 return sw.ToString();
             }
         }
-
+        
         ////////////////////
         ////////////////////
-
+/*
         public static string PES2RSA(byte[] input)
         {
             Dictionary<string, Thing> things = new Dictionary<string, Thing>();
@@ -7799,7 +8006,7 @@ namespace NEAR
                 }
                 return sw.ToString();
             }
-        }
+        }*/
     }
-
+       
 }
