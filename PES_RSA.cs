@@ -1377,8 +1377,10 @@ namespace NEAR
 
             //Diagram Type  
 
-            results3 =
-                from result in root.Elements(uml + "Model").Elements("eAnnotations").Elements("contents")
+            //results3 =
+            results = 
+                from result in root.Elements(uml + "Model").Descendants("contents")//.Elements("eAnnotations").Elements("contents")
+                where (string)result.Attribute(xi +"type") == "umlnotation:UMLDiagram"
                 select new Thing
                             {
                                 type = (string)result.Attribute("type"),
@@ -1390,7 +1392,7 @@ namespace NEAR
                                 foundation = "Thing",
                                 value_type = "$none$"
                             };
-            results4 =
+           /* results4 =
                 from result in root.Elements(uml + "Model").Elements("packagedElement").Elements("eAnnotations").Elements("contents")
                 select new Thing
                 {
@@ -1404,7 +1406,7 @@ namespace NEAR
                     value_type = "$none$"
                 };
 
-            results = results3.Union(results4);
+            results = results3.Union(results4); */
 
             //Build the type map - level 1  Pair IDs with the UPIA types.
             UPIAMap =
@@ -1569,7 +1571,7 @@ namespace NEAR
             foreach (Thing UPIAThing in UPIAMap)
             {
                 results =
-                    from result in root.Elements(uml + "Model").Elements("packagedElement")
+                    from result in root.Elements(uml + "Model").Descendants("packagedElement")
                     where ((string)result.Attribute(xi + "id")) == UPIAThing.id 
                     //where (string)result.Attribute(xi + "type") == current_lookup[1]
                     select new Thing
@@ -1799,8 +1801,9 @@ namespace NEAR
                 if (current_lookup[3] == "uml:Association") //member end contains both place1 and place2
                 {
                     results =
-                        from result in root.Elements(uml + "Model").Elements("packagedElement")
+                        from result in root.Elements(uml + "Model").Descendants("packagedElement")
                         where (string)result.Attribute(xi + "type") == current_lookup[3]
+                        where result.Attribute(current_lookup[4]) != null && ((string)result.Attribute(current_lookup[4])).Length > 24
                         select new Thing
                         {
                             type = current_lookup[1],
@@ -1819,8 +1822,9 @@ namespace NEAR
                 else 
                 {
                     results =
-                        from result in root.Elements(uml + "Model").Elements("packagedElement")
+                        from result in root.Elements(uml + "Model").Descendants("packagedElement")
                         where (string)result.Attribute(xi + "type") == current_lookup[3]
+                        where result.Attribute(current_lookup[4]) != null && result.Attribute(current_lookup[5])!= null
                         select new Thing
                         {
                             type = current_lookup[1],
@@ -4091,9 +4095,10 @@ namespace NEAR
 
             tuple_types = tuple_types.Concat(results.ToList());
 */
-            //things_dic
-
-            things_dic = things.ToDictionary(x => x.id, x => x);
+            //things_dic  put in some code to compenate for non-unique keys.
+            IEnumerable<Thing> filteredthings = things.GroupBy(x => x.id).Select(group => group.First());
+            things_dic = filteredthings.ToDictionary(x => x.id, x => x);
+           // things_dic = things.ToDictionary(x => x.id, x => x);
 
             //System Exchange (DM2rx)
 /*
@@ -5387,7 +5392,7 @@ namespace NEAR
             {
                 sorted_results = new List<List<Thing>>();
 
-                if (current_lookup[1]=="Usecase")
+               /* if (current_lookup[1]=="Usecase")
                 {
                 results = 
                     from result in root.Elements(uml + "Model").Elements("packagedElement").Elements("eAnnotations").Elements("contents").Elements("children")
@@ -5405,11 +5410,11 @@ namespace NEAR
                     };
                 }
                 else
-                {
+                {*/
                 results =
-                    from result in root.Elements(uml + "Model").Elements("eAnnotations").Elements("contents").Elements("children")
-                    where (string)result.Attribute(xi + "type") == "umlnotation:UMLShape"
-                    where ((string)result.Parent.Attribute("name")).Contains((string)current_lookup[0])                             //no differing diagram types so have to check for name containment.
+                    from result in root.Elements(uml + "Model").Descendants()//.Elements("children")
+                    where (string)result.Attribute(xi + "type") == "umlnotation:UMLShape" || (string)result.Attribute(xi + "type") == "umlnotation:UMLConnector"
+                    where result.Parent.Attribute("name") != null && ((string)result.Parent.Attribute("name")).Contains((string)current_lookup[0])  //no differing diagram types so have to check for name containment.
                     select new Thing
                     {
                         type = current_lookup[0],
@@ -5421,7 +5426,7 @@ namespace NEAR
                         foundation = "$none$",
                         value_type = "$element_type$"
                     };
-                }
+              //  }
                 
                 view_holder.Add(results.ToList());
             }
