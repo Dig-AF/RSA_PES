@@ -138,7 +138,7 @@ namespace NEAR
                             new string[] { "WholePartType", "WholePartType", "uml:Usage", "uml:Usage", "supplier", "client"},
                             new string[] { "WholePartType", "WholePartType", "uml:Realization", "uml:Realization", "supplier", "client"},
                             new string[] { "WholePartType", "WholePartType", "uml:InformationFlow", "uml:InformationFlow", "informationSource", "informationTarget"},
-
+                            new string[] { "WholePartType", "WholePartType", "ExercisesCapability","uml:Association", "memberEnd", "navigableOwnedEnd" },
                             
 /*
                             new string[] { "WholePartType", "Data Element", "WholePartType", "1", "Attribute", "Attribute" },
@@ -1800,7 +1800,7 @@ namespace NEAR
 
             foreach (string[] current_lookup in Tuple_Type_Lookup)
             {
-                if (current_lookup[3] == "uml:Association") //member end contains both place1 and place2
+                if (current_lookup[3] == "uml:Association" && current_lookup[2] != "ExercisesCapability") //member end contains both place1 and place2
                 {
                     results =
                         from result in root.Elements(uml + "Model").Descendants("packagedElement")
@@ -1810,14 +1810,43 @@ namespace NEAR
                         where (string)result4.Attribute(xi + "id") == ((string)result.Attribute(current_lookup[4])).Substring(0, 23)
                         from result5 in root.Elements(uml + "Model").Descendants("ownedAttribute")
                         where (string)result5.Attribute(xi + "id") == ((string)result.Attribute(current_lookup[4])).Substring(24)
+                        from result6 in root.Elements(uml + "Model").Descendants("ownedEnd")
+                        where (string)result6.Attribute("association") == ((string)result.Attribute(current_lookup[4])).Substring(0, 23)
                         select new Thing
                         {
                             type = current_lookup[1],
                             id = (string)result.Attribute(xi + "id"),
                             name = "$none$",
                             value = "$none$",
-                            place1 = (string)result4.Attribute("type"), //((string)result.Attribute(current_lookup[4])).Substring(0,23),
-                            place2 = (string)result5.Attribute("type"), //((string)result.Attribute(current_lookup[4])).Substring(24, 23),
+                            place1 = (string)result4.Attribute("type"), 
+                            place2 = (string)result5.Attribute("type"), 
+                            foundation = current_lookup[0],
+                            value_type = "$none$"
+                        };
+
+                    tuple_types = tuple_types.Concat(results.ToList());
+
+                }
+                else if (current_lookup[3] == "uml:Association" && current_lookup[2] == "ExercisesCapability") //member end contains both place1 and place2
+                {
+                    results =
+                        from result in root.Elements(uml + "Model").Descendants("packagedElement")
+                        where (string)result.Attribute(xi + "type") == current_lookup[3]
+                        where result.Attribute(current_lookup[4]) != null && ((string)result.Attribute(current_lookup[4])).Length > 24
+                        //from result4 in root.Elements(uml + "Model").Descendants("ownedAttribute")
+                        //where (string)result4.Attribute(xi + "id") == ((string)result.Attribute(current_lookup[4])).Substring(0, 23)
+                        from result5 in root.Elements(uml + "Model").Descendants("ownedAttribute")
+                        where (string)result5.Attribute(xi + "id") == ((string)result.Attribute(current_lookup[4])).Substring(24)
+                        from result6 in root.Elements(uml + "Model").Descendants("ownedEnd")
+                        where (string)result6.Attribute(xi + "id") == ((string)result.Attribute(current_lookup[4])).Substring(0, 23)
+                        select new Thing
+                        {
+                            type = "activityPartOfCapability",  //current_lookup[1],
+                            id = (string)result.Attribute(xi + "id"),
+                            name = "$none$",
+                            value = "$none$",
+                            place1 = (string)result6.Attribute("type"),
+                            place2 = (string)result5.Attribute("type"),
                             foundation = current_lookup[0],
                             value_type = "$none$"
                         };
@@ -5451,7 +5480,7 @@ namespace NEAR
                 {*/
                 results =
                     from result in root.Elements(uml + "Model").Descendants()//.Elements("children")
-                    where (string)result.Attribute(xi + "type") == "umlnotation:UMLShape"
+                    where (string)result.Attribute(xi + "type") == "umlnotation:UMLShape" || (string)result.Attribute(xi + "type") == "umlnotation:UMLClassifierShape"
                     where result.Parent.Attribute("name") != null && ((string)result.Parent.Attribute("name")).Contains((string)current_lookup[0])  //no differing diagram types so have to check for name containment.
                     select new Thing
                     {

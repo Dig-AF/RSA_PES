@@ -18,7 +18,7 @@ namespace ConsoleApplication
             bool test;
 
             input = @"C:\GitHub\test\Test Data\RSA\PES_SampleData.emx";
-            //input = @"C:\GitHub\test\Live Data\RSA\P-8A.emx";
+            
             
             test = NEAR.PES_RSA.RSA2PES(File.ReadAllBytes(input),ref output, ref errors);
             if (!test)
