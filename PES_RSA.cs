@@ -37,7 +37,9 @@ namespace NEAR
                             new string [] {"MeasuredElement", "base_NamedElement", "HappensInType", "IndividualType"},
                             new string [] {"ServiceParticipant", "base_Class", "Service", "IndividualType"},
                             new string [] {"ServiceSpecification", "base_Interface", "Service", "IndividualType"},
-                            new string [] {"ProjectInstance",  "base_InstanceSpecification", "Project", "IndividualType"}
+                            new string [] {"ProjectInstance",  "base_InstanceSpecification", "Project", "IndividualType"},
+                            new string [] {"SystemTask",  "base_Operation", "Activity", "IndividualType"},
+                            new string [] {"SystemFunction",  "base_Activity", "Activity", "IndividualType"},
                             };
 
         //In order - DM2 Element Name, Stereotype in UPIA, DM2 type - Currently NOT USED
@@ -135,6 +137,7 @@ namespace NEAR
                             new string[] { "WholePartType", "WholePartType", "uml:Dependency", "uml:Dependency", "supplier", "client"},
                             new string[] { "WholePartType", "WholePartType", "uml:Usage", "uml:Usage", "supplier", "client"},
                             new string[] { "WholePartType", "WholePartType", "uml:Realization", "uml:Realization", "supplier", "client"},
+                            new string[] { "WholePartType", "WholePartType", "uml:InformationFlow", "uml:InformationFlow", "informationSource", "informationTarget"},
 
                             
 /*
@@ -1566,8 +1569,7 @@ namespace NEAR
             */
             //Regular Things
             
-            //UPIAMap_dic = UPIAMap.ToDictionary(a => a.id, a => a.);
-            //UPIAMap_dic =  UPIAMap.ToDictionary(y => y.id, y => y);
+
             foreach (Thing UPIAThing in UPIAMap)
             {
                 results =
@@ -1804,14 +1806,18 @@ namespace NEAR
                         from result in root.Elements(uml + "Model").Descendants("packagedElement")
                         where (string)result.Attribute(xi + "type") == current_lookup[3]
                         where result.Attribute(current_lookup[4]) != null && ((string)result.Attribute(current_lookup[4])).Length > 24
+                        from result4 in root.Elements(uml + "Model").Descendants("ownedAttribute")
+                        where (string)result4.Attribute(xi + "id") == ((string)result.Attribute(current_lookup[4])).Substring(0, 23)
+                        from result5 in root.Elements(uml + "Model").Descendants("ownedAttribute")
+                        where (string)result5.Attribute(xi + "id") == ((string)result.Attribute(current_lookup[4])).Substring(24)
                         select new Thing
                         {
                             type = current_lookup[1],
                             id = (string)result.Attribute(xi + "id"),
                             name = "$none$",
                             value = "$none$",
-                            place1 = ((string)result.Attribute(current_lookup[4])).Substring(0,23),
-                            place2 = ((string)result.Attribute(current_lookup[4])).Substring(24),
+                            place1 = (string)result4.Attribute("type"), //((string)result.Attribute(current_lookup[4])).Substring(0,23),
+                            place2 = (string)result5.Attribute("type"), //((string)result.Attribute(current_lookup[4])).Substring(24, 23),
                             foundation = current_lookup[0],
                             value_type = "$none$"
                         };
@@ -1819,12 +1825,12 @@ namespace NEAR
                     tuple_types = tuple_types.Concat(results.ToList());
 
                 }
-                else 
+                else
                 {
                     results =
                         from result in root.Elements(uml + "Model").Descendants("packagedElement")
                         where (string)result.Attribute(xi + "type") == current_lookup[3]
-                        where result.Attribute(current_lookup[4]) != null && result.Attribute(current_lookup[5])!= null
+                        where result.Attribute(current_lookup[4]) != null && result.Attribute(current_lookup[5]) != null
                         select new Thing
                         {
                             type = current_lookup[1],
@@ -1841,6 +1847,38 @@ namespace NEAR
 
                 }
             }
+
+            results =
+                from result in root.Elements(upia + "DataExchange")
+                from result4 in root.Elements(uml + "Model").Descendants("packagedElement")
+                where (string)result4.Attribute(xi + "id") == (string)result.Attribute("base_InformationFlow")
+                select new Thing
+                {
+                    type = "activityProducesResource",
+                    id =  (string)result.Attribute(xi + "id") + "_1",
+                    name = (string)result.Attribute("exchangeId"),
+                    place1 = (string)result.Attribute("producingTask"),
+                    place2 = (string)result4.Attribute("conveyed"),
+                    foundation = "CoupleType",
+                    value_type = "exemplar"
+                };
+            tuple_types = tuple_types.Concat(results.ToList());
+
+            results =
+                from result in root.Elements(upia + "DataExchange")
+                from result4 in root.Elements(uml + "Model").Descendants("packagedElement")
+                where (string)result4.Attribute(xi + "id") == (string)result.Attribute("base_InformationFlow")
+                select new Thing
+                {
+                    type = "activityConsumesResource",
+                    id = (string)result.Attribute(xi + "id") + "_2",
+                    name = (string)result.Attribute("exchangeId"),
+                    place2 = (string)result.Attribute("consumingTask"),
+                    place1 = (string)result4.Attribute("conveyed"),
+                    foundation = "CoupleType",
+                    value_type = "exemplar"
+                };
+            tuple_types = tuple_types.Concat(results.ToList());
 
             tuple_types = tuple_types.GroupBy(x => x.id).Select(grp => grp.First());
 /*
@@ -3927,7 +3965,7 @@ namespace NEAR
             tuple_types = tuple_types.Concat(values.GroupBy(x => x.id).Select(grp => grp.First()));
 */
             //Milestone Date
-
+            // NEEDS WORK
             results =
                     from result in root.Elements(upia + "ActualMeasure")
                     select new Thing
@@ -3937,7 +3975,7 @@ namespace NEAR
                         name = "$none$",
                         value = "$none$",
                         place1 = (string)result.Attribute("base_InstanceSpecification"),
-                        place2 = (string)result.Attribute("measuredElements"),
+                        place2 = ((string)result.Attribute("measuredElements")).Substring(0, 23),
                         foundation = "WholePartType",
                         value_type = "$period$"
                     };
@@ -5413,7 +5451,7 @@ namespace NEAR
                 {*/
                 results =
                     from result in root.Elements(uml + "Model").Descendants()//.Elements("children")
-                    where (string)result.Attribute(xi + "type") == "umlnotation:UMLShape" || (string)result.Attribute(xi + "type") == "umlnotation:UMLConnector"
+                    where (string)result.Attribute(xi + "type") == "umlnotation:UMLShape"
                     where result.Parent.Attribute("name") != null && ((string)result.Parent.Attribute("name")).Contains((string)current_lookup[0])  //no differing diagram types so have to check for name containment.
                     select new Thing
                     {

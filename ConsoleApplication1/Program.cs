@@ -17,9 +17,9 @@ namespace ConsoleApplication
             string errors = "";
             bool test;
 
-            //input = @"C:\GitHub\test\Test Data\RSA\PES_SampleData.emx";
-            input = @"C:\GitHub\test\Live Data\RSA\P-8A Systems and Services.emx";
-            //input = @"C:\GitHub\test\Test Data\SA\SBXX V2.1.xml";
+            input = @"C:\GitHub\test\Test Data\RSA\PES_SampleData.emx";
+            //input = @"C:\GitHub\test\Live Data\RSA\P-8A.emx";
+            
             test = NEAR.PES_RSA.RSA2PES(File.ReadAllBytes(input),ref output, ref errors);
             if (!test)
                 System.IO.File.WriteAllText(@"C:\GitHub\test\error2.csv", errors);
