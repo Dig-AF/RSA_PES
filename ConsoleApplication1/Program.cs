@@ -18,9 +18,8 @@ namespace ConsoleApplication
             bool test;
 
             input = @"C:\GitHub\test\Test Data\RSA\PES_SampleData.emx";
-            
-            
-            test = NEAR.PES_RSA.RSA2PES(File.ReadAllBytes(input),ref output, ref errors);
+                        
+            test = EAWS.Core.SilverBullet.PES_RSA.RSA2PES(File.ReadAllBytes(input),ref output, ref errors);
             if (!test)
                 System.IO.File.WriteAllText(@"C:\GitHub\test\error2.csv", errors);
 
