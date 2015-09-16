@@ -1269,15 +1269,18 @@ namespace EAWS.Core.SilverBullet
                     place1 = false;
                     place2 = false;
 
-                    if (rela.place1 != null && dic.TryGetValue(rela.place1, out value))
-                        place1 = true;
-
-                    if (rela.place2 != null && dic.TryGetValue(rela.place2, out value))
-                        place2 = true;
-
-                    if (place1 && place2)
+                    if (rela.place1 != null && rela.place2 != null)
                     {
-                        new_view.Add(new Thing { place1 = value.place1, place2 = rela.id, value = rela.type, type = value.type, value_type="$none$" });
+                        if (dic.TryGetValue(rela.place1, out value))
+                            place1 = true;
+
+                        if (dic.TryGetValue(rela.place2, out value))
+                            place2 = true;
+
+                        if (place1 && place2)
+                        {
+                            new_view.Add(new Thing { place1 = value.place1, place2 = rela.id, value = rela.type, type = value.type, value_type = "$none$" });
+                        }
                     }
                 }
 
