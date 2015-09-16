@@ -24,6 +24,7 @@ namespace EAWS.Core.SilverBullet
                             new string [] {"CapabilityRole", "base_Class", "Performer", "IndividualType"},
                             new string [] {"OperationalNode", "base_Class", "Performer", "IndividualType"},
                             new string [] {"OperationalTask", "base_Operation", "Activity", "IndividualType"},
+                            new string [] {"OperationalActivity", "base_Activity", "Activity", "IndividualType"},
                             new string [] {"OperationalNodeSpecification", "base_Interface", "Performer", "IndividualType"},
                             //new string [] {"CapabilityRealization", "base_Class", "Activity", "IndividualType"},  UPIA Spec specifically says this is ignored.
                             new string [] {"Information", "base_Class", "DataType", "IndividualType"},
@@ -137,6 +138,7 @@ namespace EAWS.Core.SilverBullet
         static string[][] RSA_ARO_Lookup = new string[][] { 
                             new string[] { "DataExchange", "base_InformationFlow", "consumingTask", "producingTask", "", "default" },
                             new string[] { "InformationExchange", "base_InformationFlow", "consumingTask", "producingTask", "", "default" },
+                            new string[] { "ResourceExchange", "base_InformationFlow", "consumingTask", "producingTask", "", "default" },
                             };
         
         static string[][] Tuple_Lookup = new string[][] { 
@@ -227,6 +229,9 @@ namespace EAWS.Core.SilverBullet
                             new string[] {"OV-2", "Class", "", "Default"},
                             new string[] {"OV-4", "Class", "", "Default"},
                             new string[] {"OV-4", "Freeform", "", "Default"},
+                            new string[] {"OV-5a", "Activity", "", "Default"},
+                            new string[] {"OV-5b", "Activity", "", "Default"},
+                            new string[] {"OV-6c", "Sequence", "", "Default"},
                             /*
                             //Later increments
                             //new string[] {"CV-1", "Class", "", "default"}, //not on SOW
@@ -326,36 +331,25 @@ namespace EAWS.Core.SilverBullet
                             //Priority 2 - OV-4
                             //No Mandatory
 
+                            //Priority 2 - OV-5a
+                            new string[] {"Activity", "OV-5a"},
+
+                            //Priority 2 - OV-5b
+                            new string[] {"Activity", "OV-5b"},
+                            new string[] {"activityProducesResource", "OV-5b"},
+                            new string[] {"activityConsumesResource", "OV-5b"},
+
+                            //Priority 2 - OV-6c
+                            new string[] {"Activity", "OV-6c"},
+
+
                             //END REQUIREMENTS - COMMENTING OUT THE REST FOR NOW>
                             /*new string[] {"ArchitecturalDescription", "OV-1"},
-                            new string[] {"Activity", "OV-5a"},
                             new string[] {"Activity", "OV-3"},
                             new string[] {"activityPerformedByPerformer", "OV-3"},
                             new string[] {"activityProducesResource", "OV-3"},
                             new string[] {"activityConsumesResource", "OV-3"},
                             
-                             * new string[] {"Activity", "OV-5b"},
-                            new string[] {"activityProducesResource", "OV-5b"},
-                            new string[] {"activityConsumesResource", "OV-5b"},
-                            new string[] {"Activity", "OV-6b"},
-                            new string[] {"activityProducesResource", "OV-6b"},
-                            new string[] {"activityConsumesResource", "OV-6b"},
-                            new string[] {"Activity", "OV-6a"},
-                            new string[] {"Activity", "AV-1"},
-                            new string[] {"activityPartOfProjectType", "AV-1"},
-                            new string[] {"ArchitecturalDescription", "AV-1"},
-                            new string[] {"ProjectType", "AV-1"},
-                            new string[] {"Capability", "CV-1"},
-                            new string[] {"desiredResourceStateOfCapability", "CV-1"},
-                            new string[] {"desireMeasure", "CV-1"},
-                            new string[] {"effectMeasure", "CV-1"},
-                            new string[] {"MeasureOfDesire", "CV-1"},
-                            new string[] {"MeasureOfEffect", "CV-1"},
-                            new string[] {"visionRealizedByDesiredResourceState", "CV-1"},
-                            new string[] {"Vision", "CV-1"},
-                            new string[] {"Capability", "CV-4"},
-                            new string[] {"desiredResourceStateOfCapability", "CV-4"},
-                            new string[] {"Activity", "OV-6c"},
                             new string[] {"Activity", "SV-1"},
                             new string[] {"activityPerformedByPerformer", "SV-1"},
                             new string[] {"activityProducesResource", "SV-1"},
@@ -409,11 +403,7 @@ namespace EAWS.Core.SilverBullet
                             new string[] {"activityProducesResource", "SvcV-2"},
                             new string[] {"activityConsumesResource", "SvcV-2"},
                             new string[] {"Service", "SvcV-2"},
-                            new string[] {"Activity", "PV-1"},
-                            new string[] {"activityPartOfProjectType", "PV-1"},
-                            new string[] {"ProjectType", "PV-1"},
-                            new string[] {"activityPerformedByPerformer", "PV-1"},
-                            new string[] {"OrganizationType", "PV-1"} */
+                             * */
                             };
 
         static string[][] Optional_Lookup = new string[][] { 
@@ -533,6 +523,50 @@ namespace EAWS.Core.SilverBullet
                             new string[] {"Rule", "OV-4"}, 
                             new string[] {"superSubtype", "OV-4"}, 
                             new string[] {"WholePartType", "OV-4"},
+                            
+                            //Priority 2 - OV-5a
+                            new string[] {"activityPerformedByPerformer", "OV-5a"},
+                            new string[] {"activityProducesResource", "OV-5a"},
+                            new string[] {"activityConsumesResource", "OV-5a"},
+                            new string[] {"Condition", "OV-5a"},
+                            new string[] {"Information", "OV-5a"},
+                            new string[] {"Location", "OV-5a"},
+                            new string[] {"Performer", "OV-5a"},
+                            new string[] {"Resource", "OV-5a"},
+                            new string[] {"Rule", "OV-5a"}, 
+                            new string[] {"superSubtype", "OV-5a"}, 
+                            new string[] {"WholePartType", "OV-5a"}, 
+
+                            //Priority 2 - OV-5b
+                            new string[] {"activityPerformedByPerformer", "OV-5b"},
+                            new string[] {"Condition", "OV-5b"},
+                            new string[] {"Information", "OV-5b"},
+                            new string[] {"Location", "OV-5b"},
+                            new string[] {"OrganizationType", "OV-5b"},
+                            new string[] {"Performer", "OV-5b"},
+                            new string[] {"PersonRole", "OV-5b"},
+                            new string[] {"Resource", "OV-5b"},
+                            new string[] {"Data", "OV-5b"},
+                            new string[] {"Rule", "OV-5b"}, 
+                            new string[] {"superSubtype", "OV-5b"}, 
+                            new string[] {"WholePartType", "OV-5b"},
+
+
+                            //Priority 2 - OV-6c
+                            new string[] {"activityPerformedByPerformer", "OV-6c"},
+                            new string[] {"activityProducesResource", "OV-6c"},
+                            new string[] {"activityConsumesResource", "OV-6c"},
+                            new string[] {"Condition", "OV-6c"},
+                            new string[] {"Information", "OV-6c"},
+                            new string[] {"Location", "OV-6c"},
+                            new string[] {"OrganizationType", "OV-6c"},
+                            new string[] {"Performer", "OV-6c"},
+                            new string[] {"PersonRole", "OV-6c"},
+                            new string[] {"Resource", "OV-6c"},
+                            new string[] {"Rule", "OV-6c"}, 
+                            new string[] {"superSubtype", "OV-6c"}, 
+                            new string[] {"WholePartType", "OV-6c"},
+
 
 
                             //COMMENTING OUT THE REST FOR NOW>
@@ -583,25 +617,8 @@ namespace EAWS.Core.SilverBullet
                             new string[] {"superSubtype", "OV-3"}, 
                             new string[] {"WholePartType", "OV-3"},
 
-                            new string[] {"Condition", "OV-5a"},
-                            new string[] {"Information", "OV-5a"},
-                            new string[] {"Location", "OV-5a"},
-                            new string[] {"Performer", "OV-5a"},
-                            new string[] {"Resource", "OV-5a"},
-                            new string[] {"Rule", "OV-5a"}, 
-                            new string[] {"superSubtype", "OV-5a"}, 
-                            new string[] {"WholePartType", "OV-5a"}, 
-                            new string[] {"Condition", "OV-5b"},
-                            new string[] {"Information", "OV-5b"},
-                            new string[] {"Location", "OV-5b"},
-                            new string[] {"OrganizationType", "OV-5b"},
-                            new string[] {"Performer", "OV-5b"},
-                            new string[] {"PersonRole", "OV-5b"},
-                            new string[] {"Resource", "OV-5b"},
-                            new string[] {"Rule", "OV-5b"}, 
-                            new string[] {"superSubtype", "OV-5b"}, 
-                            new string[] {"WholePartType", "OV-5b"},
-                            new string[] {"activityPerformedByPerformer", "OV-5b"},
+                            
+
                             new string[] {"Condition", "OV-6b"},
                             new string[] {"Information", "OV-6b"},
                             new string[] {"Location", "OV-6b"},
@@ -614,17 +631,7 @@ namespace EAWS.Core.SilverBullet
                             new string[] {"WholePartType", "OV-6b"},
                             new string[] {"activityPerformedByPerformer", "OV-6b"},
                             new string[] {"BeforeAfterType", "OV-6b"},
-                            new string[] {"Condition", "OV-6c"},
-                            new string[] {"Information", "OV-6c"},
-                            new string[] {"Location", "OV-6c"},
-                            new string[] {"OrganizationType", "OV-6c"},
-                            new string[] {"Performer", "OV-6c"},
-                            new string[] {"PersonRole", "OV-6c"},
-                            new string[] {"Resource", "OV-6c"},
-                            new string[] {"Rule", "OV-6c"}, 
-                            new string[] {"superSubtype", "OV-6c"}, 
-                            new string[] {"WholePartType", "OV-6c"},
-                            new string[] {"activityPerformedByPerformer", "OV-6c"},
+
                             new string[] {"Condition", "OV-6a"},
                             new string[] {"Information", "OV-6a"},
                             new string[] {"Location", "OV-6a"},
@@ -1262,10 +1269,10 @@ namespace EAWS.Core.SilverBullet
                     place1 = false;
                     place2 = false;
 
-                    if (dic.TryGetValue(rela.place1, out value))
+                    if (rela.place1 != null && dic.TryGetValue(rela.place1, out value))
                         place1 = true;
 
-                    if (dic.TryGetValue(rela.place2, out value))
+                    if (rela.place2 != null && dic.TryGetValue(rela.place2, out value))
                         place2 = true;
 
                     if (place1 && place2)
@@ -1568,170 +1575,29 @@ namespace EAWS.Core.SilverBullet
                 things = things.Concat(results.ToList());
             }
 
-            /*
-            things = things.Concat(results.ToList());
-            foreach(string[] current_lookup in Element_Lookup)
+            //no for non-packaged elements that are owned behavior, slightly different conditions than above
+            foreach (Thing UPIAThing in UPIAMap)
             {
                 results =
-                    from result in root.Elements(uml + "Model").Elements("packagedElement")
-                    where (string)result.Attribute(xi + "type") == current_lookup[1]
+                    from result in root.Elements(uml + "Model").Descendants("ownedBehavior")
+                    where (string)result.Attribute(xi + "type") == "uml:Activity"
+                    where ((string)result.Attribute(xi + "id")) == UPIAThing.id
+                    //where (string)result.Attribute(xi + "type") == current_lookup[1]
                     select new Thing
                     {
-                        type = current_lookup[0],
+                        type = (string)UPIAThing.value,
                         id = (string)result.Attribute(xi + "id"),
-                        name = ((string)result.Attribute("name")).Replace("&", " And "),
+                        name = (string)result.Attribute("name"),//.Replace("&", " And ") ?? "$none$",  //commnented out because looks like in RSA emx file that & is replace by &amp;
                         value = "$none$",
-                        place1 = "$none$",
+                        place1 = (string)result.Parent.Attribute(xi + "id"), //putting in the parent (owning) class here so I can figure out latter where activities should be added to views. Formerly "$none$"
                         place2 = "$none$",
-                        foundation = current_lookup[2],
+                        foundation = (string)UPIAThing.foundation,
                         value_type = "$none$"
                     };
-
                 things = things.Concat(results.ToList());
-                
-                if (current_lookup[1] != "Entity" && current_lookup[1] != "Access Path" && current_lookup[1] != "Index" && current_lookup[1] != "Table")
-                {
-                    results_dic =
-                        (from result in root.Elements("Class").Elements("SADefinition").Elements("SAProperty")
-                         where (string)result.Parent.Attribute("SAObjMinorTypeName") == current_lookup[1]
-                         where (string)result.Attribute("SAPrpName") == "Description"
-                         select new
-                         {
-                             key = (string)result.Parent.Attribute("SAObjId"),
-                             value = new List<Thing> {
-                            new Thing
-                            {
-                                type = "Information",
-                                id = (string)result.Parent.Attribute("SAObjId") + "_9",
-                                name = ((string)result.Parent.Attribute("SAObjName")).Replace("&", " And ") + " Description",
-                                value = ((string)result.Attribute("SAPrpValue")).Replace("@", " At ").Replace("\"","'").Replace("&", " And "),
-                                place1 = (string)result.Parent.Attribute("SAObjId"),
-                                place2 = (string)result.Parent.Attribute("SAObjId") + "_9",
-                                foundation = "IndividualType",
-                                value_type = "exemplar"
-                            }
-                        }
-                         }).ToDictionary(a => a.key, a => a.value);
-
-                    things = things.Concat(results_dic.SelectMany(x => x.Value));
-
-                    foreach (Thing thing in results_dic.SelectMany(x => x.Value))
-                    {
-                        value = new Thing
-                        {
-                            type = "describedBy",
-                            id = thing.place1 + "_10",
-                            foundation = "namedBy",
-                            place1 = thing.place1,
-                            place2 = thing.place2,
-                            name = "$none$",
-                            value = "$none$",
-                            value_type = "$none$"
-                        };
-                        tuples = tuples.Concat(new List<Thing> { value });
-                        description_views.Add(thing.place1, new List<Thing> { value });
-                    }
-
-                    MergeDictionaries(description_views, results_dic);
-                }
-                else if (current_lookup[1] == "Index")
-                {
-                    results =
-                        from result in root.Elements("Class").Elements("SADefinition").Elements("SAProperty").Elements("SALink")
-                         where (string)result.Parent.Parent.Attribute("SAObjMinorTypeName") == current_lookup[1]
-                         where (string)result.Parent.Attribute("SAPrpName") == "Description"
-                         
-                         select new Thing
-                            {
-                                type = "Information",
-                                id = (string)result.Parent.Parent.Attribute("SAObjId") + (string)result.Attribute("SALinkIdentity") + "_9",
-                                name = ((string)result.Parent.Parent.Attribute("SAObjName")).Replace("&", " And ") + " Primary Key",
-                                value = (string)result.Attribute("SALinkIdentity"),
-                                place1 = (string)result.Parent.Parent.Attribute("SAObjId"),
-                                place2 = (string)result.Parent.Parent.Attribute("SAObjId") + (string)result.Attribute("SALinkIdentity") + "_9",
-                                foundation = "IndividualType",
-                                value_type = "exemplar"
-                            };
-
-                    things = things.Concat(results);
-
-                    sorted_results = results.GroupBy(x => x.place1).Select(group => group.ToList()).ToList();
-
-                    foreach (List<Thing> view in sorted_results)
-                    {
-                        values = new List<Thing>();
-                        foreach (Thing thing in view)
-                        {
-                            value = new Thing
-                            {
-                                type = "describedBy",
-                                id = thing.place2 + "_10",
-                                foundation = "namedBy",
-                                place1 = thing.place1,
-                                place2 = thing.place2,
-                                name = "$none$",
-                                value = "$none$",
-                                value_type = "$none$"
-                            };
-                            tuples = tuples.Concat(new List<Thing> { value });
-                            values.Add(value);
-                            values.Add(thing);
-                        }
-                        description_views.Add(view.First().place1, values);
-                    }
-
-                    //MergeDictionaries(description_views, results_dic);
-                } 
-            } */
-
-            //OV-1 Picture
-/*
-            results =
-                from result in root.Elements("Class").Elements("SADiagram").Elements("SASymbol").Elements("SAPicture")
-                where (string)result.Parent.Attribute("SAObjMinorTypeName") == "Picture"
-                where (string)result.Parent.Parent.Attribute("SAObjMinorTypeName") == "OV-01 High Level Operational Concept (DM2)"
-                select 
-                //new {
-                //    key = (string)result.Parent.Parent.Attribute("SAObjId"),
-                //    value = new List<Thing> {
-                        new Thing
-                    {
-                    type = "ArchitecturalDescription",
-                    id = (string)result.Parent.Attribute("SAObjId"),
-                    name = ((string)result.Parent.Attribute("SAObjName")).Replace("&", " And "),
-                    value = (string)result.Attribute("SAPictureData"),
-                    place1 = (string)result.Parent.Parent.Attribute("SAObjId"),
-                    place2 = (string)result.Parent.Attribute("SAObjId"),
-                    foundation = "IndividualType",
-                    value_type = "exemplar"
-                    };
-                //}}).ToDictionary(a => a.key, a => a.value);
-
-            OV1_pic_views = results.GroupBy(x=>x.place1).ToDictionary(x=>x.Key, x=>x.ToList());
-
-            if (OV1_pic_views.Count() > 0)
-            {
-                representation_scheme = true;
-                foreach (KeyValuePair<string, List<Thing>> entry in OV1_pic_views)
-                {
-                    foreach (Thing thing in entry.Value)
-                    {
-                        tuples = tuples.Concat(new List<Thing>{new Thing
-                            {
-                            type = "representationSchemeInstance",
-                            id = thing.id+"_1",
-                            name = "$none$",
-                            value = "$none$",
-                            place1 = "_rs1",
-                            place2 = thing.id,
-                            foundation = "typeInstance",
-                            value_type = "$none$"
-                            }});
-                    }
-                }
-                things = things.Concat(OV1_pic_views.SelectMany(x => x.Value));
             }
-*/
+
+
             //Regular tuples
 /*
             foreach (string[] current_lookup in Tuple_Lookup)
@@ -1855,20 +1721,21 @@ namespace EAWS.Core.SilverBullet
 
                 }
             }
-
+            //now for needlines and system data exchanges.
             foreach (string[] current_lookup in RSA_ARO_Lookup)
             {
                 results =
                     from result in root.Elements(upia + current_lookup[0])
+                    where result.Attribute("producingTask") != null 
                     from result4 in root.Elements(uml + "Model").Descendants("packagedElement")
                     where (string)result4.Attribute(xi + "id") == (string)result.Attribute("base_InformationFlow")
-                    where result.Attribute("producingTask") != null 
+                    //where result4.Attribute("coveyed") != null  //have to check this - the live data often has no conveyed data so no resource...
                     select new Thing
                     {
                         type = "activityProducesResource",
                         id = (string)result.Attribute(xi + "id") + "_1",
                         name = (string)result.Attribute("exchangeId"),
-                        place1 = (string)result.Attribute("producingTask"),
+                        place1 = ((string)result.Attribute("producingTask")).Substring(0, 23),  //unknown length to this.  Live Data seems to allow many entries.  Need to handle at some point.
                         place2 = (string)result4.Attribute("conveyed"),
                         value = "$none$",
                         foundation = "CoupleType",
@@ -1878,15 +1745,16 @@ namespace EAWS.Core.SilverBullet
 
                 results =
                     from result in root.Elements(upia + current_lookup[0])
+                    where result.Attribute("consumingTask") != null 
                     from result4 in root.Elements(uml + "Model").Descendants("packagedElement")
                     where (string)result4.Attribute(xi + "id") == (string)result.Attribute("base_InformationFlow")
-                    where result.Attribute("consumingTask") != null 
+                    //where result4.Attribute("coveyed") != null  //have to check this - the live data often has no conveyed data so no resource...
                     select new Thing
                     {
                         type = "activityConsumesResource",
                         id = (string)result.Attribute(xi + "id") + "_2",
                         name = (string)result.Attribute("exchangeId"),
-                        place2 = (string)result.Attribute("consumingTask"),
+                        place2 = ((string)result.Attribute("consumingTask")).Substring(0, 23),
                         place1 = (string)result4.Attribute("conveyed"),
                         value = "$none$",
                         foundation = "CoupleType",
@@ -1894,6 +1762,47 @@ namespace EAWS.Core.SilverBullet
                     };
                 tuple_types = tuple_types.Concat(results.ToList());
             }
+            //Now for activityproduces and consumes resource - from OV-5b - embedded in an activity diagram.  Ignoring the control flow, just using the information flow
+            //First APR
+            results =
+                from result in root.Elements(upia + "OperationalInformationFlow")
+                from result4 in root.Elements(uml + "Model").Descendants("result")
+                where (string)result4.Parent.Attribute(xi + "type") == "uml:CallOperationAction"
+                where (string)result4.Attribute("outgoing") == (string)result.Attribute("base_ObjectFlow")
+                where result4.Attribute("type") != null  //have to check since there may be no moved object
+                select new Thing
+                {
+                    type = "activityProducesResource",
+                    id = (string)result4.Attribute(xi + "id") + "_1",
+                    name = (string)result4.Parent.Attribute("name"),
+                    place1 = (string)result4.Parent.Attribute("operation"),
+                    place2 = (string)result4.Attribute("type"),
+                    value = "$none$",
+                    foundation = "CoupleType",
+                    value_type = "exemplar"
+                };
+            tuple_types = tuple_types.Concat(results.ToList());
+            //Second ACR
+            results =
+                from result in root.Elements(upia + "OperationalInformationFlow")
+                from result4 in root.Elements(uml + "Model").Descendants("argument")
+                where (string)result4.Parent.Attribute(xi + "type") == "uml:CallOperationAction"
+                where (string)result4.Attribute("incoming") == (string)result.Attribute("base_ObjectFlow")
+                where result4.Attribute("type") != null  //have to check since there may be no moved object
+                select new Thing
+                {
+                    type = "activityConsumesResource",
+                    id = (string)result4.Attribute(xi + "id") + "_2",
+                    name = (string)result4.Parent.Attribute("name"),
+                    place2 = (string)result4.Parent.Attribute("operation"),
+                    place1 = (string)result4.Attribute("type"),
+                    value = "$none$",
+                    foundation = "CoupleType",
+                    value_type = "exemplar"
+                };
+            tuple_types = tuple_types.Concat(results.ToList());
+
+
             //Activityperformedbyperformer - variation where the performer is a class and the operation a task identified in the UPIA stereotype area.
             foreach (Thing UPIAThing in UPIAMap)
             {
@@ -1908,6 +1817,26 @@ namespace EAWS.Core.SilverBullet
                         name = (string)result.Attribute("name"),//.Replace("&", " And ") ?? "$none$",  //commnented out because looks like in RSA emx file that & is replace by &amp;
                         value = "$none$",
                         place1 = (string)result.Parent.Attribute(xi + "id"), 
+                        place2 = (string)result.Attribute(xi + "id"),
+                        foundation = "CoupleType",
+                        value_type = "exemplar"
+                    };
+                tuple_types = tuple_types.Concat(results.ToList());
+            }
+            //Activityperformedbyperformer - variation where the performer is a class and the OWNED BEHAVIOR is a task identified in the UPIA stereotype area.
+            foreach (Thing UPIAThing in UPIAMap)
+            {
+                results =
+                    from result in root.Elements(uml + "Model").Descendants("ownedBehavior")
+                    where ((string)result.Attribute(xi + "id")) == UPIAThing.id
+                    where (string)result.Attribute(xi + "type") == "uml:Activity"
+                    select new Thing
+                    {
+                        type = "activityPerformedByPerformer",
+                        id = (string)result.Attribute(xi + "id") + "_3",
+                        name = (string)result.Attribute("name"),//.Replace("&", " And ") ?? "$none$",  //commnented out because looks like in RSA emx file that & is replace by &amp;
+                        value = "$none$",
+                        place1 = (string)result.Parent.Attribute(xi + "id"),
                         place2 = (string)result.Attribute(xi + "id"),
                         foundation = "CoupleType",
                         value_type = "exemplar"
@@ -2309,7 +2238,134 @@ namespace EAWS.Core.SilverBullet
                         value_type = "$element_type$"
                     };
                 }
-                
+                if ((current_lookup[0] == "OV-5a" || current_lookup[0] == "OV-5b") && current_lookup[1] == "Activity")
+                {
+                    //Add Activities from ActivityDiagrams
+                     results2 =
+                        from result in root.Elements(uml + "Model").Descendants()//.Elements("children")
+                        where (string)result.Attribute(xi + "type") == "uml:CallBehaviorAction" 
+                        from result3 in root.Elements(uml + "Model").Descendants("children")
+                        where (string)result3.Attribute(xi + "type") == "umlnotation:UMLShape"
+                        where (string)result.Attribute(xi + "id") == (string)result3.Attribute("element")
+                        from result4 in result3.Ancestors()
+                        where (string)result4.Attribute(xi + "type") == "umlnotation:UMLDiagram"
+                        where (string)result4.Attribute("type") == current_lookup[1]
+                        where result4.Attribute("name") != null && ((string)result4.Attribute("name")).Contains((string)current_lookup[0])  //no differing DoDAF diagram types so have to check for name containment.
+                        select new Thing
+                        {
+                            type = current_lookup[0],
+                            id = (string)result4.Attribute(xi + "id") + (string)result.Attribute("behavior"), //combined ids
+                            name = ((string)result4.Attribute("name")).Replace("&", " And "),                //diagram name  
+                            place1 = (string)result4.Attribute(xi + "id"),
+                            place2 = (string)result.Attribute("behavior"),
+                            value = (string)result.Attribute("behavior"),
+                            foundation = "$none$",
+                            value_type = "$element_type$"
+                        };
+                     results = results.Concat(results2.ToList());
+
+                     results2 =
+                            from result in root.Elements(uml + "Model").Descendants()//.Elements("children")
+                            where (string)result.Attribute(xi + "type") == "uml:CallOperationAction"
+                            from result3 in root.Elements(uml + "Model").Descendants("children")
+                            where (string)result3.Attribute(xi + "type") == "umlnotation:UMLShape"
+                            where (string)result.Attribute(xi + "id") == (string)result3.Attribute("element")
+                            from result4 in result3.Ancestors()
+                            where (string)result4.Attribute(xi + "type") == "umlnotation:UMLDiagram"
+                            where (string)result4.Attribute("type") == current_lookup[1]
+                            where result4.Attribute("name") != null && ((string)result4.Attribute("name")).Contains((string)current_lookup[0])  //no differing DoDAF diagram types so have to check for name containment.
+                            select new Thing
+                            {
+                                type = current_lookup[0],
+                                id = (string)result4.Attribute(xi + "id") + (string)result.Attribute("operation"), //combined ids
+                                name = ((string)result4.Attribute("name")).Replace("&", " And "),                //diagram name  
+                                place1 = (string)result4.Attribute(xi + "id"),
+                                place2 = (string)result.Attribute("operation"),
+                                value = (string)result.Attribute("operation"),
+                                foundation = "$none$",
+                                value_type = "$element_type$"
+                            };
+                     results = results.Concat(results2.ToList());
+                }
+                //Add operations and performers from sequence diagrams
+                if (current_lookup[0] == "OV-6c" && current_lookup[1] == "Sequence")
+                {
+                    results2 =
+                       from result in root.Elements(uml + "Model").Descendants("packagedElement")//.Elements("children")
+                       where (string)result.Attribute(xi + "type") == "uml:SendOperationEvent"
+                       from result3 in root.Elements(uml + "Model").Descendants("fragment")
+                       where (string)result3.Attribute(xi + "type") == "uml:MessageOccurrenceSpecification"
+                       where (string)result.Attribute(xi + "id") == (string)result3.Attribute("event")
+                       from result2 in result3.Ancestors()
+                       where (string)result2.Attribute(xi + "type") == "uml:Collaboration"
+                       from result4 in result2.Descendants()
+                       where (string)result4.Attribute(xi + "type") == "umlnotation:UMLDiagram"
+                       where (string)result4.Attribute("type") == current_lookup[1]
+                       where result4.Attribute("name") != null && ((string)result4.Attribute("name")).Contains((string)current_lookup[0])  //no differing DoDAF diagram types so have to check for name containment.
+                       select new Thing
+                       {
+                           type = current_lookup[0],
+                           id = (string)result4.Attribute(xi + "id") + (string)result.Attribute("operation"), //combined ids
+                           name = ((string)result4.Attribute("name")).Replace("&", " And "),                //diagram name  
+                           place1 = (string)result4.Attribute(xi + "id"),
+                           place2 = (string)result.Attribute("operation"),
+                           value = (string)result.Attribute("operation"),
+                           foundation = "$none$",
+                           value_type = "$element_type$"
+                       };
+                    results = results.Concat(results2.ToList());
+
+                    results2 =
+                           from result in root.Elements(uml + "Model").Descendants("packagedElement")//.Elements("children")
+                           where (string)result.Attribute(xi + "type") == "uml:ReceiveOperationEvent"
+                           from result3 in root.Elements(uml + "Model").Descendants("fragment")
+                           where (string)result3.Attribute(xi + "type") == "uml:MessageOccurrenceSpecification"
+                           where (string)result.Attribute(xi + "id") == (string)result3.Attribute("event")
+                           from result2 in result3.Ancestors()
+                           where (string)result2.Attribute(xi + "type") == "uml:Collaboration"
+                           from result4 in result2.Descendants()
+                           where (string)result4.Attribute(xi + "type") == "umlnotation:UMLDiagram"
+                           where (string)result4.Attribute("type") == current_lookup[1]
+                           where result4.Attribute("name") != null && ((string)result4.Attribute("name")).Contains((string)current_lookup[0])  //no differing DoDAF diagram types so have to check for name containment.
+                           select new Thing
+                           {
+                               type = current_lookup[0],
+                               id = (string)result4.Attribute(xi + "id") + (string)result.Attribute("operation"), //combined ids
+                               name = ((string)result4.Attribute("name")).Replace("&", " And "),                //diagram name  
+                               place1 = (string)result4.Attribute(xi + "id"),
+                               place2 = (string)result.Attribute("operation"),
+                               value = (string)result.Attribute("operation"),
+                               foundation = "$none$",
+                               value_type = "$element_type$"
+                           };
+                    results = results.Concat(results2.ToList());
+
+                    results2 =
+                           from result in root.Elements(uml + "Model").Descendants("ownedAttribute")//.Elements("children")
+                           //where (string)result.Attribute(xi + "type") == "uml:ReceiveOperationEvent"
+                           from result3 in root.Elements(uml + "Model").Descendants("lifeline")
+                           //where (string)result3.Attribute(xi + "type") == "uml:MessageOccurrenceSpecification"
+                           where (string)result.Attribute(xi + "id") == (string)result3.Attribute("represents")
+                           from result2 in result3.Ancestors()
+                           where (string)result2.Attribute(xi + "type") == "uml:Collaboration"
+                           from result4 in result2.Descendants()
+                           where (string)result4.Attribute(xi + "type") == "umlnotation:UMLDiagram"
+                           where (string)result4.Attribute("type") == current_lookup[1]
+                           where result4.Attribute("name") != null && ((string)result4.Attribute("name")).Contains((string)current_lookup[0])  //no differing DoDAF diagram types so have to check for name containment.
+                           select new Thing
+                           {
+                               type = current_lookup[0],
+                               id = (string)result4.Attribute(xi + "id") + (string)result.Attribute("type"), //combined ids
+                               name = ((string)result4.Attribute("name")).Replace("&", " And "),                //diagram name  
+                               place1 = (string)result4.Attribute(xi + "id"),
+                               place2 = (string)result.Attribute("type"),
+                               value = (string)result.Attribute("type"),
+                               foundation = "$none$",
+                               value_type = "$element_type$"
+                           };
+                    results = results.Concat(results2.ToList());
+                }
+
                 //view_holder.Add(results.ToList());
 
                 //Add Operations to views
@@ -2321,8 +2377,8 @@ namespace EAWS.Core.SilverBullet
                     {
                             results2 =
                                 from result in root.Elements(uml + "Model").Descendants()//.Elements("children")
-                                where (string)result.Attribute(xi + "type") == "umlnotation:UMLShape" || (string)result.Attribute(xi + "type") == "umlnotation:UMLClassifierShape"
-                                where (string)result.Attribute("element") == (string)UPIATHING.place1
+                                where (string)result.Attribute(xi + "type") == "umlnotation:UMLShape" || (string)result.Attribute(xi + "type") == "umlnotation:UMLClassifierShape" 
+                                where (string)result.Attribute("element") == (string)UPIATHING.place1 
                                 from result2 in result.Ancestors()
                                 where (string)result2.Attribute("type") == current_lookup[1]
                                 where result2.Attribute("name") != null && ((string)result2.Attribute("name")).Contains((string)current_lookup[0])  //no differing DoDAF diagram types so have to check for name containment.
@@ -2355,11 +2411,123 @@ namespace EAWS.Core.SilverBullet
                             results3 =
                                 from result in root.Elements(upia + local_current_lookup[0])
                                 from result4 in root.Elements(uml + "Model").Descendants("packagedElement")
+                                where (string)result4.Attribute(xi + "type") == "uml:InformationFlow"
                                 where (string)result4.Attribute(xi + "id") == (string)result.Attribute("base_InformationFlow")
                                 where (string)result4.Attribute("conveyed") == (string)UPIATHING.id
                                 from result3 in root.Elements(uml + "Model").Descendants("edges")
                                 where (string)result3.Attribute("element") == (string)result4.Attribute(xi + "id") 
                                 where (string)result3.Attribute(xi + "type") == "umlnotation:UMLConnector"
+                                from result2 in result3.Ancestors()
+                                where (string)result2.Attribute("type") == current_lookup[1]
+                                where result2.Attribute("name") != null && ((string)result2.Attribute("name")).Contains((string)current_lookup[0])  //no differing DoDAF diagram types so have to check for name containment.
+
+                                select new Thing
+                                {
+                                    type = current_lookup[0],
+                                    id = (string)result2.Attribute(xi + "id") + UPIATHING.id, //combined ids
+                                    name = ((string)result2.Attribute("name")).Replace("&", " And "),                //diagram name  
+                                    place1 = (string)result2.Attribute(xi + "id"),
+                                    place2 = (string)UPIATHING.id,
+                                    value = (string)UPIATHING.id,
+                                    foundation = "$none$",
+                                    value_type = "$element_type$"
+                                };
+                            //view_holder.Add(results.ToList());
+                            results = results.Concat(results3.ToList());
+                        }
+                    }
+                }
+                values = null;
+
+                //Add Resources to views via needlines (OV-2 mostly)
+                if (current_lookup[0] == "OV-2" && current_lookup[1] == "Class")
+                {
+                    values = new List<Thing>();
+                    values = things_dic.Select(kvp => kvp.Value).ToList();
+                    foreach (Thing UPIATHING in values)
+                    {
+                        if ((string)UPIATHING.type == "Data")  //so far the only resource type that really results from anything...
+                        {
+                            //Needline
+                            results3 =
+                                from result in root.Elements(upia + "InformationExchange")
+                                from result4 in root.Elements(uml + "Model").Descendants("packagedElement")
+                                where (string)result4.Attribute(xi + "type") == "uml:InformationFlow"
+                                where (string)result4.Attribute(xi + "id") == (string)result.Attribute("base_InformationFlow")
+                                where (string)result4.Attribute("conveyed") == (string)UPIATHING.id
+                                from result5 in root.Elements(upia + "Needline")
+                                where result5.Attribute("exchanges") != null && ((string)result5.Attribute("exchanges")).Contains((string)result.Attribute("base_InformationFlow"))
+                                from result3 in root.Elements(uml + "Model").Descendants("edges")
+                                where (string)result3.Attribute("element") == (string)result5.Attribute("base_Association")
+                                where (string)result3.Attribute(xi + "type") == "umlnotation:UMLConnector"
+                                from result2 in result3.Ancestors()
+                                where (string)result2.Attribute("type") == current_lookup[1]
+                                where result2.Attribute("name") != null && ((string)result2.Attribute("name")).Contains((string)current_lookup[0])  //no differing DoDAF diagram types so have to check for name containment.
+
+                                select new Thing
+                                {
+                                    type = current_lookup[0],
+                                    id = (string)result2.Attribute(xi + "id") + UPIATHING.id, //combined ids
+                                    name = ((string)result2.Attribute("name")).Replace("&", " And "),                //diagram name  
+                                    place1 = (string)result2.Attribute(xi + "id"),
+                                    place2 = (string)UPIATHING.id,
+                                    value = (string)UPIATHING.id,
+                                    foundation = "$none$",
+                                    value_type = "$element_type$"
+                                };
+                            //view_holder.Add(results.ToList());
+                            results = results.Concat(results3.ToList());
+                            //resource flow
+                            results3 =
+                                from result in root.Elements(upia + "InformationExchange")
+                                from result4 in root.Elements(uml + "Model").Descendants("packagedElement")
+                                where (string)result4.Attribute(xi + "type") == "uml:InformationFlow"
+                                where (string)result4.Attribute(xi + "id") == (string)result.Attribute("base_InformationFlow")
+                                where (string)result4.Attribute("conveyed") == (string)UPIATHING.id
+                                from result5 in root.Elements(upia + "ResourceFlow")
+                                where result5.Attribute("exchanges") != null && ((string)result5.Attribute("exchanges")).Contains((string)result.Attribute("base_InformationFlow"))
+                                from result3 in root.Elements(uml + "Model").Descendants("edges")
+                                where (string)result3.Attribute("element") == (string)result5.Attribute("base_Association")
+                                where (string)result3.Attribute(xi + "type") == "umlnotation:UMLConnector"
+                                from result2 in result3.Ancestors()
+                                where (string)result2.Attribute("type") == current_lookup[1]
+                                where result2.Attribute("name") != null && ((string)result2.Attribute("name")).Contains((string)current_lookup[0])  //no differing DoDAF diagram types so have to check for name containment.
+
+                                select new Thing
+                                {
+                                    type = current_lookup[0],
+                                    id = (string)result2.Attribute(xi + "id") + UPIATHING.id, //combined ids
+                                    name = ((string)result2.Attribute("name")).Replace("&", " And "),                //diagram name  
+                                    place1 = (string)result2.Attribute(xi + "id"),
+                                    place2 = (string)UPIATHING.id,
+                                    value = (string)UPIATHING.id,
+                                    foundation = "$none$",
+                                    value_type = "$element_type$"
+                                };
+                            //view_holder.Add(results.ToList());
+                            results = results.Concat(results3.ToList());
+                        }
+                    }
+                    values = null;
+                }
+
+                //Add Resources to views from activity Diagrams (OV-5b mostly)
+                if ((current_lookup[0] == "OV-5a" || current_lookup[0] == "OV-5b") && current_lookup[1] == "Activity")
+                {
+                    values = new List<Thing>();
+                    values = things_dic.Select(kvp => kvp.Value).ToList();
+                    foreach (Thing UPIATHING in values)
+                    {
+                        if ((string)UPIATHING.type == "Data")  //so far the only resource type that really results from anything...
+                        {
+                            results3 =
+                                from result in root.Elements(upia + "OperationalInformationFlow")
+                                from result4 in root.Elements(uml + "Model").Descendants("result")
+                                where (string)result4.Attribute("outgoing") == (string)result.Attribute("base_ObjectFlow")
+                                where (string)result4.Attribute("type") == (string)UPIATHING.id
+                                from result3 in root.Elements(uml + "Model").Descendants("children")
+                                where (string)result3.Attribute(xi + "type") == "umlnotation:UMLShape"
+                                where (string)result3.Attribute("element") == (string)result4.Parent.Attribute(xi + "id")
                                 from result2 in result3.Ancestors()
                                 where (string)result2.Attribute("type") == current_lookup[1]
                                 where result2.Attribute("name") != null && ((string)result2.Attribute("name")).Contains((string)current_lookup[0])  //no differing DoDAF diagram types so have to check for name containment.
