@@ -566,6 +566,7 @@ namespace EAWS.Core.SilverBullet
                             new string[] {"Rule", "OV-6c"}, 
                             new string[] {"superSubtype", "OV-6c"}, 
                             new string[] {"WholePartType", "OV-6c"},
+                            new string[] {"BeforeAfterType", "OV-6c"},
 
 
 
@@ -1805,6 +1806,44 @@ namespace EAWS.Core.SilverBullet
                 };
             tuple_types = tuple_types.Concat(results.ToList());
 
+            //Task Invocation (basically an event trace event line)
+            results =
+                from result in root.Elements(upia + "TaskInvocation")
+                from result4 in root.Elements(uml + "Model").Descendants("message")
+                where (string)result4.Attribute(xi + "id") == (string)result.Attribute("base_Message")
+                from result3 in root.Elements(uml + "Model").Descendants("fragment")
+                where (string)result3.Attribute(xi + "type") == "uml:MessageOccurrenceSpecification"
+                where (string)result3.Attribute("message") == (string)result4.Attribute(xi + "id")
+                from result5 in root.Elements(uml + "Model").Descendants("edges")
+                where (string)result5.Attribute(xi + "type") == "umlnotation:UMLConnector"
+                where (string)result5.Attribute("element") == (string)result3.Attribute("message")
+                from result6 in root.Elements(uml + "Model").Descendants("children")
+                where (string)result6.Attribute(xi + "type") == "umlnotation:UMLShape"
+                where (string)result6.Attribute(xi + "id") == (string)result5.Attribute("source")
+                from result8 in root.Elements(uml + "Model").Descendants("lifeline")
+                where (string)result8.Attribute(xi + "id") == (string)result6.Attribute("element")
+                from result10 in root.Elements(uml + "Model").Descendants("ownedAttribute")
+                where (string)result10.Attribute(xi + "id") == (string)result8.Attribute("represents")
+                
+                from result7 in root.Elements(uml + "Model").Descendants("children")
+                where (string)result7.Attribute(xi + "type") == "umlnotation:UMLShape"
+                where (string)result7.Attribute(xi + "id") == (string)result5.Attribute("target")
+                from result9 in root.Elements(uml + "Model").Descendants("lifeline")
+                where (string)result9.Attribute(xi + "id") == (string)result7.Attribute("element")
+                from result11 in root.Elements(uml + "Model").Descendants("ownedAttribute")
+                where (string)result11.Attribute(xi + "id") == (string)result9.Attribute("represents")
+                select new Thing
+                {
+                    type = "BeforeAfterType",
+                    id = (string)result4.Attribute(xi + "id") + "_5",
+                    name = (string)result4.Attribute("name"),
+                    place2 = (string)result11.Attribute("type"),
+                    place1 = (string)result10.Attribute("type"),
+                    value = "$none$",
+                    foundation = "BeforeAfterType",
+                    value_type = "$none$"
+                };
+            tuple_types = tuple_types.Concat(results.ToList());
 
             //Activityperformedbyperformer - variation where the performer is a class and the operation a task identified in the UPIA stereotype area.
             foreach (Thing UPIAThing in UPIAMap)
@@ -1854,7 +1893,7 @@ namespace EAWS.Core.SilverBullet
             things = things.Distinct();
 
             //Milestone Date
-            // NEEDS WORK
+            // NEEDS WORK since measured elements can be a very very large group, not just one. However, this is NOT a required element at this time so saving to later.
             results =
                     from result in root.Elements(upia + "ActualMeasure")
                     select new Thing
@@ -1874,7 +1913,8 @@ namespace EAWS.Core.SilverBullet
             //things_dic  put in some code to compenate for non-unique keys.
             IEnumerable<Thing> filteredthings = things.GroupBy(x => x.id).Select(group => group.First());
             things_dic = filteredthings.ToDictionary(x => x.id, x => x);
-           // things_dic = things.ToDictionary(x => x.id, x => x);
+           
+             //things_dic = things.ToDictionary(x => x.id, x => x);
 
             //System Exchange (DM2rx)
 
