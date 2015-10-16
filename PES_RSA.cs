@@ -216,60 +216,36 @@ namespace EAWS.Core.SilverBullet
                             new string[] {"CV-3", "Freeform", "", "extra"},
                             new string[] {"CV-6", "Class", "", "default"},
                             //new string[] {"CV-6", "Usecase", "", "extra"}, //not used afterall
-                            new string[] {"DIV-1", "Class", "", "Default"},
-                            new string[] {"DIV-2", "Class", "", "Default"},
-                            new string[] {"PV-2", "Class", "", "Default"},
-                            new string[] {"SV-6", "Freeform", "", "Default"},
-                            new string[] {"SvcV-6", "Freeform", "", "Default"},
+                            new string[] {"DIV-1", "Class", "", "default"},
+                            new string[] {"DIV-2", "Class", "", "default"},
+                            new string[] {"PV-2", "Class", "", "default"},
+                            new string[] {"SV-6", "Freeform", "", "default"},
+                            new string[] {"SvcV-6", "Freeform", "", "default"},
                             //Priority 2
                             new string[] {"CV-2", "Class", "", "default"},
                             new string[] {"CV-2", "Freeform", "", "extra"},
-                            new string[] {"DIV-3", "Class", "", "Default"},
-                            new string[] {"OV-1", "Freeform", "", "Default"},
-                            new string[] {"OV-2", "Class", "", "Default"},
-                            new string[] {"OV-4", "Class", "", "Default"},
-                            new string[] {"OV-4", "Freeform", "", "Default"},
-                            new string[] {"OV-5a", "Activity", "", "Default"},
-                            new string[] {"OV-5b", "Activity", "", "Default"},
-                            new string[] {"OV-6c", "Sequence", "", "Default"},
-                            /*
-                            //Later increments
-                            //new string[] {"CV-1", "Class", "", "default"}, //not on SOW
-                            //new string[] {"CV-1", "Freeform", "", "extra"}, //not on SOW
-                            new string[] {"CV-2", "Class", "", "default"},
-                            //new string[] {"CV-4", "Freeform", "", "default"}, //not on SOW
                             new string[] {"DIV-3", "Class", "", "default"},
-                            new string[] {"DIV-3", "Freeform", "", "extra"},
                             new string[] {"OV-1", "Freeform", "", "default"},
                             new string[] {"OV-2", "Class", "", "default"},
                             new string[] {"OV-4", "Class", "", "default"},
-                            new string[] {"OV-4", "Freeform", "", "extra"},
+                            new string[] {"OV-4", "Freeform", "", "default"},
                             new string[] {"OV-5a", "Activity", "", "default"},
-                            new string[] {"OV-5a", "Freeform", "", "extra"},
-                            new string[] {"OV-5a", "Usecase", "", "extra"},
                             new string[] {"OV-5b", "Activity", "", "default"},
-                            new string[] {"OV-5b", "Freeform", "", "extra"},
-                            new string[] {"OV-5b", "Topic", "", "extra"},
-                            new string[] {"OV-5b", "Usecase", "", "extra"},
-                            new string[] {"OV-6a", "Class", "", "default"},
-                            new string[] {"OV-6b", "Statechart", "", "default"},
                             new string[] {"OV-6c", "Sequence", "", "default"},
-                            //new string[] {"PV-1", "??", "", "default"},  //NA
+                            //Priority 3
                             new string[] {"SV-1", "Freeform", "", "default"},
-                            new string[] {"SV-1", "Topic", "", "extra"},
-                            new string[] {"SV-2", "Freeform", "", "default"},
-                            new string[] {"SV-2", "Class", "", "extra"},
-                            new string[] {"SV-2", "Compositestructure", "", "default"},
+                            new string[] {"SvcV-1", "Freeform", "", "default"},
+                            new string[] {"SV-2", "Class", "", "default"},
+                            new string[] {"SV-2", "Freeform", "", "extra"},
+                            new string[] {"SvcV-2", "Class", "", "default"},
+                            new string[] {"SvcV-2", "Freeform", "", "extra"},
                             new string[] {"SV-4", "Activity", "", "default"},
-                            new string[] {"SV-4", "Usecase", "", "extra"},
-                            new string[] {"SV-4", "Freeform", "", "extra"},
-                            //new string[] {"SV-8", "", "", "default"},  //NA for RSA
-                            //new string[] {"SV-10c", "??", "", "default"},
-                            //new string[] {"SvcV-1", "??", "", "default"},   //TBD
-                            //new string[] {"SvcV-2", "??", "", "default"},   //TBD
-                            //new string[] {"SvcV-4", "??", "", "default"},   //TBD
-                            //new string[] {"SvcV-5", "??", "", "default"},   //TBD
-                            */
+                            new string[] {"SvcV-4", "Activity", "", "default"},
+                            //new string[] {"SV-4", "Class", "", "extra"},  //commented out because live data does not contain proper elements for SV-4.   
+                            //new string[] {"SvcV-4", "Class", "", "extra"},//commented out because live data does not contain proper elements for SV-4.  
+                            //new string[] {"SV-4", "Freeform", "", "extra"},//commented out because live data does not contain proper elements for SV-4.  
+                            //new string[] {"SvcV-4", "Freeform", "", "extra"},///commented out because live data does not contain proper elements for SV-4.  
+
                             };
         //There are limited diagram types availabe in UML and they don't distinquish between the ways they are used, therfore can only put those that are completely ignored
         static string[][] Not_Processed_View_Lookup = new string[][] {  
@@ -277,6 +253,9 @@ namespace EAWS.Core.SilverBullet
                             new string[] {"Unmappedview2", "Deployment", "", "default"},
                             new string[] {"Unmappedview3", "Communication", "", "default"},
                             new string[] {"Unmappedview4", "Object", "", "default"},
+                            new string[] {"Unmappedview5", "Topic", "", "default"},
+                            new string[] {"Unmappedview6", "Statemachine", "", "default"},
+                            new string[] {"Unmappedview7", "Structure", "", "default"},
                             };
 
         static string[][] Mandatory_Lookup = new string[][] { 
@@ -314,7 +293,7 @@ namespace EAWS.Core.SilverBullet
                             new string[] {"Service", "SvcV-6"},
                             new string[] {"Data", "SvcV-6"},
                             new string[] {"ServiceDescription", "SvcV-6"},
-                            new string[] {"serviceDescribedBy", "SvcV-6"},
+                            //new string[] {"serviceDescribedBy", "SvcV-6"},
 
                             //Priority 2 - CV-2
                             new string[] {"Capability", "CV-2"},
@@ -342,6 +321,62 @@ namespace EAWS.Core.SilverBullet
                             //Priority 2 - OV-6c
                             new string[] {"Activity", "OV-6c"},
 
+                            //Priority 3 - SV-1
+                            new string[] {"Activity", "SV-1"},
+                            new string[] {"activityPerformedByPerformer", "SV-1"},
+                            new string[] {"activityProducesResource", "SV-1"},
+                            new string[] {"activityConsumesResource", "SV-1"},
+                            new string[] {"System", "SV-1"},
+                            new string[] {"Data", "SV-1"},                  //Not Mandatory but without it the other mandatory elemments of Activity Produces and Consumes resource cannot be written
+                            new string[] {"Performer", "SV-1"},             //Not Mandatory but without it the other mandatory elemments of Activityperformedbyperformer does not work
+                            
+                            //Priority 3 - SvcV-1
+                            new string[] {"Activity", "SvcV-1"},
+                            new string[] {"activityPerformedByPerformer", "SvcV-1"},
+                            new string[] {"activityProducesResource", "SvcV-1"},
+                            new string[] {"activityConsumesResource", "SvcV-1"},
+                            new string[] {"Service", "SvcV-1"},
+                            new string[] {"Data", "SvcV-1"},                 //Not Mandatory but without it the other mandatory elemments of Activity Produces and Consumes resource cannot be written
+                            new string[] {"Performer", "SvcV-1"},           //Not Mandatory but without it the other mandatory elemments of Acvivityperformedbyperformer does not work
+                            new string[] {"ServiceDescription", "SvcV-1"},
+                            //new string[] {"serviceDescribedBy", "SvcV-1"},
+
+                            //Priority 3 - SV-2
+                            new string[] {"Activity", "SV-2"},
+                            new string[] {"activityPerformedByPerformer", "SV-2"},
+                            new string[] {"activityProducesResource", "SV-2"},
+                            new string[] {"activityConsumesResource", "SV-2"},
+                            new string[] {"System", "SV-2"},
+                            new string[] {"Data", "SV-2"},                  //Not Mandatory but without it the other mandatory elemments of Activity Produces and Consumes resource cannot be written
+                            new string[] {"Performer", "SV-2"},             //Not Mandatory but without it the other mandatory elemments of Activityperformedbyperformer does not work
+
+                            //Priority 3 - SvcV-2
+                            new string[] {"Activity", "SvcV-2"},
+                            new string[] {"activityPerformedByPerformer", "SvcV-2"},
+                            new string[] {"activityProducesResource", "SvcV-2"},
+                            new string[] {"activityConsumesResource", "SvcV-2"},
+                            new string[] {"Service", "SvcV-2"},
+                            new string[] {"Data", "SvcV-2"},                  //Not Mandatory but without it the other mandatory elemments of Activity Produces and Consumes resource cannot be written
+                            new string[] {"Performer", "SvcV-2"},             //Not Mandatory but without it the other mandatory elemments of Activityperformedbyperformer does not work
+
+                            //Priority 3 - SV-4
+                            new string[] {"Activity", "SV-4"},
+                            new string[] {"activityPerformedByPerformer", "SV-4"},
+                            new string[] {"activityProducesResource", "SV-4"},
+                            new string[] {"activityConsumesResource", "SV-4"},
+                            new string[] {"Data", "SV-4"},
+                            new string[] {"System", "SV-4"},
+                            new string[] {"Performer", "SV-4"},             //Not Mandatory but without it the other mandatory elemments of Activityperformedbyperformer does not work
+
+                            //Priority 3 - SvcV-4
+                            new string[] {"Activity", "SvcV-4"},
+                            new string[] {"activityPerformedByPerformer", "SvcV-4"},
+                            new string[] {"activityProducesResource", "SvcV-4"},
+                            new string[] {"activityConsumesResource", "SvcV-4"},
+                            new string[] {"Data", "SvcV-4"},
+                            new string[] {"Service", "SvcV-4"},
+                            new string[] {"Performer", "SV-4"},             //Not Mandatory but without it the other mandatory elemments of Activityperformedbyperformer does not work
+
 
                             //END REQUIREMENTS - COMMENTING OUT THE REST FOR NOW>
                             /*new string[] {"ArchitecturalDescription", "OV-1"},
@@ -349,12 +384,6 @@ namespace EAWS.Core.SilverBullet
                             new string[] {"activityPerformedByPerformer", "OV-3"},
                             new string[] {"activityProducesResource", "OV-3"},
                             new string[] {"activityConsumesResource", "OV-3"},
-                            
-                            new string[] {"Activity", "SV-1"},
-                            new string[] {"activityPerformedByPerformer", "SV-1"},
-                            new string[] {"activityProducesResource", "SV-1"},
-                            new string[] {"activityConsumesResource", "SV-1"},
-                            new string[] {"System", "SV-1"},
                             new string[] {"Activity", "SV-10b"},
                             new string[] {"activityPerformedByPerformer", "SV-10b"},
                             new string[] {"activityProducesResource", "SV-10b"},
@@ -365,11 +394,6 @@ namespace EAWS.Core.SilverBullet
                             new string[] {"activityProducesResource", "SV-10c"},
                             new string[] {"activityConsumesResource", "SV-10c"},
                             new string[] {"System", "SV-10c"},
-                            new string[] {"Activity", "SvcV-1"},
-                            new string[] {"activityPerformedByPerformer", "SvcV-1"},
-                            new string[] {"activityProducesResource", "SvcV-1"},
-                            new string[] {"activityConsumesResource", "SvcV-1"},
-                            new string[] {"Service", "SvcV-1"},
                             new string[] {"Activity", "SvcV-10b"},
                             new string[] {"activityPerformedByPerformer", "SvcV-10b"},
                             new string[] {"activityProducesResource", "SvcV-10b"},
@@ -380,29 +404,7 @@ namespace EAWS.Core.SilverBullet
                             new string[] {"activityProducesResource", "SvcV-10c"},
                             new string[] {"activityConsumesResource", "SvcV-10c"},
                             new string[] {"Service", "SvcV-10c"},
-                            new string[] {"Activity", "SV-4"},
-                            new string[] {"activityPerformedByPerformer", "SV-4"},
-                            new string[] {"activityProducesResource", "SV-4"},
-                            new string[] {"activityConsumesResource", "SV-4"},
-                            new string[] {"Data", "SV-4"},
-                            new string[] {"System", "SV-4"},
-                            new string[] {"Activity", "SvcV-4"},
-                            new string[] {"activityPerformedByPerformer", "SvcV-4"},
-                            new string[] {"activityProducesResource", "SvcV-4"},
-                            new string[] {"activityConsumesResource", "SvcV-4"},
-                            new string[] {"Data", "SvcV-4"},
-                            new string[] {"Service", "SvcV-4"},
-                            new string[] {"Activity", "SV-2"},
-                            new string[] {"activityPerformedByPerformer", "SV-2"},
-                            new string[] {"activityProducesResource", "SV-2"},
-                            new string[] {"activityConsumesResource", "SV-2"},
-                            new string[] {"System", "SV-2"},
                             new string[] {"System", "SV-8"},
-                            new string[] {"Activity", "SvcV-2"},
-                            new string[] {"activityPerformedByPerformer", "SvcV-2"},
-                            new string[] {"activityProducesResource", "SvcV-2"},
-                            new string[] {"activityConsumesResource", "SvcV-2"},
-                            new string[] {"Service", "SvcV-2"},
                              * */
                             };
 
@@ -446,7 +448,7 @@ namespace EAWS.Core.SilverBullet
                             new string[] {"superSubtype", "DIV-2"}, 
                             new string[] {"WholePartType", "DIV-2"},
                             new string[] {"OverlapType", "DIV-2"},
-                            //Inc. 1 - SV-6
+                            //Inc. 1 - SV-6 - Not dealing in all optionals for SV-6 since not required and only one partial one exists in live data
                             new string[] {"Measure", "SV-6"},
                             new string[] {"MeasureType", "SV-6"},
                             new string[] {"WholePartType", "SV-6"},
@@ -460,8 +462,20 @@ namespace EAWS.Core.SilverBullet
                             new string[] {"Rule", "SV-6"}, 
                             new string[] {"superSubtype", "SV-6"}, 
 
-                            //Not dealing in all optionals for SV-6 since not required and only one partial one exists in live data
-                            //Inc. 1 - SvcV-6 - not dealing in optionals for SvcV-6 since not required and NONE exist in the live data
+                            //Inc. 1 - SvcV-6 - not dealing in all optionals for SvcV-6 since not required and NONE exist in the live data
+                            new string[] {"Measure", "SvcV-6"},
+                            new string[] {"MeasureType", "SvcV-6"},
+                            new string[] {"WholePartType", "SvcV-6"},
+                            new string[] {"Condition", "SvcV-6"},
+                            new string[] {"Information", "SvcV-6"},
+                            new string[] {"Location", "SvcV-6"},
+                            new string[] {"OrganizationType", "SvcV-6"},
+                            new string[] {"Performer", "SvcV-6"},
+                            new string[] {"PersonRole", "SvcV-6"},
+                            new string[] {"Resource", "SvcV-6"},
+                            new string[] {"Rule", "SvcV-6"}, 
+                            new string[] {"superSubtype", "SvcV-6"}, 
+
                             //Priority 2 - CV-2
                             new string[] {"Activity", "CV-2"},
                             new string[] {"Condition", "CV-2"},
@@ -551,7 +565,6 @@ namespace EAWS.Core.SilverBullet
                             new string[] {"superSubtype", "OV-5b"}, 
                             new string[] {"WholePartType", "OV-5b"},
 
-
                             //Priority 2 - OV-6c
                             new string[] {"activityPerformedByPerformer", "OV-6c"},
                             new string[] {"activityProducesResource", "OV-6c"},
@@ -568,7 +581,87 @@ namespace EAWS.Core.SilverBullet
                             new string[] {"WholePartType", "OV-6c"},
                             new string[] {"BeforeAfterType", "OV-6c"},
 
+                            //Priority 3 - SV-1 - Not dealing in all optionals since not required
+                            new string[] {"Measure", "SV-1"},
+                            new string[] {"MeasureType", "SV-1"},
+                            new string[] {"WholePartType", "SV-1"},
+                            new string[] {"Condition", "SV-1"},
+                            new string[] {"Information", "SV-1"},
+                            new string[] {"Location", "SV-1"},
+                            new string[] {"OrganizationType", "SV-1"},
+                            //new string[] {"Performer", "SV-1"},  Moved to Mandatory because the other mandatory elements depend on it
+                            //new string[] {"Data", "SV-1"},       Moved to Mandatory because the other mandatory elements depend on it
+                            new string[] {"PersonRole", "SV-1"},
+                            new string[] {"Resource", "SV-1"},
+                            new string[] {"Rule", "SV-1"}, 
+                            new string[] {"superSubtype", "SV-1"}, 
 
+                            //Priority 3 - SvcV-1 - not dealing in all optionals since not required and NONE exist in the live data
+                            new string[] {"Measure", "SvcV-1"},
+                            new string[] {"MeasureType", "SvcV-1"},
+                            new string[] {"WholePartType", "SvcV-1"},
+                            new string[] {"Condition", "SvcV-1"},
+                            new string[] {"Information", "SvcV-1"},
+                            new string[] {"Location", "SvcV-1"},
+                            new string[] {"OrganizationType", "SvcV-1"},
+                            //new string[] {"Performer", "SvcV-1"},  Moved to Mandatory because the other mandatory elements depend on it
+                            //new string[] {"Data", "SvcV-1"},       Moved to Mandatory because the other mandatory elements depend on it
+                            new string[] {"PersonRole", "SvcV-1"},
+                            new string[] {"Resource", "SvcV-1"},
+                            new string[] {"Rule", "SvcV-1"}, 
+                            new string[] {"superSubtype", "SvcV-1"}, 
+
+                            //Priority 3 - SV-2 - Not dealing in all optionals since not required
+                            new string[] {"Condition", "SV-2"},
+                            new string[] {"Information", "SV-2"},
+                            new string[] {"Location", "SV-2"},
+                            new string[] {"OrganizationType", "SV-2"},
+                            //new string[] {"Performer", "SV-2"}, Moved to Mandatory because the other mandatory elements depend on it
+                            //new string[] {"Data", "SV-2"},       Moved to Mandatory because the other mandatory elements depend on it
+                            new string[] {"PersonRole", "SV-2"},
+                            new string[] {"Resource", "SV-2"},
+                            new string[] {"Rule", "SV-2"}, 
+                            new string[] {"superSubtype", "SV-2"}, 
+                            new string[] {"WholePartType", "SV-2"},
+
+                            //Priority 3 - SvcV-2 - Not dealing in all optionals since not required
+                            new string[] {"Condition", "SvcV-2"},
+                            new string[] {"Information", "SvcV-2"},
+                            new string[] {"Location", "SvcV-2"},
+                            new string[] {"OrganizationType", "SvcV-2"},
+                            //new string[] {"Performer", "SvcV-2"},  Moved to Mandatory because the other mandatory elements depend on it
+                            //new string[] {"Data", "SV-2"},       Moved to Mandatory because the other mandatory elements depend on it
+                            new string[] {"PersonRole", "SvcV-2"},
+                            new string[] {"Resource", "SvcV-2"},
+                            new string[] {"Rule", "SvcV-2"}, 
+                            new string[] {"System", "SvcV-2"}, 
+                            new string[] {"superSubtype", "SvcV-2"}, 
+                            new string[] {"WholePartType", "SvcV-2"},
+
+                            //Priority 3 - SV-4 - Not dealing in all optionals since not required
+                            new string[] {"Condition", "SV-4"},
+                            new string[] {"Information", "SV-4"},
+                            new string[] {"Location", "SV-4"},
+                            new string[] {"OrganizationType", "SV-4"},
+                            new string[] {"Performer", "SV-4"},
+                            new string[] {"PersonRole", "SV-4"},
+                            new string[] {"Resource", "SV-4"},
+                            new string[] {"Rule", "SV-4"}, 
+                            new string[] {"superSubtype", "SV-4"}, 
+                            new string[] {"WholePartType", "SV-4"},
+
+                            //Priority 3 - SvcV-4 - Not dealing in all optionals since not required
+                            new string[] {"Condition", "SvcV-4"},
+                            new string[] {"Information", "SvcV-4"},
+                            new string[] {"Location", "SvcV-4"},
+                            new string[] {"OrganizationType", "SvcV-4"},
+                            new string[] {"Performer", "SvcV-4"},
+                            new string[] {"PersonRole", "SvcV-4"},
+                            new string[] {"Resource", "SvcV-4"},
+                            new string[] {"Rule", "SvcV-4"}, 
+                            new string[] {"System", "SvcV-4"},  
+                            new string[] {"superSubtype", "SvcV-4"}, 
+                            new string[] {"WholePartType", "SvcV-4"},
 
                             //COMMENTING OUT THE REST FOR NOW>
                             /*new string[] {"Activity", "CV-1"},
@@ -618,8 +711,6 @@ namespace EAWS.Core.SilverBullet
                             new string[] {"superSubtype", "OV-3"}, 
                             new string[] {"WholePartType", "OV-3"},
 
-                            
-
                             new string[] {"Condition", "OV-6b"},
                             new string[] {"Information", "OV-6b"},
                             new string[] {"Location", "OV-6b"},
@@ -660,16 +751,7 @@ namespace EAWS.Core.SilverBullet
                             new string[] {"superSubtype", "AV-1"}, 
                             new string[] {"WholePartType", "AV-1"}, 
                             new string[] {"ruleConstrainsActivity", "AV-1"}, 
-                            new string[] {"Condition", "SV-1"},
-                            new string[] {"Information", "SV-1"},
-                            new string[] {"Location", "SV-1"},
-                            new string[] {"OrganizationType", "SV-1"},
-                            new string[] {"Performer", "SV-1"},
-                            new string[] {"PersonRole", "SV-1"},
-                            new string[] {"Resource", "SV-1"},
-                            new string[] {"Rule", "SV-1"}, 
-                            new string[] {"superSubtype", "SV-1"}, 
-                            new string[] {"WholePartType", "SV-1"},
+
                             new string[] {"Condition", "SV-10b"},
                             new string[] {"Information", "SV-10b"},
                             new string[] {"Location", "SV-10b"},
@@ -691,27 +773,7 @@ namespace EAWS.Core.SilverBullet
                             new string[] {"Rule", "SV-10c"}, 
                             new string[] {"superSubtype", "SV-10c"}, 
                             new string[] {"WholePartType", "SV-10c"},
-                            new string[] {"Condition", "SV-2"},
-                            new string[] {"Information", "SV-2"},
-                            new string[] {"Location", "SV-2"},
-                            new string[] {"OrganizationType", "SV-2"},
-                            new string[] {"Performer", "SV-2"},
-                            new string[] {"PersonRole", "SV-2"},
-                            new string[] {"Resource", "SV-2"},
-                            new string[] {"Rule", "SV-2"}, 
-                            new string[] {"superSubtype", "SV-2"}, 
-                            new string[] {"WholePartType", "SV-2"},
-                            new string[] {"Condition", "SvcV-1"},
-                            new string[] {"Information", "SvcV-1"},
-                            new string[] {"Location", "SvcV-1"},
-                            new string[] {"OrganizationType", "SvcV-1"},
-                            new string[] {"Performer", "SvcV-1"},
-                            new string[] {"PersonRole", "SvcV-1"},
-                            new string[] {"Resource", "SvcV-1"},
-                            new string[] {"Rule", "SvcV-1"}, 
-                            new string[] {"System", "SvcV-1"}, 
-                            new string[] {"superSubtype", "SvcV-1"}, 
-                            new string[] {"WholePartType", "SvcV-1"},
+
                             new string[] {"Condition", "SvcV-10b"},
                             new string[] {"Information", "SvcV-10b"},
                             new string[] {"Location", "SvcV-10b"},
@@ -735,16 +797,7 @@ namespace EAWS.Core.SilverBullet
                             new string[] {"System", "SvcV-10c"}, 
                             new string[] {"superSubtype", "SvcV-10c"}, 
                             new string[] {"WholePartType", "SvcV-10c"},
-                            new string[] {"Condition", "SV-4"},
-                            new string[] {"Information", "SV-4"},
-                            new string[] {"Location", "SV-4"},
-                            new string[] {"OrganizationType", "SV-4"},
-                            new string[] {"Performer", "SV-4"},
-                            new string[] {"PersonRole", "SV-4"},
-                            new string[] {"Resource", "SV-4"},
-                            new string[] {"Rule", "SV-4"}, 
-                            new string[] {"superSubtype", "SV-4"}, 
-                            new string[] {"WholePartType", "SV-4"},
+
                             new string[] {"Activity", "SV-8"},
                             new string[] {"Condition", "SV-8"},
                             new string[] {"Information", "SV-8"},
@@ -760,28 +813,6 @@ namespace EAWS.Core.SilverBullet
                             new string[] {"activityPerformedByPerformer", "SV-8"},
                             new string[] {"HappensInType", "SV-8"},
                             new string[] {"PeriodType", "SV-8"},
-                            new string[] {"Condition", "SvcV-4"},
-                            new string[] {"Information", "SvcV-4"},
-                            new string[] {"Location", "SvcV-4"},
-                            new string[] {"OrganizationType", "SvcV-4"},
-                            new string[] {"Performer", "SvcV-4"},
-                            new string[] {"PersonRole", "SvcV-4"},
-                            new string[] {"Resource", "SvcV-4"},
-                            new string[] {"Rule", "SvcV-4"}, 
-                            new string[] {"System", "SvcV-4"},  
-                            new string[] {"superSubtype", "SvcV-4"}, 
-                            new string[] {"WholePartType", "SvcV-4"},
-                            new string[] {"Condition", "SvcV-2"},
-                            new string[] {"Information", "SvcV-2"},
-                            new string[] {"Location", "SvcV-2"},
-                            new string[] {"OrganizationType", "SvcV-2"},
-                            new string[] {"Performer", "SvcV-2"},
-                            new string[] {"PersonRole", "SvcV-2"},
-                            new string[] {"Resource", "SvcV-2"},
-                            new string[] {"Rule", "SvcV-2"}, 
-                            new string[] {"System", "SvcV-2"}, 
-                            new string[] {"superSubtype", "SvcV-2"}, 
-                            new string[] {"WholePartType", "SvcV-2"},
 
                             new string[] {"Condition", "PV-1"},
                             new string[] {"Information", "PV-1"},
@@ -1601,6 +1632,14 @@ namespace EAWS.Core.SilverBullet
                 things = things.Concat(results.ToList());
             }
 
+            things = things.Distinct();
+
+            //things_dic = things.ToDictionary(x => x.id, x => x);
+            //things_dic  put in some code to compenate for non-unique keys - was causing crash.
+            IEnumerable<Thing> filteredthings = things.GroupBy(x => x.id).Select(group => group.First());
+            things_dic = filteredthings.ToDictionary(x => x.id, x => x);
+            things = null;
+             
 
             //Regular tuples
 /*
@@ -1806,6 +1845,47 @@ namespace EAWS.Core.SilverBullet
                 };
             tuple_types = tuple_types.Concat(results.ToList());
 
+            //Now for activityproduces and consumes resource - from SV-4 - embedded in an activity diagram.  Ignoring the control flow, just using the information flow
+            //First APR
+            results =
+                from result in root.Elements(upia + "SystemInformationFlow")
+                from result4 in root.Elements(uml + "Model").Descendants("result")
+                where (string)result4.Parent.Attribute(xi + "type") == "uml:CallOperationAction"
+                where (string)result4.Attribute("outgoing") == (string)result.Attribute("base_ObjectFlow")
+                where result4.Attribute("type") != null  //have to check since there may be no moved object
+                select new Thing
+                {
+                    type = "activityProducesResource",
+                    id = (string)result4.Attribute(xi + "id") + "_1",
+                    name = (string)result4.Parent.Attribute("name"),
+                    place1 = (string)result4.Parent.Attribute("operation"),
+                    place2 = (string)result4.Attribute("type"),
+                    value = "$none$",
+                    foundation = "CoupleType",
+                    value_type = "exemplar"
+                };
+            tuple_types = tuple_types.Concat(results.ToList());
+            //Second ACR
+            results =
+                from result in root.Elements(upia + "SystemInformationFlow")
+                from result4 in root.Elements(uml + "Model").Descendants("argument")
+                where (string)result4.Parent.Attribute(xi + "type") == "uml:CallOperationAction"
+                where (string)result4.Attribute("incoming") == (string)result.Attribute("base_ObjectFlow")
+                where result4.Attribute("type") != null  //have to check since there may be no moved object
+                select new Thing
+                {
+                    type = "activityConsumesResource",
+                    id = (string)result4.Attribute(xi + "id") + "_2",
+                    name = (string)result4.Parent.Attribute("name"),
+                    place2 = (string)result4.Parent.Attribute("operation"),
+                    place1 = (string)result4.Attribute("type"),
+                    value = "$none$",
+                    foundation = "CoupleType",
+                    value_type = "exemplar"
+                };
+            tuple_types = tuple_types.Concat(results.ToList());
+
+
             //Task Invocation (basically an event trace event line)
             results =
                 from result in root.Elements(upia + "TaskInvocation")
@@ -1890,8 +1970,6 @@ namespace EAWS.Core.SilverBullet
 
             tuple_types = tuple_types.Distinct();
 
-            things = things.Distinct();
-
             //Milestone Date
             // NEEDS WORK since measured elements can be a very very large group, not just one. However, this is NOT a required element at this time so saving to later.
             results =
@@ -1910,20 +1988,11 @@ namespace EAWS.Core.SilverBullet
 
             tuple_types = tuple_types.Concat(results.ToList());
 
-            //things_dic  put in some code to compenate for non-unique keys.
-            IEnumerable<Thing> filteredthings = things.GroupBy(x => x.id).Select(group => group.First());
-            things_dic = filteredthings.ToDictionary(x => x.id, x => x);
-           
-             //things_dic = things.ToDictionary(x => x.id, x => x);
-
-            //System Exchange (DM2rx)
-
             //ToLists
-                    values3 = tuples.ToList();
-                    values4 = tuple_types.ToList();
-                    things = null;
-                    tuples = null;
-                    tuple_types = null;
+            values3 = tuples.ToList();
+            values4 = tuple_types.ToList();
+            tuples = null;
+            tuple_types = null;
 
 
 
@@ -2281,7 +2350,7 @@ namespace EAWS.Core.SilverBullet
                         value_type = "$element_type$"
                     };
                 }
-                if ((current_lookup[0] == "OV-5a" || current_lookup[0] == "OV-5b") && current_lookup[1] == "Activity")
+                if ((current_lookup[0] == "OV-5a" || current_lookup[0] == "OV-5b" || current_lookup[0] == "SV-4" ) && current_lookup[1] == "Activity")
                 {
                     //Add Activities from ActivityDiagrams
                      results2 =
@@ -2330,6 +2399,33 @@ namespace EAWS.Core.SilverBullet
                             };
                      results = results.Concat(results2.ToList());
                 }
+
+                //Add Performers from ActivityDiagrams (in the form of partitions)
+                if ((current_lookup[0] == "OV-5a" || current_lookup[0] == "OV-5b" || current_lookup[0] == "SV-4") && current_lookup[1] == "Activity")
+                {
+                    results2 =
+                       from result in root.Elements(uml + "Model").Descendants("group")//.Elements("children")
+                       where (string)result.Attribute(xi + "type") == "uml:ActivityPartition"
+                       from result3 in result.Ancestors() 
+                       where (string)result3.Attribute(xi + "type") == "uml:Activity"
+                       from result4 in result3.Descendants()
+                       where (string)result4.Attribute(xi + "type") == "umlnotation:UMLDiagram"
+                       where (string)result4.Attribute("type") == current_lookup[1]
+                       where result4.Attribute("name") != null && ((string)result4.Attribute("name")).Contains((string)current_lookup[0])  //no differing DoDAF diagram types so have to check for name containment.
+                       select new Thing
+                       {
+                           type = current_lookup[0],
+                           id = (string)result4.Attribute(xi + "id") + (string)result.Attribute("represents"), //combined ids
+                           name = ((string)result4.Attribute("name")).Replace("&", " And "),                //diagram name  
+                           place1 = (string)result4.Attribute(xi + "id"),
+                           place2 = (string)result.Attribute("represents"),
+                           value = (string)result.Attribute("represents"),
+                           foundation = "$none$",
+                           value_type = "$element_type$"
+                       };
+                    results = results.Concat(results2.ToList());
+                }
+
                 //Add operations and performers from sequence diagrams
                 if (current_lookup[0] == "OV-6c" && current_lookup[1] == "Sequence")
                 {
@@ -2554,8 +2650,80 @@ namespace EAWS.Core.SilverBullet
                     values = null;
                 }
 
+                //Add Resources to views via needlines (OV-2 mostly)
+                if ((current_lookup[0] == "SV-2" || current_lookup[0] == "SV-1") && (current_lookup[1] == "Class" || current_lookup[1] == "Freeform"))  //too much hard-coding for my taste but necessary because of varying storage structure across diagram types
+                {
+                    values = new List<Thing>();
+                    values = things_dic.Select(kvp => kvp.Value).ToList();
+                    foreach (Thing UPIATHING in values)
+                    {
+                        if ((string)UPIATHING.type == "Data")  //so far the only resource type that really results from anything...
+                        {
+                            //Needline
+                            results3 =
+                                from result in root.Elements(upia + "DataExchange")
+                                from result4 in root.Elements(uml + "Model").Descendants("packagedElement")
+                                where (string)result4.Attribute(xi + "type") == "uml:InformationFlow"
+                                where (string)result4.Attribute(xi + "id") == (string)result.Attribute("base_InformationFlow")
+                                where (string)result4.Attribute("conveyed") == (string)UPIATHING.id
+                                from result5 in root.Elements(upia + "SystemInterface")
+                                where result5.Attribute("exchanges") != null && ((string)result5.Attribute("exchanges")).Contains((string)result.Attribute("base_InformationFlow"))
+                                from result3 in root.Elements(uml + "Model").Descendants("edges")
+                                where (string)result3.Attribute("element") == (string)result5.Attribute("base_Association")
+                                where (string)result3.Attribute(xi + "type") == "umlnotation:UMLConnector"
+                                from result2 in result3.Ancestors()
+                                where (string)result2.Attribute("type") == current_lookup[1]
+                                where result2.Attribute("name") != null && ((string)result2.Attribute("name")).Contains((string)current_lookup[0])  //no differing DoDAF diagram types so have to check for name containment.
+
+                                select new Thing
+                                {
+                                    type = current_lookup[0],
+                                    id = (string)result2.Attribute(xi + "id") + UPIATHING.id, //combined ids
+                                    name = ((string)result2.Attribute("name")).Replace("&", " And "),                //diagram name  
+                                    place1 = (string)result2.Attribute(xi + "id"),
+                                    place2 = (string)UPIATHING.id,
+                                    value = (string)UPIATHING.id,
+                                    foundation = "$none$",
+                                    value_type = "$element_type$"
+                                };
+                            //view_holder.Add(results.ToList());
+                            results = results.Concat(results3.ToList());
+                            //resource flow
+                            results3 =
+                                from result in root.Elements(upia + "DataExchange")
+                                from result4 in root.Elements(uml + "Model").Descendants("packagedElement")
+                                where (string)result4.Attribute(xi + "type") == "uml:InformationFlow"
+                                where (string)result4.Attribute(xi + "id") == (string)result.Attribute("base_InformationFlow")
+                                where (string)result4.Attribute("conveyed") == (string)UPIATHING.id
+                                from result5 in root.Elements(upia + "CommunicationLink")
+                                where result5.Attribute("exchanges") != null && ((string)result5.Attribute("exchanges")).Contains((string)result.Attribute("base_InformationFlow"))
+                                from result3 in root.Elements(uml + "Model").Descendants("edges")
+                                where (string)result3.Attribute("element") == (string)result5.Attribute("base_Association")
+                                where (string)result3.Attribute(xi + "type") == "umlnotation:UMLConnector"
+                                from result2 in result3.Ancestors()
+                                where (string)result2.Attribute("type") == current_lookup[1]
+                                where result2.Attribute("name") != null && ((string)result2.Attribute("name")).Contains((string)current_lookup[0])  //no differing DoDAF diagram types so have to check for name containment.
+
+                                select new Thing
+                                {
+                                    type = current_lookup[0],
+                                    id = (string)result2.Attribute(xi + "id") + UPIATHING.id, //combined ids
+                                    name = ((string)result2.Attribute("name")).Replace("&", " And "),                //diagram name  
+                                    place1 = (string)result2.Attribute(xi + "id"),
+                                    place2 = (string)UPIATHING.id,
+                                    value = (string)UPIATHING.id,
+                                    foundation = "$none$",
+                                    value_type = "$element_type$"
+                                };
+                            //view_holder.Add(results.ToList());
+                            results = results.Concat(results3.ToList());
+                        }
+                    }
+                    values = null;
+                }
+
                 //Add Resources to views from activity Diagrams (OV-5b mostly)
-                if ((current_lookup[0] == "OV-5a" || current_lookup[0] == "OV-5b") && current_lookup[1] == "Activity")
+                if ((current_lookup[0] == "OV-5a" || current_lookup[0] == "OV-5b" ) && current_lookup[1] == "Activity")
                 {
                     values = new List<Thing>();
                     values = things_dic.Select(kvp => kvp.Value).ToList();
@@ -2592,6 +2760,46 @@ namespace EAWS.Core.SilverBullet
                     }
                 }
                 values = null;
+
+                //Add Resources to views from activity Diagrams (SV-4 mostly)
+                if ( current_lookup[0] == "SV-4" && current_lookup[1] == "Activity")
+                {
+                    values = new List<Thing>();
+                    values = things_dic.Select(kvp => kvp.Value).ToList();
+                    foreach (Thing UPIATHING in values)
+                    {
+                        if ((string)UPIATHING.type == "Data")  //so far the only resource type that really results from anything...
+                        {
+                            results3 =
+                                from result in root.Elements(upia + "SystemInformationFlow")
+                                from result4 in root.Elements(uml + "Model").Descendants("result")
+                                where (string)result4.Attribute("outgoing") == (string)result.Attribute("base_ObjectFlow")
+                                where (string)result4.Attribute("type") == (string)UPIATHING.id
+                                from result3 in root.Elements(uml + "Model").Descendants("children")
+                                where (string)result3.Attribute(xi + "type") == "umlnotation:UMLShape"
+                                where (string)result3.Attribute("element") == (string)result4.Parent.Attribute(xi + "id")
+                                from result2 in result3.Ancestors()
+                                where (string)result2.Attribute("type") == current_lookup[1]
+                                where result2.Attribute("name") != null && ((string)result2.Attribute("name")).Contains((string)current_lookup[0])  //no differing DoDAF diagram types so have to check for name containment.
+
+                                select new Thing
+                                {
+                                    type = current_lookup[0],
+                                    id = (string)result2.Attribute(xi + "id") + UPIATHING.id, //combined ids
+                                    name = ((string)result2.Attribute("name")).Replace("&", " And "),                //diagram name  
+                                    place1 = (string)result2.Attribute(xi + "id"),
+                                    place2 = (string)UPIATHING.id,
+                                    value = (string)UPIATHING.id,
+                                    foundation = "$none$",
+                                    value_type = "$element_type$"
+                                };
+                            //view_holder.Add(results.ToList());
+                            results = results.Concat(results3.ToList());
+                        }
+                    }
+                }
+                values = null;
+
 
                 view_holder.Add(results.ToList());
             }

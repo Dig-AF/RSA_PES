@@ -19,7 +19,7 @@ namespace ConsoleApplication
 
             input = @"C:\GitHub\test\Test Data\RSA\PES_SampleData.emx";
 
-            //input = @"C:\GitHub\test\Test Data\RSA\P-8A Systems and Services.emx";
+            //input = @"C:\GitHub\test\Test Data\RSA\cod restart.emx";
                         
             test = EAWS.Core.SilverBullet.PES_RSA.RSA2PES(File.ReadAllBytes(input),ref output, ref errors);
             if (!test)
