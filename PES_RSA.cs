@@ -630,7 +630,7 @@ namespace EAWS.Core.SilverBullet
                             new string[] {"Location", "SvcV-2"},
                             new string[] {"OrganizationType", "SvcV-2"},
                             //new string[] {"Performer", "SvcV-2"},  Moved to Mandatory because the other mandatory elements depend on it
-                            //new string[] {"Data", "SV-2"},       Moved to Mandatory because the other mandatory elements depend on it
+                            //new string[] {"Data", "SvcV-2"},       Moved to Mandatory because the other mandatory elements depend on it
                             new string[] {"PersonRole", "SvcV-2"},
                             new string[] {"Resource", "SvcV-2"},
                             new string[] {"Rule", "SvcV-2"}, 
@@ -1845,7 +1845,7 @@ namespace EAWS.Core.SilverBullet
                 };
             tuple_types = tuple_types.Concat(results.ToList());
 
-            //Now for activityproduces and consumes resource - from SV-4 - embedded in an activity diagram.  Ignoring the control flow, just using the information flow
+            //Now for activityproduces and consumes resource - from SV-4 and SvcV-4 - embedded in an activity diagram.  Ignoring the control flow, just using the information flow
             //First APR
             results =
                 from result in root.Elements(upia + "SystemInformationFlow")
@@ -2350,7 +2350,7 @@ namespace EAWS.Core.SilverBullet
                         value_type = "$element_type$"
                     };
                 }
-                if ((current_lookup[0] == "OV-5a" || current_lookup[0] == "OV-5b" || current_lookup[0] == "SV-4" ) && current_lookup[1] == "Activity")
+                 if ((current_lookup[0] == "OV-5a" || current_lookup[0] == "OV-5b" || current_lookup[0] == "SV-4" || current_lookup[0] == "SvcV-4") && current_lookup[1] == "Activity")
                 {
                     //Add Activities from ActivityDiagrams
                      results2 =
@@ -2401,7 +2401,7 @@ namespace EAWS.Core.SilverBullet
                 }
 
                 //Add Performers from ActivityDiagrams (in the form of partitions)
-                if ((current_lookup[0] == "OV-5a" || current_lookup[0] == "OV-5b" || current_lookup[0] == "SV-4") && current_lookup[1] == "Activity")
+                 if ((current_lookup[0] == "OV-5a" || current_lookup[0] == "OV-5b" || current_lookup[0] == "SV-4" || current_lookup[0] == "SvcV-4") && current_lookup[1] == "Activity")
                 {
                     results2 =
                        from result in root.Elements(uml + "Model").Descendants("group")//.Elements("children")
@@ -2651,7 +2651,8 @@ namespace EAWS.Core.SilverBullet
                 }
 
                 //Add Resources to views via needlines (OV-2 mostly)
-                if ((current_lookup[0] == "SV-2" || current_lookup[0] == "SV-1") && (current_lookup[1] == "Class" || current_lookup[1] == "Freeform"))  //too much hard-coding for my taste but necessary because of varying storage structure across diagram types
+                //too much hard-coding for my taste but necessary because of varying storage structure across diagram types
+                if ((current_lookup[0] == "SV-2" || current_lookup[0] == "SV-1" || current_lookup[0] == "SvcV-2" || current_lookup[0] == "SvcV-1") && (current_lookup[1] == "Class" || current_lookup[1] == "Freeform"))  //too much hard-coding for my taste but necessary because of varying storage structure across diagram types
                 {
                     values = new List<Thing>();
                     values = things_dic.Select(kvp => kvp.Value).ToList();
@@ -2762,7 +2763,7 @@ namespace EAWS.Core.SilverBullet
                 values = null;
 
                 //Add Resources to views from activity Diagrams (SV-4 mostly)
-                if ( current_lookup[0] == "SV-4" && current_lookup[1] == "Activity")
+                if ( (current_lookup[0] == "SV-4" || current_lookup[0] == "SvcV-4") && current_lookup[1] == "Activity")
                 {
                     values = new List<Thing>();
                     values = things_dic.Select(kvp => kvp.Value).ToList();
