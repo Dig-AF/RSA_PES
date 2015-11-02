@@ -1632,6 +1632,24 @@ namespace EAWS.Core.SilverBullet
                 things = things.Concat(results.ToList());
             }
 
+            //now for non-packaged elements that are owned Attributes - These are not stereotyped by UPIA so no choice but to take all and use as "Data"
+            results =
+                from result in root.Elements(uml + "Model").Descendants("ownedAttribute")
+                where result.Attribute("association") == null  //added this because attributes are not really "owned" but inherited if they have associations...this is the only way I fouund to not get dups because of inheritance (basically)
+                
+                select new Thing
+                {
+                    type = "Data",
+                    id = (string)result.Attribute(xi + "id"),
+                    name = (string)result.Attribute("name"),//.Replace("&", " And ") ?? "$none$",  //commnented out because looks like in RSA emx file that & is replace by &amp;
+                    value = "$none$",
+                    place1 = (string)result.Parent.Attribute(xi + "id"), //putting in the parent (owning) class here so I can figure out latter where activities should be added to views. Formerly "$none$"
+                    place2 = "$none$",
+                    foundation = "IndividualType",
+                    value_type = "$none$"
+                };
+            things = things.Concat(results.ToList());
+
             things = things.Distinct();
 
             //things_dic = things.ToDictionary(x => x.id, x => x);
@@ -1703,7 +1721,7 @@ namespace EAWS.Core.SilverBullet
                         select new Thing
                         {
                             type = current_lookup[1],
-                            id = (string)result.Attribute(xi + "id"),
+                            id = (string)result.Attribute(xi + "id") + "_4",
                             name = "$none$",
                             value = "$none$",
                             place1 = (string)result4.Attribute("type"), 
@@ -1965,6 +1983,23 @@ namespace EAWS.Core.SilverBullet
                     };
                 tuple_types = tuple_types.Concat(results.ToList());
             }
+
+        //wholeparttype - variation where the data is a class and the OWNED attritue is data identified in the class.
+            results =
+                from result in root.Elements(uml + "Model").Descendants("ownedAttribute")
+                where result.Attribute("association") == null  //added this because attributes are not really "owned" but inherited if they have associations...this is the only way I fouund to not get dups because of inheritance (basically)
+                select new Thing
+                {
+                    type = "WholePartType",
+                    id = (string)result.Attribute(xi + "id") + "_4",  // (string)result.Parent.Attribute("id"),
+                    name = "$none$",  //(string)result.Attribute("name"),//.Replace("&", " And ") ?? "$none$",  //commnented out because looks like in RSA emx file that & is replace by &amp;
+                    value = "$none$",
+                    place2 = (string)result.Parent.Attribute(xi + "id"),
+                    place1 = (string)result.Attribute(xi + "id"),
+                    foundation = "WholePartType",
+                    value_type = "$none$"
+                };
+            tuple_types = tuple_types.Concat(results.ToList());
 
             tuple_types = tuple_types.GroupBy(x => x.id).Select(grp => grp.First());
 
@@ -2534,6 +2569,38 @@ namespace EAWS.Core.SilverBullet
                                 };
                             //view_holder.Add(results.ToList());
                             results = results.Concat(results2.ToList());
+                    }
+                }
+                values = null;
+
+
+                //Add Data Members (attributs) to views
+                values = new List<Thing>();
+                values = things_dic.Select(kvp => kvp.Value).ToList();
+                foreach (Thing UPIATHING in values)
+                {
+                    if ((string)UPIATHING.type == "Data" && (string)UPIATHING.place1 != "$none$")
+                    {
+                        results2 =
+                            from result in root.Elements(uml + "Model").Descendants()//.Elements("children")
+                            where (string)result.Attribute(xi + "type") == "umlnotation:UMLShape" || (string)result.Attribute(xi + "type") == "umlnotation:UMLClassifierShape"
+                            where (string)result.Attribute("element") == (string)UPIATHING.place1
+                            from result2 in result.Ancestors()
+                            where (string)result2.Attribute("type") == current_lookup[1]
+                            where result2.Attribute("name") != null && ((string)result2.Attribute("name")).Contains((string)current_lookup[0])  //no differing DoDAF diagram types so have to check for name containment.
+                            select new Thing
+                            {
+                                type = current_lookup[0],
+                                id = (string)result2.Attribute(xi + "id") + UPIATHING.id, //combined ids
+                                name = ((string)result2.Attribute("name")).Replace("&", " And "),                //diagram name  
+                                place1 = (string)result2.Attribute(xi + "id"),
+                                place2 = (string)UPIATHING.id,
+                                value = (string)UPIATHING.id,
+                                foundation = "$none$",
+                                value_type = "$element_type$"
+                            };
+                        //view_holder.Add(results.ToList());
+                        results = results.Concat(results2.ToList());
                     }
                 }
                 values = null;
