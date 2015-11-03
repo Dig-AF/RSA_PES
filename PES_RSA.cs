@@ -246,6 +246,12 @@ namespace EAWS.Core.SilverBullet
                             //new string[] {"SV-4", "Freeform", "", "extra"},//commented out because live data does not contain proper elements for SV-4.  
                             //new string[] {"SvcV-4", "Freeform", "", "extra"},///commented out because live data does not contain proper elements for SV-4.  
 
+                            //Priority 4
+                            // OV-6a - there is NO DIAGRAM - these are constraints on operational Tasks.  Can establish things but a "view" must be constructed from them in NEAR or in this tool.  
+                            //Constraints can appear anywhere an operational task does, so no diagrams makes sense to choose.
+                            new string[] {"OV-6b", "Statemachine", "", "default"},
+                            new string[] {"SV-10c", "Sequence", "", "default"},
+
                             };
         //There are limited diagram types availabe in UML and they don't distinquish between the ways they are used, therfore can only put those that are completely ignored
         static string[][] Not_Processed_View_Lookup = new string[][] {  
@@ -254,7 +260,7 @@ namespace EAWS.Core.SilverBullet
                             new string[] {"Unmappedview3", "Communication", "", "default"},
                             new string[] {"Unmappedview4", "Object", "", "default"},
                             new string[] {"Unmappedview5", "Topic", "", "default"},
-                            new string[] {"Unmappedview6", "Statemachine", "", "default"},
+                            //new string[] {"Unmappedview6", "Statemachine", "", "default"},
                             new string[] {"Unmappedview7", "Structure", "", "default"},
                             };
 
@@ -377,6 +383,22 @@ namespace EAWS.Core.SilverBullet
                             new string[] {"Service", "SvcV-4"},
                             new string[] {"Performer", "SV-4"},             //Not Mandatory but without it the other mandatory elemments of Activityperformedbyperformer does not work
 
+                            //Priority 4 - OV-6a - this is not a diagram in RSA  see notes above.  Made these mandatory so there is something to do.
+                            new string[] {"Activity", "OV-6a"},
+                            new string[] {"ruleConstrainsActivity", "OV-6a"},
+                            new string[] {"Rule", "OV-6a"},
+                            
+                            //Priority 4 - OV-6b
+                            new string[] {"Activity", "OV-6b"},
+                            new string[] {"activityProducesResource", "OV-6b"},
+                            new string[] {"activityConsumesResource", "OV-6b"},
+                            
+                            //Priority 4 - SV-10c
+                            new string[] {"Activity", "SV-10c"},
+                            new string[] {"activityPerformedByPerformer", "SV-10c"},
+                            new string[] {"activityProducesResource", "SV-10c"},
+                            new string[] {"activityConsumesResource", "SV-10c"},
+                            new string[] {"System", "SV-10c"},
 
                             //END REQUIREMENTS - COMMENTING OUT THE REST FOR NOW>
                             /*new string[] {"ArchitecturalDescription", "OV-1"},
@@ -389,11 +411,7 @@ namespace EAWS.Core.SilverBullet
                             new string[] {"activityProducesResource", "SV-10b"},
                             new string[] {"activityConsumesResource", "SV-10b"},
                             new string[] {"System", "SV-10b"},
-                            new string[] {"Activity", "SV-10c"},
-                            new string[] {"activityPerformedByPerformer", "SV-10c"},
-                            new string[] {"activityProducesResource", "SV-10c"},
-                            new string[] {"activityConsumesResource", "SV-10c"},
-                            new string[] {"System", "SV-10c"},
+
                             new string[] {"Activity", "SvcV-10b"},
                             new string[] {"activityPerformedByPerformer", "SvcV-10b"},
                             new string[] {"activityProducesResource", "SvcV-10b"},
@@ -663,6 +681,47 @@ namespace EAWS.Core.SilverBullet
                             new string[] {"superSubtype", "SvcV-4"}, 
                             new string[] {"WholePartType", "SvcV-4"},
 
+                            //Priority 4 - OV-6a
+                            new string[] {"Condition", "OV-6a"},
+                            new string[] {"Information", "OV-6a"},
+                            new string[] {"Location", "OV-6a"},
+                            new string[] {"OrganizationType", "OV-6a"},
+                            new string[] {"Performer", "OV-6a"},
+                            new string[] {"PersonRole", "OV-6a"},
+                            new string[] {"Resource", "OV-6a"},
+                            //new string[] {"Rule", "OV-6a"}, 
+                            new string[] {"superSubtype", "OV-6a"}, 
+                            new string[] {"WholePartType", "OV-6a"},
+                            //new string[] {"ruleConstrainsActivity", "OV-6a"},
+                            new string[] {"activityPerformedByPerformer", "OV-6a"},
+
+                            //Priority 4 = OV-6b
+                            new string[] {"Condition", "OV-6b"},
+                            new string[] {"Information", "OV-6b"},
+                            new string[] {"Location", "OV-6b"},
+                            new string[] {"OrganizationType", "OV-6b"},
+                            new string[] {"Performer", "OV-6b"},
+                            new string[] {"PersonRole", "OV-6b"},
+                            new string[] {"Resource", "OV-6b"},
+                            new string[] {"Rule", "OV-6b"}, 
+                            new string[] {"superSubtype", "OV-6b"}, 
+                            new string[] {"WholePartType", "OV-6b"},
+                            new string[] {"activityPerformedByPerformer", "OV-6b"},
+                            new string[] {"BeforeAfterType", "OV-6b"},
+
+                            //Priority 4 - SV-10c
+                            new string[] {"Condition", "SV-10c"},
+                            new string[] {"Information", "SV-10c"},
+                            new string[] {"Location", "SV-10c"},
+                            new string[] {"OrganizationType", "SV-10c"},
+                            new string[] {"Performer", "SV-10c"},
+                            new string[] {"PersonRole", "SV-10c"},
+                            new string[] {"Resource", "SV-10c"},
+                            new string[] {"Rule", "SV-10c"}, 
+                            new string[] {"superSubtype", "SV-10c"}, 
+                            new string[] {"WholePartType", "SV-10c"},
+                            new string[] {"BeforeAfterType", "SV-10c"},
+
                             //COMMENTING OUT THE REST FOR NOW>
                             /*new string[] {"Activity", "CV-1"},
                             new string[] {"Condition", "CV-1"},
@@ -711,31 +770,6 @@ namespace EAWS.Core.SilverBullet
                             new string[] {"superSubtype", "OV-3"}, 
                             new string[] {"WholePartType", "OV-3"},
 
-                            new string[] {"Condition", "OV-6b"},
-                            new string[] {"Information", "OV-6b"},
-                            new string[] {"Location", "OV-6b"},
-                            new string[] {"OrganizationType", "OV-6b"},
-                            new string[] {"Performer", "OV-6b"},
-                            new string[] {"PersonRole", "OV-6b"},
-                            new string[] {"Resource", "OV-6b"},
-                            new string[] {"Rule", "OV-6b"}, 
-                            new string[] {"superSubtype", "OV-6b"}, 
-                            new string[] {"WholePartType", "OV-6b"},
-                            new string[] {"activityPerformedByPerformer", "OV-6b"},
-                            new string[] {"BeforeAfterType", "OV-6b"},
-
-                            new string[] {"Condition", "OV-6a"},
-                            new string[] {"Information", "OV-6a"},
-                            new string[] {"Location", "OV-6a"},
-                            new string[] {"OrganizationType", "OV-6a"},
-                            new string[] {"Performer", "OV-6a"},
-                            new string[] {"PersonRole", "OV-6a"},
-                            new string[] {"Resource", "OV-6a"},
-                            new string[] {"Rule", "OV-6a"}, 
-                            new string[] {"superSubtype", "OV-6a"}, 
-                            new string[] {"WholePartType", "OV-6a"},
-                            new string[] {"ruleConstrainsActivity", "OV-6a"},
-                            new string[] {"activityPerformedByPerformer", "OV-6a"},
                             new string[] {"Condition", "AV-1"},
                             new string[] {"Facility", "AV-1"},
                             new string[] {"Guidance", "AV-1"},
@@ -763,16 +797,7 @@ namespace EAWS.Core.SilverBullet
                             new string[] {"superSubtype", "SV-10b"}, 
                             new string[] {"WholePartType", "SV-10b"},
                             new string[] {"BeforeAfterType", "SV-10b"},
-                            new string[] {"Condition", "SV-10c"},
-                            new string[] {"Information", "SV-10c"},
-                            new string[] {"Location", "SV-10c"},
-                            new string[] {"OrganizationType", "SV-10c"},
-                            new string[] {"Performer", "SV-10c"},
-                            new string[] {"PersonRole", "SV-10c"},
-                            new string[] {"Resource", "SV-10c"},
-                            new string[] {"Rule", "SV-10c"}, 
-                            new string[] {"superSubtype", "SV-10c"}, 
-                            new string[] {"WholePartType", "SV-10c"},
+
 
                             new string[] {"Condition", "SvcV-10b"},
                             new string[] {"Information", "SvcV-10b"},
@@ -1650,6 +1675,60 @@ namespace EAWS.Core.SilverBullet
                 };
             things = things.Concat(results.ToList());
 
+            //Rules - three variants...
+            results =
+                from result in root.Elements(uml + "Model").Descendants("localPostcondition")
+                where (string)result.Attribute("constrainedElement") != null
+
+                select new Thing
+                {
+                    type = "Rule",
+                    id = (string)result.Attribute(xi + "id"),
+                    name = (string)result.Attribute("name"),//.Replace("&", " And ") ?? "$none$",  //commnented out because looks like in RSA emx file that & is replace by &amp;
+                    value = "$none$",
+                    place1 = (string)result.Attribute("constrainedElement"), //putting in the parent (owning) thing here so I can figure out latter where rules should be added to views. Formerly "$none$"
+                    place2 = "$none$",
+                    foundation = "IndividualType",
+                    value_type = "$none$"
+                };
+            things = things.Concat(results.ToList());
+
+            //Rules - three variants...
+            results =
+                from result in root.Elements(uml + "Model").Descendants("localPrecondition")
+                where (string)result.Attribute("constrainedElement") != null
+
+                select new Thing
+                {
+                    type = "Rule",
+                    id = (string)result.Attribute(xi + "id"),
+                    name = (string)result.Attribute("name"),//.Replace("&", " And ") ?? "$none$",  //commnented out because looks like in RSA emx file that & is replace by &amp;
+                    value = "$none$",
+                    place1 = (string)result.Attribute("constrainedElement"), //putting in the parent (owning) thing here so I can figure out latter where rules should be added to views. Formerly "$none$"
+                    place2 = "$none$",
+                    foundation = "IndividualType",
+                    value_type = "$none$"
+                };
+            things = things.Concat(results.ToList());
+
+            //Rules - three variants...
+            results =
+                from result in root.Elements(uml + "Model").Descendants("ownedRule")
+                where (string)result.Attribute("constrainedElement") != null
+
+                select new Thing
+                {
+                    type = "Rule",
+                    id = (string)result.Attribute(xi + "id"),
+                    name = (string)result.Attribute("name"),//.Replace("&", " And ") ?? "$none$",  //commnented out because looks like in RSA emx file that & is replace by &amp;
+                    value = "$none$",
+                    place1 = (string)result.Attribute("constrainedElement"), //putting in the parent (owning) thing here so I can figure out latter where rules should be added to views. Formerly "$none$"
+                    place2 = "$none$",
+                    foundation = "IndividualType",
+                    value_type = "$none$"
+                };
+            things = things.Concat(results.ToList());
+
             things = things.Distinct();
 
             //things_dic = things.ToDictionary(x => x.id, x => x);
@@ -1983,6 +2062,58 @@ namespace EAWS.Core.SilverBullet
                     };
                 tuple_types = tuple_types.Concat(results.ToList());
             }
+
+            //ruleConstrainsActivity - variation where a class has owned operations that have associated rules..
+            results =
+                from result in root.Elements(uml + "Model").Descendants("ownedRule")
+                where (string)result.Attribute("constrainedElement") != null 
+
+                select new Thing
+                {
+                    type = "ruleConstrainsActivity",
+                    id = (string)result.Attribute(xi + "id") + "_6",
+                    name = (string)result.Attribute("name"),//.Replace("&", " And ") ?? "$none$",  //commnented out because looks like in RSA emx file that & is replace by &amp;
+                    value = "$none$",
+                    place1 = (string)result.Attribute("constrainedElement"),
+                    place2 = (string)result.Attribute(xi + "id"),
+                    foundation = "CoupleType",
+                    value_type = "exemplar"
+                };
+                tuple_types = tuple_types.Concat(results.ToList());
+            //ruleConstrainsActivity - variation where an operation action has an assocoiated pre-condition (like on an OV-5b)
+            results =
+                from result in root.Elements(uml + "Model").Descendants("localPrecondition")
+                where (string)result.Attribute("constrainedElement") != null
+
+                select new Thing
+                {
+                    type = "ruleConstrainsActivity",
+                    id = (string)result.Attribute(xi + "id") + "_6",
+                    name = (string)result.Attribute("name"),//.Replace("&", " And ") ?? "$none$",  //commnented out because looks like in RSA emx file that & is replace by &amp;
+                    value = "$none$",
+                    place1 = (string)result.Attribute("constrainedElement"),
+                    place2 = (string)result.Attribute(xi + "id"),
+                    foundation = "CoupleType",
+                    value_type = "exemplar"
+                };
+                tuple_types = tuple_types.Concat(results.ToList());
+                //ruleConstrainsActivity - variation where an operation action has an assocoiated post-condition (like on an OV-5b)
+                results =
+                    from result in root.Elements(uml + "Model").Descendants("localPostcondition")
+                    where (string)result.Attribute("constrainedElement") != null
+
+                    select new Thing
+                    {
+                        type = "ruleConstrainsActivity",
+                        id = (string)result.Attribute(xi + "id") + "_6",
+                        name = (string)result.Attribute("name"),//.Replace("&", " And ") ?? "$none$",  //commnented out because looks like in RSA emx file that & is replace by &amp;
+                        value = "$none$",
+                        place1 = (string)result.Attribute("constrainedElement"),
+                        place2 = (string)result.Attribute(xi + "id"),
+                        foundation = "CoupleType",
+                        value_type = "exemplar"
+                    };
+                tuple_types = tuple_types.Concat(results.ToList());
 
         //wholeparttype - variation where the data is a class and the OWNED attritue is data identified in the class.
             results =
@@ -2462,7 +2593,7 @@ namespace EAWS.Core.SilverBullet
                 }
 
                 //Add operations and performers from sequence diagrams
-                if (current_lookup[0] == "OV-6c" && current_lookup[1] == "Sequence")
+                if ((current_lookup[0] == "OV-6c" || current_lookup[0] == "SV-10c") && current_lookup[1] == "Sequence")
                 {
                     results2 =
                        from result in root.Elements(uml + "Model").Descendants("packagedElement")//.Elements("children")
