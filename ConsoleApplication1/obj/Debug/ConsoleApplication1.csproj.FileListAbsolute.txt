@@ -42,3 +42,10 @@ C:\GitHub\PES_RSA\ConsoleApplication1\bin\Debug\ConsoleApplication1.pdb
 C:\GitHub\PES_RSA\ConsoleApplication1\bin\Debug\PES_RSA.dll
 C:\GitHub\PES_RSA\ConsoleApplication1\bin\Debug\PES_RSA.pdb
 C:\GitHub\PES_RSA\ConsoleApplication1\obj\Debug\ConsoleApplication1.csprojResolveAssemblyReference.cache
+C:\GitHub\RSA_PES\ConsoleApplication1\obj\Debug\ConsoleApplication1.exe
+C:\GitHub\RSA_PES\ConsoleApplication1\obj\Debug\ConsoleApplication1.pdb
+C:\GitHub\RSA_PES\ConsoleApplication1\obj\Debug\ConsoleApplication1.csprojResolveAssemblyReference.cache
+C:\GitHub\RSA_PES\ConsoleApplication1\bin\Debug\ConsoleApplication1.exe
+C:\GitHub\RSA_PES\ConsoleApplication1\bin\Debug\ConsoleApplication1.pdb
+C:\GitHub\RSA_PES\ConsoleApplication1\bin\Debug\PES_RSA.dll
+C:\GitHub\RSA_PES\ConsoleApplication1\bin\Debug\PES_RSA.pdb

@@ -8,3 +8,8 @@ C:\GitHub\PES_RSA\bin\Debug\PES_RSA.pdb
 C:\GitHub\PES_RSA\obj\Debug\PES_RSA.csprojResolveAssemblyReference.cache
 C:\GitHub\PES_RSA\obj\Debug\PES_RSA.dll
 C:\GitHub\PES_RSA\obj\Debug\PES_RSA.pdb
+C:\GitHub\RSA_PES\obj\Debug\PES_RSA.csprojResolveAssemblyReference.cache
+C:\GitHub\RSA_PES\obj\Debug\PES_RSA.dll
+C:\GitHub\RSA_PES\bin\Debug\PES_RSA.dll
+C:\GitHub\RSA_PES\bin\Debug\PES_RSA.pdb
+C:\GitHub\RSA_PES\obj\Debug\PES_RSA.pdb
