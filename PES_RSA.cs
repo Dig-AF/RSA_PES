@@ -5292,7 +5292,49 @@ namespace EAWS.Core.SilverBullet
 
                         //relationships
 
+
                         //definition
+
+                      foreach (KeyValuePair<string, Thing> thing in things)
+                        {
+
+                                 writer.WriteRaw("<packagedElement xmi:type=\"uml:Class\" xmi:id=\"" + thing.Key + "\" name=\"" + thing.Value.name + "\"/>");
+                        }
+
+                        writer.WriteRaw(@"</packagedElement><profileApplication xmi:id=""_9R-3CdPyEeSa1bJT-ij9YA"">
+                              <eAnnotations xmi:id=""_9R-3CtPyEeSa1bJT-ij9YA"" source=""http://www.eclipse.org/uml2/2.0.0/UML"">
+                                <references xmi:type=""ecore:EPackage"" href=""pathmap://UML_PROFILES/Standard.profile.uml#_yzU58YinEdqtvbnfB2L_5w""/>
+                              </eAnnotations>
+                              <appliedProfile href=""pathmap://UML_PROFILES/Standard.profile.uml#_0""/>
+                            </profileApplication>
+                            <profileApplication xmi:id=""_9R-3C9PyEeSa1bJT-ij9YA"">
+                              <eAnnotations xmi:id=""_9R-3DNPyEeSa1bJT-ij9YA"" source=""http://www.eclipse.org/uml2/2.0.0/UML"">
+                                <references xmi:type=""ecore:EPackage"" href=""pathmap://UML2_MSL_PROFILES/Default.epx#_fNwoAAqoEd6-N_NOT9vsCA?Default/Default?""/>
+                              </eAnnotations>
+                              <appliedProfile href=""pathmap://UML2_MSL_PROFILES/Default.epx#_a_S3wNWLEdiy4IqP8whjFA?Default?""/>
+                            </profileApplication>
+                            <profileApplication xmi:id=""_9R-3DdPyEeSa1bJT-ij9YA"">
+                              <eAnnotations xmi:id=""_9R-3DtPyEeSa1bJT-ij9YA"" source=""http://www.eclipse.org/uml2/2.0.0/UML"">
+                                <references xmi:type=""ecore:EPackage"" href=""pathmap://UML2_MSL_PROFILES/Deployment.epx#_IrdAUMmBEdqBcN1R6EvWUw?Deployment/Deployment?""/>
+                              </eAnnotations>
+                              <appliedProfile href=""pathmap://UML2_MSL_PROFILES/Deployment.epx#_vjbuwOvHEdiDX5bji0iVSA?Deployment?""/>
+                            </profileApplication>
+                            <profileApplication xmi:id=""_9R-3D9PyEeSa1bJT-ij9YA"">
+                              <eAnnotations xmi:id=""_9R-3ENPyEeSa1bJT-ij9YA"" source=""http://www.eclipse.org/uml2/2.0.0/UML"">
+                                <references xmi:type=""ecore:EPackage"" href=""pathmap://UPIA_HOME/UPIA.epx#_7im0MEc6Ed-f1uPQXF_0HA?UPIA/UPIA?""/>
+                              </eAnnotations>
+                              <appliedProfile href=""pathmap://UPIA_HOME/UPIA.epx#_c2-k4GUFEduIxJjDZy3KpA?UPIA?""/>
+                            </profileApplication>
+                            <profileApplication xmi:id=""_9R-3EdPyEeSa1bJT-ij9YA"">
+                              <eAnnotations xmi:id=""_9R-3EtPyEeSa1bJT-ij9YA"" source=""http://www.eclipse.org/uml2/2.0.0/UML"">
+                                <references xmi:type=""ecore:EPackage"" href=""pathmap://SOAML/SoaML.epx#_LLGeYPc5EeGmUaPBBKwKBw?SoaML/SoaML?""/>
+                              </eAnnotations>
+                              <appliedProfile href=""pathmap://SOAML/SoaML.epx#_ut1IIGfDEdy6JoIZoRRqYw?SoaML?""/>
+                            </profileApplication>
+                          </uml:Model>
+                          <UPIA:EnterpriseModel xmi:id=""_9R-3E9PyEeSa1bJT-ij9YA"" base_Package=""_9R-2X9PyEeSa1bJT-ij9YA""/>
+                          <UPIA:ArchitectureDescription xmi:id=""_9R-3FNPyEeSa1bJT-ij9YA"" base_Package=""_9R-3B9PyEeSa1bJT-ij9YA""/>
+                          <UPIA:View xmi:id=""_GSChQNPzEeSa1bJT-ij9YA"" base_Package=""_GJaJsNPzEeSa1bJT-ij9YA""/>");
 
                         //upia
                         foreach (KeyValuePair<string, Thing> thing in things)
