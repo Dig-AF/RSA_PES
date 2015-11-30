@@ -4952,6 +4952,8 @@ namespace EAWS.Core.SilverBullet
             List<List<Thing>> sorted_results;
             Dictionary<string, Location> location_dic = new Dictionary<string, Location>();
             List<View> views = new List<View>();
+            Location location;
+            string loc_x,loc_y, size_x, size_y;
 
             foreach (string[] current_lookup in UPIA_Element_Id_Prop)
             {
@@ -5287,7 +5289,75 @@ namespace EAWS.Core.SilverBullet
 
                         foreach (View view in views)
                         {
+                            //
 
+                            writer.WriteRaw("<contents xmi:type=\"umlnotation:UMLDiagram\" xmi:id=\"" + view.id + "\" type=\"Freeform\" name=\"" + view.name + "\">");
+
+                            foreach (Thing thing in view.mandatory)
+                            {
+
+                                if (location_dic.TryGetValue(thing.id, out location) == true)
+                                {
+                                    loc_x = location.top_left_x;
+                                    loc_y = location.top_left_y;
+                                    size_x = (Convert.ToInt32(location.bottom_right_x) - Convert.ToInt32(location.top_left_x)).ToString();
+                                    size_y = (Convert.ToInt32(location.top_left_y) - Convert.ToInt32(location.bottom_right_y)).ToString();
+                                }
+                                else
+                                {
+                                    loc_x = "$none$";
+                                    loc_y = "$none$";
+                                    size_x = "$none$";
+                                    size_y = "$none$";
+                                }
+
+                                writer.WriteRaw("<children xmi:type=\"umlnotation:UMLShape\" xmi:id=\"" + "_2" + thing.id.Substring(2) + "\" element=\"" + thing.id + "\" fontHeight=\"8\" transparency=\"0\" lineColor=\"14263149\" lineWidth=\"1\" showStereotype=\"Label\">");
+                                writer.WriteRaw("<children xmi:type=\"notation:DecorationNode\" xmi:id=\"" + "_3" + thing.id.Substring(2) + "\" type=\"ImageCompartment\">");
+                                writer.WriteRaw("<layoutConstraint xmi:type=\"notation:Size\" xmi:id=\"" + "_4" + thing.id.Substring(2) + "\" width=\"1320\" height=\"1320\"/></children>");
+                                writer.WriteRaw("<children xmi:type=\"notation:BasicDecorationNode\" xmi:id=\"" + "_5" + thing.id.Substring(2) + "\" type=\"Stereotype\"/>");
+                                writer.WriteRaw("<children xmi:type=\"notation:BasicDecorationNode\" xmi:id=\"" + "_6" + thing.id.Substring(2) + "\" type=\"Name\"/>");
+                                writer.WriteRaw("<children xmi:type=\"notation:BasicDecorationNode\" xmi:id=\"" + "_7" + thing.id.Substring(2) + "\" type=\"Parent\"/>");
+                                writer.WriteRaw("<children xmi:type=\"notation:SemanticListCompartment\" xmi:id=\"" + "_8" + thing.id.Substring(2) + "\" type=\"AttributeCompartment\"/>");
+                                writer.WriteRaw("<children xmi:type=\"notation:SemanticListCompartment\" xmi:id=\"" + "_9" + thing.id.Substring(2) + "\" type=\"OperationCompartment\"/>");
+                                writer.WriteRaw("<children xmi:type=\"notation:SemanticListCompartment\" xmi:id=\"" + "_10" + thing.id.Substring(3) + "\" visible=\"false\" type=\"SignalCompartment\"/>");
+                                writer.WriteRaw("<children xmi:type=\"umlnotation:UMLShapeCompartment\" xmi:id=\"" + "_11" + thing.id.Substring(3) + "\" visible=\"false\" type=\"StructureCompartment\"/>");
+                                writer.WriteRaw("<layoutConstraint xmi:type=\"notation:Bounds\" xmi:id=\"" + "_12" + thing.id.Substring(3) + "\""
+                                + ((loc_x == "$none$") ? "" : " x=\"" + loc_x + "\"")
+                                + ((loc_y == "$none$") ? "" : " y=\"" + loc_y + "\"")
+                                + ((size_x == "$none$") ? "" : " width=\"" + size_x + "\"")
+                                + ((size_y == "$none$") ? "" : " height=\"" + size_y + "\"")
+                                + "/></children>");
+                            }
+
+                            writer.WriteRaw(@"<element xsi:nil=""true""/>");
+
+                            //foreach (Thing thing in view.mandatory)
+                            //{
+
+                            //    thing_GUID_1 = "_00";
+
+                            //    sorted_results = Get_Tuples_place1(thing, tuples);
+
+                            //    foreach (List<Thing> values in sorted_results)
+                            //    {
+                            //        thing_GUID_2 = thing_GUIDs[values[0].place1];
+                            //        thing_GUID_3 = thing_GUIDs[values[0].place2];
+
+                            //        writer.WriteRaw("<edges xmi:type=\"umlnotation:UMLConnector\" xmi:id=\"" + thing_GUID_1 + "cccc" + thing_GUID_2 + "\" element=\"" + thing_GUID_1 + "dddd" + thing_GUID_2 + "\" source=\"" + thing_GUID_1 + "1111" + thing_GUID_2 + "\" target=\"" + thing_GUID_1 + "1111" + thing_GUID_3 + "\" fontHeight=\"8\" roundedBendpointsRadius=\"4\" routing=\"Rectilinear\" lineColor=\"8421504\" lineWidth=\"1\" showStereotype=\"Text\">");
+                            //        writer.WriteRaw("<children xmi:type=\"notation:DecorationNode\" xmi:id=\"" + thing_GUID_1 + "eeee" + thing_GUID_2 + "\" type=\"NameLabel\">");
+                            //        writer.WriteRaw("<children xmi:type=\"notation:BasicDecorationNode\" xmi:id=\"" + thing_GUID_1 + "ffff" + thing_GUID_2 + "\" type=\"Stereotype\"/>");
+                            //        writer.WriteRaw("<children xmi:type=\"notation:BasicDecorationNode\" xmi:id=\"" + thing_GUID_1 + "gggg" + thing_GUID_2 + "\" type=\"Name\"/>");
+                            //        writer.WriteRaw("<layoutConstraint xmi:type=\"notation:Bounds\" xmi:id=\"" + thing_GUID_1 + "hhhh" + thing_GUID_2 + "\" y=\"-186\"/>");
+                            //        writer.WriteRaw("</children>");
+                            //        writer.WriteRaw("<bendpoints xmi:type=\"notation:RelativeBendpoints\" xmi:id=\"" + thing_GUID_1 + "iiii" + thing_GUID_2 + "\" points=\"[6, 42, 32, -157]$[29, 168, 55, -31]\"/>");
+                            //        writer.WriteRaw("</edges>");
+                            //    }
+                            //}
+
+                            writer.WriteRaw(@"</contents>
+                                        </eAnnotations>");
+
+                            //
                         }
 
                         //relationships
