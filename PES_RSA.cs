@@ -5289,14 +5289,14 @@ namespace EAWS.Core.SilverBullet
 
                         foreach (View view in views)
                         {
-                            //
+                            //location
 
                             writer.WriteRaw("<contents xmi:type=\"umlnotation:UMLDiagram\" xmi:id=\"" + view.id + "\" type=\"Freeform\" name=\"" + view.name + "\">");
 
                             foreach (Thing thing in view.mandatory)
                             {
 
-                                if (location_dic.TryGetValue(thing.id, out location) == true)
+                                if (location_dic.TryGetValue(thing.id + view.id, out location) == true)
                                 {
                                     loc_x = location.top_left_x;
                                     loc_y = location.top_left_y;
