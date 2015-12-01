@@ -5354,21 +5354,22 @@ namespace EAWS.Core.SilverBullet
                             //    }
                             //}
 
-                            writer.WriteRaw(@"</contents>
-                                        </eAnnotations>");
+                            writer.WriteRaw(@"</contents>");
 
                             //
                         }
+                        writer.WriteRaw(@"</eAnnotations>");
 
                         //relationships
 
+                    //to do
 
                         //definition
 
-                      foreach (KeyValuePair<string, Thing> thing in things)
+                        foreach (KeyValuePair<string, Thing> thing in things)
                         {
 
-                                 writer.WriteRaw("<packagedElement xmi:type=\"uml:Class\" xmi:id=\"" + thing.Key + "\" name=\"" + thing.Value.name + "\"/>");
+                            writer.WriteRaw("<packagedElement xmi:type=\"uml:Class\" xmi:id=\"" + thing.Key + "\" name=\"" + thing.Value.name + "\"/>");
                         }
 
                         writer.WriteRaw(@"</packagedElement><profileApplication xmi:id=""_9R-3CdPyEeSa1bJT-ij9YA"">
@@ -5417,10 +5418,17 @@ namespace EAWS.Core.SilverBullet
 
                         writer.Flush();
                     }
-                }
-                //return sw.ToString();
 
-                return true;
+                    output = sw.ToString();
+                    errors = string.Join("", errors_list.Distinct().ToArray());
+
+                    if (errors.Count() > 0)
+                        test = false;
+
+                    return test;
+                }
+
+            
 
                 /*
                 Dictionary<string, Thing> things = new Dictionary<string, Thing>();
