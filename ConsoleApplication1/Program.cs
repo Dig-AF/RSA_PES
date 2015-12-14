@@ -19,14 +19,16 @@ namespace ConsoleApplication
 
             input = @"C:\GitHub\test\RSA_out.xml";
 
-            //input = @"C:\GitHub\test\Test Data\RSA\cod restart.emx";
-                        
+            //input = @"C:\GitHub\test\PES_SampleData.emx";
+
+            //test = EAWS.Core.SilverBullet.PES_RSA.RSA2PES(File.ReadAllBytes(input), ref output, ref errors);
+
             test = EAWS.Core.SilverBullet.PES_RSA.PES2RSA(File.ReadAllBytes(input),ref output, ref errors);
             if (!test)
                 System.IO.File.WriteAllText(@"C:\GitHub\test\error2.csv", errors);
 
-            //System.IO.File.WriteAllText(@"C:\GitHub\test\1_out.xml", output);  
-            System.IO.File.WriteAllText(@"C:\GitHub\test\1_out.emx", output);    
+            System.IO.File.WriteAllText(@"C:\GitHub\test\1_out.xml", output);  
+            //System.IO.File.WriteAllText(@"C:\GitHub\test\1_out.emx", output);    
 
             //input = @"C:\test\1_out.xml";
             //XML_2 = NEAR.PES.PES2SA(File.ReadAllBytes(input));

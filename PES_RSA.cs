@@ -32,7 +32,7 @@ namespace EAWS.Core.SilverBullet
                             new string [] {"DataElement", "base_Class", "Data", "IndividualType", "default"},  
                             new string [] {"Project", "base_Class", "ProjectType", "IndividualType", "default"},
                             new string [] {"Milestone", "base_Class", "TemporalMeasureType", "IndividualType", "default"},//formerly PeriodType
-                            new string [] {"TemporalElement", "base_Class", "TemporalMeasure", "IndividualType", "extra"},//Temportal Measure may need more than one thing here!
+                            new string [] {"TemporalElement", "timePeriod", "TemporalMeasure", "IndividualType", "extra"},//Temportal Measure may need more than one thing here!
                             new string [] {"DataExchange", "consumingTask", "Activity", "IndividualType", "extra"},    //for data exchange - need to add the contained producing and consuming activity as a UPIA Task since only appear here.
                             new string [] {"DataExchange", "producingTask", "Activity", "IndividualType", "extra"},    //same as above comment
                             new string [] {"InformationExchange", "consumingTask", "Activity", "IndividualType", "extra"},    //for InformationExchange - need to add the contained producing and consuming activity as a UPIA Task since only appear here.
@@ -148,17 +148,24 @@ namespace EAWS.Core.SilverBullet
         //Not sure the UPIA mapping matters since there is no real translation of this now - nothing maped in the spec anyway. Nothing more deterministic discernablea at this point.
         static string[][] Tuple_Type_Lookup = new string[][] { 
                             //new string [] {"WholePartType (etc)", "DoDAF2TypeName", "UPIA StereoType", "Base ID to UML", "UML Type", SourceProp, DestProp}
+
+
+
                             //new string [] {"WholePartType", "WholePartType", "PartOf", "base_Association", "uml:Association", "memberEnd", ""},   //memberEnd comes in two parts separated by a space, IDs in both parts
                             //new string[] { "WholePartType", "WholePartType", "ExercisesCapability","uml:Association", "memberEnd", "navigableOwnedEnd" }, //memer end contains both sparated by space, navigableownedend is source
                             //new string[] { "WholePartType", "WholePartType", "MilestonePoint", "uml:Association", "memberEnd", ""},
                             //new string[] { "WholePartType", "WholePartType", "ProjectStructure", "uml:Association", "memberEnd", ""},
                             //new string[] { "WholePartType", "WholePartType", "ProjectPhase", "uml:Association", "memberEnd", ""},
                             //commenting out above. Not deterministic nor documented anywhere what UPIA types map to what DM2 types. May attempt again another time.
+                            
+                            //new string [] {"WholePartType", "WholePartType", "PartOf", "base_Association", "memberEnd", ""},   //memberEnd comes in two parts separated by a space, IDs in both parts
+
                             new string[] { "WholePartType", "WholePartType", "uml:Association", "uml:Association", "memberEnd", ""},  //for now letting this single entry deal with UPIA PartOf as well as normal association till I learn otherwise.  The live data does not always use the UPIA stereotype
-                            new string[] { "WholePartType", "WholePartType", "uml:Dependency", "uml:Dependency", "supplier", "client"},
+                            new string[] { "temporalWholePart", "temporalWholePart", "uml:Dependency", "uml:Dependency", "supplier", "client"},
                             new string[] { "WholePartType", "WholePartType", "uml:Usage", "uml:Usage", "supplier", "client"},
                             new string[] { "WholePartType", "WholePartType", "uml:Realization", "uml:Realization", "supplier", "client"},
-                            //new string[] { "WholePartType", "WholePartType", "uml:InformationFlow", "uml:InformationFlow", "informationSource", "informationTarget"},  These are the system interface and needlines
+                            new string[] { "WholePartType", "WholePartType", "uml:ControlFlow", "uml:ControlFlow", "source", "target"},
+                                    //new string[] { "WholePartType", "WholePartType", "uml:InformationFlow", "uml:InformationFlow", "informationSource", "informationTarget"},  These are the system interface and needlines
                             new string[] { "WholePartType", "activityPartOfCapability", "ExercisesCapability","uml:Association", "memberEnd", "navigableOwnedEnd" },
                             
 /*
@@ -431,11 +438,14 @@ namespace EAWS.Core.SilverBullet
                             //Inc. 1- CV-3
                             //Optionals are too numerous on monster matrix  Will do only those required to reproduce live data.
                             new string[] {"WholePartType", "CV-3"}, 
-
+                            new string[] {"TemporalMeasureType", "CV-3"},
+                            new string[] {"TemporalMeasure", "CV-3"},
+                            new string[] {"temporalWholePart", "CV-3"},
                             //Inc. 1 - CV-6
                             new string[] {"TemporalMeasure", "CV-6"},
                             new string[] {"TemporalMeasureType", "CV-6"},
                             new string[] {"WholePartType", "CV-6"}, 
+                            new string[] {"temporalWholePart", "CV-6"}, 
                             //Inc. 1 - PV-2
                             new string[] {"PeriodType", "PV-2"},
                             new string[] {"HappensInType", "PV-2"},
@@ -451,7 +461,7 @@ namespace EAWS.Core.SilverBullet
                             new string[] {"Project", "PV-2"},
                             new string[] {"TemporalMeasureType", "PV-2"},
                             new string[] {"TemporalMeasure", "PV-2"},
-
+                            new string[] {"temporalWholePart", "PV-2"}, 
                             //Inc. 1 - Div-1
                             new string[] {"Data","DIV-1"},
                             new string[] {"DataType", "DIV-1"},
@@ -469,7 +479,7 @@ namespace EAWS.Core.SilverBullet
                             //Inc. 1 - SV-6 - Not dealing in all optionals for SV-6 since not required and only one partial one exists in live data
                             new string[] {"Measure", "SV-6"},
                             new string[] {"MeasureType", "SV-6"},
-                            new string[] {"WholePartType", "SV-6"},
+                            //new string[] {"WholePartType", "SV-6"},
                             new string[] {"Condition", "SV-6"},
                             new string[] {"Information", "SV-6"},
                             new string[] {"Location", "SV-6"},
@@ -483,7 +493,7 @@ namespace EAWS.Core.SilverBullet
                             //Inc. 1 - SvcV-6 - not dealing in all optionals for SvcV-6 since not required and NONE exist in the live data
                             new string[] {"Measure", "SvcV-6"},
                             new string[] {"MeasureType", "SvcV-6"},
-                            new string[] {"WholePartType", "SvcV-6"},
+                            //new string[] {"WholePartType", "SvcV-6"},
                             new string[] {"Condition", "SvcV-6"},
                             new string[] {"Information", "SvcV-6"},
                             new string[] {"Location", "SvcV-6"},
@@ -602,7 +612,7 @@ namespace EAWS.Core.SilverBullet
                             //Priority 3 - SV-1 - Not dealing in all optionals since not required
                             new string[] {"Measure", "SV-1"},
                             new string[] {"MeasureType", "SV-1"},
-                            new string[] {"WholePartType", "SV-1"},
+                            //new string[] {"WholePartType", "SV-1"},
                             new string[] {"Condition", "SV-1"},
                             new string[] {"Information", "SV-1"},
                             new string[] {"Location", "SV-1"},
@@ -617,7 +627,7 @@ namespace EAWS.Core.SilverBullet
                             //Priority 3 - SvcV-1 - not dealing in all optionals since not required and NONE exist in the live data
                             new string[] {"Measure", "SvcV-1"},
                             new string[] {"MeasureType", "SvcV-1"},
-                            new string[] {"WholePartType", "SvcV-1"},
+                            //new string[] {"WholePartType", "SvcV-1"},
                             new string[] {"Condition", "SvcV-1"},
                             new string[] {"Information", "SvcV-1"},
                             new string[] {"Location", "SvcV-1"},
@@ -640,7 +650,7 @@ namespace EAWS.Core.SilverBullet
                             new string[] {"Resource", "SV-2"},
                             new string[] {"Rule", "SV-2"}, 
                             new string[] {"superSubtype", "SV-2"}, 
-                            new string[] {"WholePartType", "SV-2"},
+                           // new string[] {"WholePartType", "SV-2"},
 
                             //Priority 3 - SvcV-2 - Not dealing in all optionals since not required
                             new string[] {"Condition", "SvcV-2"},
@@ -654,7 +664,7 @@ namespace EAWS.Core.SilverBullet
                             new string[] {"Rule", "SvcV-2"}, 
                             new string[] {"System", "SvcV-2"}, 
                             new string[] {"superSubtype", "SvcV-2"}, 
-                            new string[] {"WholePartType", "SvcV-2"},
+                            //new string[] {"WholePartType", "SvcV-2"},
 
                             //Priority 3 - SV-4 - Not dealing in all optionals since not required
                             new string[] {"Condition", "SV-4"},
@@ -666,7 +676,7 @@ namespace EAWS.Core.SilverBullet
                             new string[] {"Resource", "SV-4"},
                             new string[] {"Rule", "SV-4"}, 
                             new string[] {"superSubtype", "SV-4"}, 
-                            new string[] {"WholePartType", "SV-4"},
+                            //new string[] {"WholePartType", "SV-4"},
 
                             //Priority 3 - SvcV-4 - Not dealing in all optionals since not required
                             new string[] {"Condition", "SvcV-4"},
@@ -679,7 +689,7 @@ namespace EAWS.Core.SilverBullet
                             new string[] {"Rule", "SvcV-4"}, 
                             new string[] {"System", "SvcV-4"},  
                             new string[] {"superSubtype", "SvcV-4"}, 
-                            new string[] {"WholePartType", "SvcV-4"},
+                            //new string[] {"WholePartType", "SvcV-4"},
 
                             //Priority 4 - OV-6a
                             new string[] {"Condition", "OV-6a"},
@@ -902,6 +912,7 @@ namespace EAWS.Core.SilverBullet
             public string bottom_right_x;
             public string bottom_right_y;
             public string bottom_right_z;
+            public string diagram_id;
         }
 
         private class View
@@ -1435,9 +1446,10 @@ namespace EAWS.Core.SilverBullet
             IEnumerable<Thing> results3; //added for RSA which has diagrams embedded in two places so a union is needed.
             IEnumerable<Thing> results4; //added for RSA which has diagrams embedded in two places so a union is needed.  This one holds subordinate diagrams to union.
             IEnumerable<Thing> results5; //
+            IEnumerable<Location> results_loc;
             IEnumerable<Thing> UPIAMap;
             IEnumerable<Thing> UPIAMapTemp;
-            IEnumerable<Location> locations;
+            IEnumerable<Location> locations = new List<Location>(); ;
             List<View> views = new List<View>();
             List<Thing> mandatory_list = new List<Thing>();
             List<Thing> optional_list = new List<Thing>();
@@ -1508,16 +1520,16 @@ namespace EAWS.Core.SilverBullet
                 from result in root.Elements(uml + "Model").Descendants("contents")//.Elements("eAnnotations").Elements("contents")
                 where (string)result.Attribute(xi + "type") == "umlnotation:UMLDiagram"
                 select new Thing
-                            {
-                                type = (string)result.Attribute("type"),
-                                id = (string)result.Attribute(xi + "id"),
-                                name = ((string)result.Attribute("name")).Replace("&", " And "),
-                                value = "$none$",
-                                place1 = "$none$",
-                                place2 = "$none$",
-                                foundation = "Thing",
-                                value_type = "$none$"
-                            };
+                {
+                    type = (string)result.Attribute("type"),
+                    id = (string)result.Attribute(xi + "id"),
+                    name = ((string)result.Attribute("name")).Replace("&", " And "),
+                    value = "$none$",
+                    place1 = "$none$",
+                    place2 = "$none$",
+                    foundation = "Thing",
+                    value_type = "$none$"
+                };
             /* results4 =
                  from result in root.Elements(uml + "Model").Elements("packagedElement").Elements("eAnnotations").Elements("contents")
                  select new Thing
@@ -1728,15 +1740,7 @@ namespace EAWS.Core.SilverBullet
                     foundation = "IndividualType",
                     value_type = "$none$"
                 };
-            things = things.Concat(results.ToList());
 
-            things = things.Distinct();
-
-            //things_dic = things.ToDictionary(x => x.id, x => x);
-            //things_dic  put in some code to compenate for non-unique keys - was causing crash.
-            IEnumerable<Thing> filteredthings = things.GroupBy(x => x.id).Select(group => group.First());
-            things_dic = filteredthings.ToDictionary(x => x.id, x => x);
-            things = null;
 
 
             //Regular tuples
@@ -2155,312 +2159,321 @@ namespace EAWS.Core.SilverBullet
 
             tuple_types = tuple_types.Concat(results.ToList());
 
+            //Diagramming
+
+            foreach (Thing thing in things)
+            {
+                results_loc =
+                    from result in root.Descendants().Elements("children")
+                    from result2 in result.Descendants()
+                    from result3 in result.Descendants()
+                    where (string)result.Attribute("element") == thing.id
+                    where (string)result.Attribute(xi + "type") == "umlnotation:UMLShape"
+                    where (string)result2.Attribute(xi + "type") == "notation:Size"
+                    where (string)result3.Attribute(xi + "type") == "notation:Bounds"
+                    where (string)result3.Parent.Parent.Attribute(xi + "id") != null
+                    select new Location
+                    {
+                        id = (string)result.Attribute("element") + (string)result3.Parent.Parent.Attribute(xi + "id"),
+                        top_left_x = ((result3.Attribute("x") == null) ? 1000 : (int)result3.Attribute("x")).ToString(),
+                        top_left_y = ((result3.Attribute("y") == null) ? 1000 : (int)result3.Attribute("y")).ToString(),
+                        bottom_right_x = ((int)((result3.Attribute("x") == null) ? 1000 : (int)result3.Attribute("x")) + ((result2.Attribute("width") == null) ? 1000 : (int)result2.Attribute("width"))).ToString(),
+                        bottom_right_y = ((int)((result3.Attribute("y") == null) ? 1000 : (int)result3.Attribute("y")) + ((result2.Attribute("height") == null) ? 1000 : (int)result2.Attribute("height"))).ToString(),
+                        diagram_id = (string)result3.Parent.Parent.Attribute(xi + "id"),
+                        element_id = (string)result.Attribute("element")
+                    };
+
+                locations = locations.Concat(results_loc.ToList());
+
+            }
+
+            foreach (Location location in locations)
+            {
+                values = new List<Thing>();
+
+                values.Add(new Thing
+                {
+                    type = "Information",
+                    id = location.id + "_12",
+                    name = "Diagramming Information",
+                    value = (string)location.diagram_id,
+                    place1 = "$none$",
+                    place2 = "$none$",
+                    foundation = "IndividualType",
+                    value_type = "exemplar"
+                });
+
+                values.Add(new Thing
+                {
+                    type = "Point",
+                    id = location.id + "_16",
+                    name = "Top Left Location",
+                    value = "$none$",
+                    place1 = "$none$",
+                    place2 = "$none$",
+                    foundation = "IndividualType",
+                    value_type = "$none$"
+                });
+
+                values.Add(new Thing
+                {
+                    type = "PointType",
+                    id = location.id + "_14",
+                    name = "Top Left LocationType",
+                    value = "$none$",
+                    place1 = "$none$",
+                    place2 = "$none$",
+                    foundation = "IndividualType",
+                    value_type = "$none$"
+                });
+
+                values.Add(new Thing
+                {
+                    type = "Point",
+                    id = location.id + "_26",
+                    name = "Bottome Right Location",
+                    value = "$none$",
+                    place1 = "$none$",
+                    place2 = "$none$",
+                    foundation = "IndividualType",
+                    value_type = "$none$"
+                });
+
+                values.Add(new Thing
+                {
+                    type = "PointType",
+                    id = location.id + "_24",
+                    name = "Bottome Right LocationType",
+                    value = "$none$",
+                    place1 = "$none$",
+                    place2 = "$none$",
+                    foundation = "IndividualType",
+                    value_type = "$none$"
+                });
+
+                values.Add(new Thing
+                {
+                    type = "SpatialMeasure",
+                    id = location.id + "_18",
+                    name = "Top Left X Location",
+                    value = location.top_left_x,
+                    place1 = "$none$",
+                    place2 = "$none$",
+                    foundation = "IndividualType",
+                    value_type = "numericValue"
+                });
+
+                values.Add(new Thing
+                {
+                    type = "SpatialMeasure",
+                    id = location.id + "_20",
+                    name = "Top Left Y Location",
+                    value = location.top_left_y,
+                    place1 = "$none$",
+                    place2 = "$none$",
+                    foundation = "IndividualType",
+                    value_type = "numericValue"
+                });
+
+                values.Add(new Thing
+                {
+                    type = "SpatialMeasure",
+                    id = location.id + "_22",
+                    name = "Top Left Z Location",
+                    value = "0",
+                    place1 = "$none$",
+                    place2 = "$none$",
+                    foundation = "IndividualType",
+                    value_type = "numericValue"
+                });
+
+                values.Add(new Thing
+                {
+                    type = "SpatialMeasure",
+                    id = location.id + "_28",
+                    name = "Bottom Right X Location",
+                    value = location.bottom_right_x,
+                    place1 = "$none$",
+                    place2 = "$none$",
+                    foundation = "IndividualType",
+                    value_type = "numericValue"
+                });
+
+                values.Add(new Thing
+                {
+                    type = "SpatialMeasure",
+                    id = location.id + "_30",
+                    name = "Bottom Right Y Location",
+                    value = location.bottom_right_y,
+                    place1 = "$none$",
+                    place2 = "$none$",
+                    foundation = "IndividualType",
+                    value_type = "numericValue"
+                });
+
+                values.Add(new Thing
+                {
+                    type = "SpatialMeasure",
+                    id = location.id + "_32",
+                    name = "Bottom Right Z Location",
+                    value = "0",
+                    place1 = "$none$",
+                    place2 = "$none$",
+                    foundation = "IndividualType",
+                    value_type = "numericValue"
+                });
+
+                things = things.Concat(values);
+
+                values = new List<Thing>();
+
+                values.Add(new Thing
+                {
+                    type = "describedBy",
+                    id = location.id + "_11",
+                    name = "$none$",
+                    value = "$none$",
+                    place1 = location.element_id,
+                    place2 = location.id + "_12",
+                    foundation = "namedBy"
+                });
+
+                values.Add(new Thing
+                {
+                    type = "typeInstance",
+                    id = location.id + "_15",
+                    name = "$none$",
+                    value = "$none$",
+                    place1 = location.id + "_14",
+                    place2 = location.id + "_16",
+                    foundation = "typeInstance"
+                });
+
+                values.Add(new Thing
+                {
+                    type = "typeInstance",
+                    id = location.id + "_25",
+                    name = "$none$",
+                    value = "$none$",
+                    place1 = location.id + "_24",
+                    place2 = location.id + "_26",
+                    foundation = "typeInstance"
+                });
+
+
+                values.Add(new Thing
+                {
+                    type = "measureOfIndividualPoint",
+                    id = location.id + "_17",
+                    name = "$none$",
+                    value = "$none$",
+                    place1 = location.id + "_18",
+                    place2 = location.id + "_16",
+                    foundation = "typeInstance"
+                });
+
+                values.Add(new Thing
+                {
+                    type = "measureOfIndividualPoint",
+                    id = location.id + "_19",
+                    name = "$none$",
+                    value = "$none$",
+                    place1 = location.id + "_20",
+                    place2 = location.id + "_16",
+                    foundation = "typeInstance"
+                });
+
+                values.Add(new Thing
+                {
+                    type = "measureOfIndividualPoint",
+                    id = location.id + "_21",
+                    name = "$none$",
+                    value = "$none$",
+                    place1 = location.id + "_22",
+                    place2 = location.id + "_16",
+                    foundation = "typeInstance"
+                });
+
+                values.Add(new Thing
+                {
+                    type = "measureOfIndividualPoint",
+                    id = location.id + "_27",
+                    name = "$none$",
+                    value = "$none$",
+                    place1 = location.id + "_28",
+                    place2 = location.id + "_26",
+                    foundation = "typeInstance"
+                });
+
+                values.Add(new Thing
+                {
+                    type = "measureOfIndividualPoint",
+                    id = location.id + "_29",
+                    name = "$none$",
+                    value = "$none$",
+                    place1 = location.id + "_30",
+                    place2 = location.id + "_26",
+                    foundation = "typeInstance"
+                });
+
+                values.Add(new Thing
+                {
+                    type = "measureOfIndividualPoint",
+                    id = location.id + "_31",
+                    name = "$none$",
+                    value = "$none$",
+                    place1 = location.id + "_32",
+                    place2 = location.id + "_26",
+                    foundation = "typeInstance"
+                });
+
+                tuples = tuples.Concat(values);
+
+                values = new List<Thing>();
+
+                values.Add(new Thing
+                {
+                    type = "resourceInLocationType",
+                    id = location.id + "_13",
+                    name = "$none$",
+                    value = "$none$",
+                    place1 = location.id + "_12",
+                    place2 = location.id + "_14",
+                    foundation = "CoupleType"
+                });
+
+                values.Add(new Thing
+                {
+                    type = "resourceInLocationType",
+                    id = location.id + "_23",
+                    name = "$none$",
+                    value = "$none$",
+                    place1 = location.id + "_12",
+                    place2 = location.id + "_24",
+                    foundation = "CoupleType"
+                });
+
+                tuple_types = tuple_types.Concat(values);
+            }
+
+
+
             //ToLists
+            things = things.Concat(results.ToList());
+
+            things = things.Distinct();
+
+            //things_dic = things.ToDictionary(x => x.id, x => x);
+            //things_dic  put in some code to compenate for non-unique keys - was causing crash.
+            IEnumerable<Thing> filteredthings = things.GroupBy(x => x.id).Select(group => group.First());
+            things_dic = filteredthings.ToDictionary(x => x.id, x => x);
+
             values3 = tuples.ToList();
             values4 = tuple_types.ToList();
             tuples = null;
             tuple_types = null;
 
-
-
-
-            //Diagramming
-            /***********************************************************************************************************************************************************************
-                        locations =
-                                from result in root.Elements("Class").Elements("SADiagram").Elements("SASymbol")
-                                where (string)result.Attribute("SASymIdDef") != null
-                                    || (string)result.Attribute("SAObjMinorTypeName") == "Picture" || (string)result.Attribute("SAObjMinorTypeName") == "Doc Block"
-                                select new Location
-                                {
-                                    id = ((string)result.Attribute("SAObjMinorTypeName") == "Picture" || (string)result.Attribute("SAObjMinorTypeName") == "Doc Block") ? (string)result.Parent.Attribute("SAObjId") + (string)result.Attribute("SAObjId") : (string)result.Parent.Attribute("SAObjId") + (string)result.Attribute("SAObjId"),
-                                    top_left_x = (string)result.Attribute("SASymLocX"),
-                                    top_left_y = (string)result.Attribute("SASymLocY"),
-                                    bottom_right_x = ((int)result.Attribute("SASymLocX") + (int)result.Attribute("SASymSizeX")).ToString(),
-                                    bottom_right_y = ((int)result.Attribute("SASymLocY") - (int)result.Attribute("SASymSizeY")).ToString(),
-                                    element_id = ((string)result.Attribute("SAObjMinorTypeName") == "Picture" || (string)result.Attribute("SAObjMinorTypeName") == "Doc Block") ? (string)result.Attribute("SAObjId") : (string)result.Attribute("SASymIdDef")
-                                };
-
-                        foreach (Location location in locations)
-                        {
-                            values = new List<Thing>();
-
-                            values.Add(new Thing
-                            {
-                                type = "Information",
-                                id = location.id + "_12",
-                                name = "Diagramming Information",
-                                value = "$none$",
-                                place1 = "$none$",
-                                place2 = "$none$",
-                                foundation = "IndividualType",
-                                value_type = "$none$"
-                            });
-
-                            values.Add(new Thing
-                            {
-                                type = "Point",
-                                id = location.id + "_16",
-                                name = "Top Left Location",
-                                value = "$none$",
-                                place1 = "$none$",
-                                place2 = "$none$",
-                                foundation = "IndividualType",
-                                value_type = "$none$"
-                            });
-
-                            values.Add(new Thing
-                            {
-                                type = "PointType",
-                                id = location.id + "_14",
-                                name = "Top Left LocationType",
-                                value = "$none$",
-                                place1 = "$none$",
-                                place2 = "$none$",
-                                foundation = "IndividualType",
-                                value_type = "$none$"
-                            });
-
-                            values.Add(new Thing
-                            {
-                                type = "Point",
-                                id = location.id + "_26",
-                                name = "Bottome Right Location",
-                                value = "$none$",
-                                place1 = "$none$",
-                                place2 = "$none$",
-                                foundation = "IndividualType",
-                                value_type = "$none$"
-                            });
-
-                            values.Add(new Thing
-                            {
-                                type = "PointType",
-                                id = location.id + "_24",
-                                name = "Bottome Right LocationType",
-                                value = "$none$",
-                                place1 = "$none$",
-                                place2 = "$none$",
-                                foundation = "IndividualType",
-                                value_type = "$none$"
-                            });
-
-                            values.Add(new Thing
-                            {
-                                type = "SpatialMeasure",
-                                id = location.id + "_18",
-                                name = "Top Left X Location",
-                                value = location.top_left_x,
-                                place1 = "$none$",
-                                place2 = "$none$",
-                                foundation = "IndividualType",
-                                value_type = "numericValue",
-                            });
-
-                            values.Add(new Thing
-                            {
-                                type = "SpatialMeasure",
-                                id = location.id + "_20",
-                                name = "Top Left Y Location",
-                                value = location.top_left_y,
-                                place1 = "$none$",
-                                place2 = "$none$",
-                                foundation = "IndividualType",
-                                value_type = "numericValue"
-                            });
-
-                            values.Add(new Thing
-                            {
-                                type = "SpatialMeasure",
-                                id = location.id + "_22",
-                                name = "Top Left Z Location",
-                                value = "0",
-                                place1 = "$none$",
-                                place2 = "$none$",
-                                foundation = "IndividualType",
-                                value_type = "numericValue"
-                            });
-
-                            values.Add(new Thing
-                            {
-                                type = "SpatialMeasure",
-                                id = location.id + "_28",
-                                name = "Bottom Right X Location",
-                                value = location.bottom_right_x,
-                                place1 = "$none$",
-                                place2 = "$none$",
-                                foundation = "IndividualType",
-                                value_type = "numericValue"
-                            });
-
-                            values.Add(new Thing
-                            {
-                                type = "SpatialMeasure",
-                                id = location.id + "_30",
-                                name = "Bottom Right Y Location",
-                                value = location.bottom_right_y,
-                                place1 = "$none$",
-                                place2 = "$none$",
-                                foundation = "IndividualType",
-                                value_type = "numericValue"
-                            });
-
-                            values.Add(new Thing
-                            {
-                                type = "SpatialMeasure",
-                                id = location.id + "_32",
-                                name = "Bottom Right Z Location",
-                                value = "0",
-                                place1 = "$none$",
-                                place2 = "$none$",
-                                foundation = "IndividualType",
-                                value_type = "numericValue"
-                            });
-
-                            values5.AddRange(values);
-
-                            values = new List<Thing>();
-
-                            values.Add(new Thing
-                            {
-                                type = "describedBy",
-                                id = location.id + "_11",
-                                name = "$none$",
-                                value = "$none$",
-                                place1 = location.element_id,
-                                place2 = location.id + "_12",
-                                foundation = "namedBy",
-                                value_type = "$none$"
-                            });
-
-                            values.Add(new Thing
-                            {
-                                type = "typeInstance",
-                                id = location.id + "_15",
-                                name = "$none$",
-                                value = "$none$",
-                                place1 = location.id + "_14",
-                                place2 = location.id + "_16",
-                                foundation = "typeInstance",
-                                value_type = "$none$"
-                            });
-
-                            values.Add(new Thing
-                            {
-                                type = "typeInstance",
-                                id = location.id + "_25",
-                                name = "$none$",
-                                value = "$none$",
-                                place1 = location.id + "_24",
-                                place2 = location.id + "_26",
-                                foundation = "typeInstance",
-                                value_type = "$none$"
-                            });
-
-
-                            values.Add(new Thing
-                            {
-                                type = "measureOfIndividualPoint",
-                                id = location.id + "_17",
-                                name = "$none$",
-                                value = "$none$",
-                                place1 = location.id + "_18",
-                                place2 = location.id + "_16",
-                                foundation = "typeInstance",
-                                value_type = "$none$"
-                            });
-
-                            values.Add(new Thing
-                            {
-                                type = "measureOfIndividualPoint",
-                                id = location.id + "_19",
-                                name = "$none$",
-                                value = "$none$",
-                                place1 = location.id + "_20",
-                                place2 = location.id + "_16",
-                                foundation = "typeInstance",
-                                value_type = "$none$"
-                            });
-
-                            values.Add(new Thing
-                            {
-                                type = "measureOfIndividualPoint",
-                                id = location.id + "_21",
-                                name = "$none$",
-                                value = "$none$",
-                                place1 = location.id + "_22",
-                                place2 = location.id + "_16",
-                                foundation = "typeInstance",
-                                value_type = "$none$"
-                            });
-
-                            values.Add(new Thing
-                            {
-                                type = "measureOfIndividualPoint",
-                                id = location.id + "_27",
-                                name = "$none$",
-                                value = "$none$",
-                                place1 = location.id + "_28",
-                                place2 = location.id + "_26",
-                                foundation = "typeInstance",
-                                value_type = "$none$"
-                            });
-
-                            values.Add(new Thing
-                            {
-                                type = "measureOfIndividualPoint",
-                                id = location.id + "_29",
-                                name = "$none$",
-                                value = "$none$",
-                                place1 = location.id + "_30",
-                                place2 = location.id + "_26",
-                                foundation = "typeInstance",
-                                value_type = "$none$"
-                            });
-
-                            values.Add(new Thing
-                            {
-                                type = "measureOfIndividualPoint",
-                                id = location.id + "_31",
-                                name = "$none$",
-                                value = "$none$",
-                                place1 = location.id + "_32",
-                                place2 = location.id + "_26",
-                                foundation = "typeInstance",
-                                value_type = "$none$"
-                            });
-
-                            values7.AddRange(values);
-
-                            values = new List<Thing>();
-
-                            values.Add(new Thing
-                            {
-                                type = "resourceInLocationType",
-                                id = location.id + "_13",
-                                name = "$none$",
-                                value = "$none$",
-                                place1 = location.id + "_12",
-                                place2 = location.id + "_14",
-                                foundation = "CoupleType",
-                                value_type = "$none$"
-                            });
-
-                            values.Add(new Thing
-                            {
-                                type = "resourceInLocationType",
-                                id = location.id + "_23",
-                                name = "$none$",
-                                value = "$none$",
-                                place1 = location.id + "_12",
-                                place2 = location.id + "_24",
-                                foundation = "CoupleType",
-                                value_type = "$none$"
-                            });
-
-
-                            values6.AddRange(values);
-                        }
-            */
+            things = null;
             locations = null;
             values = null;
             values2 = null;
