@@ -16,29 +16,29 @@ namespace EAWS.Core.SilverBullet
         static String[][] UPIA_Element_Id_Prop = new string[][] {
                             //new string [] {"EnterpriseModel", "base_Package"},  //NOt used yet
                             //new string [] {"View", "base_Package"}, //not used yet
-                            new string [] {"ArchitectureDescription", "base_Package", "ArchitecturalDescription", "IndividualType", "extra"},
+                            new string [] {"ArchitectureDescription", "base_Package", "ArchitecturalDescription", "IndividualType", "default"},
                             //new string [] {"Viewpoint", "base_Class"}, //not used yet
                             //new string [] {"Conform", "base_Dependency"}, //NOt used yet
                             new string [] {"Capability", "base_Class", "Capability", "IndividualType", "default"},
-                            new string [] {"CapabilityUsage", "base_UseCase", "Activity", "IndividualType", "default"},
+                            new string [] {"CapabilityUsage", "base_UseCase", "Activity", "IndividualType", "extra"},
                             new string [] {"CapabilityRole", "base_Class", "Performer", "IndividualType", "extra"},
-                            new string [] {"OperationalNode", "base_Class", "Performer", "IndividualType", "extra"},
+                            new string [] {"OperationalNode", "base_Class", "Performer", "IndividualType", "default"},
                             new string [] {"OperationalTask", "base_Operation", "Activity", "IndividualType", "extra"},
-                            new string [] {"OperationalActivity", "base_Activity", "Activity", "IndividualType", "extra"},
+                            new string [] {"OperationalActivity", "base_Activity", "Activity", "IndividualType", "default"},
                             new string [] {"OperationalNodeSpecification", "base_Interface", "Performer", "IndividualType", "extra"},
                             //new string [] {"CapabilityRealization", "base_Class", "Activity", "IndividualType"},  UPIA Spec specifically says this is ignored.
                             new string [] {"Information", "base_Class", "DataType", "IndividualType", "default"},
-                            new string [] {"InformationElement", "base_Class", "Data", "IndividualType", "extra"},
+                            new string [] {"InformationElement", "base_Class", "Data", "IndividualType", "default"},
                             new string [] {"DataElement", "base_Class", "Data", "IndividualType", "default"},  
                             new string [] {"Project", "base_Class", "ProjectType", "IndividualType", "default"},
                             new string [] {"Milestone", "base_Class", "TemporalMeasureType", "IndividualType", "default"},//formerly PeriodType
-                            new string [] {"TemporalElement", "timePeriod", "TemporalMeasure", "IndividualType", "extra"},//Temportal Measure may need more than one thing here!
+                            new string [] {"TemporalElement", "timePeriod", "TemporalMeasure", "IndividualType", "default"},//Temportal Measure may need more than one thing here!
                             new string [] {"DataExchange", "consumingTask", "Activity", "IndividualType", "extra"},    //for data exchange - need to add the contained producing and consuming activity as a UPIA Task since only appear here.
                             new string [] {"DataExchange", "producingTask", "Activity", "IndividualType", "extra"},    //same as above comment
                             new string [] {"InformationExchange", "consumingTask", "Activity", "IndividualType", "extra"},    //for InformationExchange - need to add the contained producing and consuming activity as a UPIA Task since only appear here.
                             new string [] {"InformationExchange", "producingTask", "Activity", "IndividualType", "extra"},    //same as above comment
 
-                            new string [] {"System", "base_Class", "System", "IndividualType", "extra"},
+                            new string [] {"System", "base_Class", "System", "IndividualType", "default"},
                             new string [] {"CommunicationSystem", "base_Class", "System", "IndividualType", "extra"},
                             new string [] {"Network", "base_Class", "System", "IndividualType", "extra"},
                             new string [] {"SystemHardware", "base_Class", "System", "IndividualType", "extra"},
@@ -47,14 +47,14 @@ namespace EAWS.Core.SilverBullet
                             new string [] {"ActualMeasure", "base_InstanceSpecification", "Measure", "IndividualType", "extra"},
                             new string [] {"MeasuredElement", "base_NamedElement", "HappensInType", "IndividualType", "extra"},
                             new string [] {"ServiceParticipant", "base_Class", "Service", "IndividualType", "extra"},  //is mentioned as just participant in the UPIA doc, but stores as serviceparticipant
-                            new string [] {"ServiceSpecification", "base_Interface", "Service", "IndividualType", "extra"},
+                            new string [] {"ServiceSpecification", "base_Interface", "Service", "IndividualType", "default"},
                             new string [] {"ProjectInstance",  "base_InstanceSpecification", "Project", "IndividualType", "default"},
                             new string [] {"SystemTask",  "base_Operation", "Activity", "IndividualType", "extra"},
                             new string [] {"SystemFunction",  "base_Activity", "Activity", "IndividualType", "extra"},
 
                             new string [] {"Personnel",  "base_Class", "PersonRole", "IndividualType", "extra"},
                             new string [] {"Stakeholder",  "base_Class", "PersonRole", "IndividualType", "extra"},
-                            new string [] {"OrganizationalResource",  "base_Class", "OrganizationType", "IndividualType", "extra"},
+                            new string [] {"OrganizationalResource",  "base_Class", "OrganizationType", "IndividualType", "default"},
                             };
 
         //In order - DM2 Element Name, Stereotype in UPIA, DM2 type - Currently NOT USED
@@ -226,28 +226,28 @@ namespace EAWS.Core.SilverBullet
                             new string[] {"DIV-1", "Class", "", "default"},
                             new string[] {"DIV-2", "Class", "", "default"},
                             new string[] {"PV-2", "Class", "", "default"},
-                            new string[] {"SV-6", "Freeform", "", "extra"},
-                            new string[] {"SvcV-6", "Freeform", "", "extra"},
+                            new string[] {"SV-6", "Freeform", "", "default"},
+                            new string[] {"SvcV-6", "Freeform", "", "default"},
                             //Priority 2
-                            new string[] {"CV-2", "Class", "", "extra"},
+                            new string[] {"CV-2", "Class", "", "default"},
                             new string[] {"CV-2", "Freeform", "", "extra"},
-                            new string[] {"DIV-3", "Class", "", "extra"},
-                            new string[] {"OV-1", "Freeform", "", "extra"},
-                            new string[] {"OV-2", "Class", "", "extra"},
-                            new string[] {"OV-4", "Class", "", "extra"},
+                            new string[] {"DIV-3", "Class", "", "default"},
+                            new string[] {"OV-1", "Freeform", "", "default"},
+                            new string[] {"OV-2", "Class", "", "default"},
+                            new string[] {"OV-4", "Class", "", "default"},
                             new string[] {"OV-4", "Freeform", "", "extra"},
-                            new string[] {"OV-5a", "Activity", "", "extra"},
-                            new string[] {"OV-5b", "Activity", "", "extra"},
-                            new string[] {"OV-6c", "Sequence", "", "extra"},
+                            new string[] {"OV-5a", "Activity", "", "default"},
+                            new string[] {"OV-5b", "Activity", "", "default"},
+                            new string[] {"OV-6c", "Sequence", "", "default"},
                             //Priority 3
-                            new string[] {"SV-1", "Freeform", "", "extra"},
+                            new string[] {"SV-1", "Freeform", "", "default"},
                             new string[] {"SvcV-1", "Freeform", "", "extra"},
-                            new string[] {"SV-2", "Class", "", "extra"},
+                            new string[] {"SV-2", "Class", "", "default"},
                             new string[] {"SV-2", "Freeform", "", "extra"},
-                            new string[] {"SvcV-2", "Class", "", "extra"},
+                            new string[] {"SvcV-2", "Class", "", "default"},
                             new string[] {"SvcV-2", "Freeform", "", "extra"},
-                            new string[] {"SV-4", "Activity", "", "extra"},
-                            new string[] {"SvcV-4", "Activity", "", "extra"},
+                            new string[] {"SV-4", "Activity", "", "default"},
+                            new string[] {"SvcV-4", "Activity", "", "default"},
                             //new string[] {"SV-4", "Class", "", "extra"},  //commented out because live data does not contain proper elements for SV-4.   
                             //new string[] {"SvcV-4", "Class", "", "extra"},//commented out because live data does not contain proper elements for SV-4.  
                             //new string[] {"SV-4", "Freeform", "", "extra"},//commented out because live data does not contain proper elements for SV-4.  
@@ -1617,7 +1617,7 @@ namespace EAWS.Core.SilverBullet
                     {
                         type = (string)UPIAThing.value,
                         id = (string)result.Attribute(xi + "id"),
-                        name = ((string)result.Attribute("name")),//.Replace("&", " And ") ?? "$none$",
+                        name = (result.Attribute("name") == null ? "$none$" : ((string)result.Attribute("name")).Replace("&", " And ")),
                         value = "$none$",
                         place1 = "$none$",
                         place2 = "$none$",
@@ -1638,7 +1638,7 @@ namespace EAWS.Core.SilverBullet
                     {
                         type = (string)UPIAThing.value,
                         id = (string)result.Attribute(xi + "id"),
-                        name = (string)result.Attribute("name"),//.Replace("&", " And ") ?? "$none$",  //commnented out because looks like in RSA emx file that & is replace by &amp;
+                        name = (result.Attribute("name") == null ? "$none$" : ((string)result.Attribute("name")).Replace("&", " And ")),
                         value = "$none$",
                         place1 = (string)result.Parent.Attribute(xi + "id"), //putting in the parent (owning) class here so I can figure out latter where activities should be added to views. Formerly "$none$"
                         place2 = "$none$",
@@ -1660,7 +1660,7 @@ namespace EAWS.Core.SilverBullet
                     {
                         type = (string)UPIAThing.value,
                         id = (string)result.Attribute(xi + "id"),
-                        name = (string)result.Attribute("name"),//.Replace("&", " And ") ?? "$none$",  //commnented out because looks like in RSA emx file that & is replace by &amp;
+                        name = (result.Attribute("name") == null ? "$none$" : ((string)result.Attribute("name")).Replace("&", " And ")),
                         value = "$none$",
                         place1 = (string)result.Parent.Attribute(xi + "id"), //putting in the parent (owning) class here so I can figure out latter where activities should be added to views. Formerly "$none$"
                         place2 = "$none$",
@@ -1679,7 +1679,7 @@ namespace EAWS.Core.SilverBullet
                 {
                     type = "Data",
                     id = (string)result.Attribute(xi + "id"),
-                    name = (string)result.Attribute("name"),//.Replace("&", " And ") ?? "$none$",  //commnented out because looks like in RSA emx file that & is replace by &amp;
+                    name = (result.Attribute("name") == null ? "$none$" : ((string)result.Attribute("name")).Replace("&", " And ")),
                     value = "$none$",
                     place1 = (string)result.Parent.Attribute(xi + "id"), //putting in the parent (owning) class here so I can figure out latter where activities should be added to views. Formerly "$none$"
                     place2 = "$none$",
@@ -1697,7 +1697,7 @@ namespace EAWS.Core.SilverBullet
                 {
                     type = "Rule",
                     id = (string)result.Attribute(xi + "id"),
-                    name = (string)result.Attribute("name"),//.Replace("&", " And ") ?? "$none$",  //commnented out because looks like in RSA emx file that & is replace by &amp;
+                    name = (result.Attribute("name") == null ? "$none$" : ((string)result.Attribute("name")).Replace("&", " And ")),
                     value = "$none$",
                     place1 = (string)result.Attribute("constrainedElement"), //putting in the parent (owning) thing here so I can figure out latter where rules should be added to views. Formerly "$none$"
                     place2 = "$none$",
@@ -1715,7 +1715,7 @@ namespace EAWS.Core.SilverBullet
                 {
                     type = "Rule",
                     id = (string)result.Attribute(xi + "id"),
-                    name = (string)result.Attribute("name"),//.Replace("&", " And ") ?? "$none$",  //commnented out because looks like in RSA emx file that & is replace by &amp;
+                    name = (result.Attribute("name") == null ? "$none$" : ((string)result.Attribute("name")).Replace("&", " And ")),
                     value = "$none$",
                     place1 = (string)result.Attribute("constrainedElement"), //putting in the parent (owning) thing here so I can figure out latter where rules should be added to views. Formerly "$none$"
                     place2 = "$none$",
@@ -1733,7 +1733,7 @@ namespace EAWS.Core.SilverBullet
                 {
                     type = "Rule",
                     id = (string)result.Attribute(xi + "id"),
-                    name = (string)result.Attribute("name"),//.Replace("&", " And ") ?? "$none$",  //commnented out because looks like in RSA emx file that & is replace by &amp;
+                    name = (result.Attribute("name") == null ? "$none$" : ((string)result.Attribute("name")).Replace("&", " And ")),
                     value = "$none$",
                     place1 = (string)result.Attribute("constrainedElement"), //putting in the parent (owning) thing here so I can figure out latter where rules should be added to views. Formerly "$none$"
                     place2 = "$none$",
@@ -1808,8 +1808,8 @@ namespace EAWS.Core.SilverBullet
                             id = (string)result.Attribute(xi + "id") + "_4",
                             name = "$none$",
                             value = "$none$",
-                            place1 = (string)result4.Attribute("type"),
-                            place2 = (string)result5.Attribute("type"),
+                            place2 = (string)result4.Attribute("type"),
+                            place1 = (string)result5.Attribute("type"),
                             foundation = current_lookup[0],
                             value_type = "$none$"
                         };
@@ -4967,6 +4967,8 @@ namespace EAWS.Core.SilverBullet
             List<View> views = new List<View>();
             Location location;
             string loc_x,loc_y, size_x, size_y;
+            int count;
+            Thing value;
 
             foreach (string[] current_lookup in UPIA_Element_Id_Prop)
             {
@@ -5377,13 +5379,54 @@ namespace EAWS.Core.SilverBullet
 
                     //to do
 
-                        //definition
-
                         foreach (KeyValuePair<string, Thing> thing in things)
                         {
 
-                            writer.WriteRaw("<packagedElement xmi:type=\"uml:Class\" xmi:id=\"" + thing.Key + "\" name=\"" + thing.Value.name + "\"/>");
+                            //if (thing_GUIDs.TryGetValue(thing.Value.id, out thing_GUID) == false)
+                            //{
+
+                            //    thing_GUID = "_" + Guid.NewGuid().ToString("N").Substring(10);
+                            //    thing_GUID_1 = thing_GUID.Substring(0, 3);
+                            //    thing_GUID_3 = thing_GUID.Substring(7, 16);
+
+                            //    thing_GUIDs.Add(thing.Value.id, thing_GUID_3);
+
+                            //}
+                            sorted_results = new List<List<Thing>>();
+
+                            sorted_results.AddRange(Get_Tuples_place1(thing.Value, tuple_types));
+                            count = sorted_results.Count();
+
+                            if (count != 0)
+                                foreach (List<Thing> values in sorted_results)
+                                {
+                                    things.TryGetValue(values[0].place2,out value);
+                                    if (value != null)
+                                    {
+                                        writer.WriteRaw("<packagedElement xmi:type=\"uml:Class\" xmi:id=\"" + thing.Key + "\" name=\"" + thing.Value.name + "\">");
+                                        writer.WriteRaw("<ownedAttribute xmi:id=\"" + "_2" + thing.Key.Substring(2) + "_\" name=\"" + value.name + "\" visibility=\"private\" type=\""
+                                            + value.id + "\" aggregation=\"composite\" association=\"" + "_3" + thing.Key.Substring(2) + "\">");
+                                        writer.WriteRaw("<upperValue xmi:type=\"uml:LiteralUnlimitedNatural\" xmi:id=\"" + "_4" + thing.Key.Substring(2) + "\" value=\"*\"/>");
+                                        writer.WriteRaw("<lowerValue xmi:type=\"uml:LiteralInteger\" xmi:id=\"" + "_5" + thing.Key.Substring(2) + "\"/>");
+                                        writer.WriteRaw("</ownedAttribute>");
+                                        writer.WriteRaw("</packagedElement>");
+                                    }
+                                }
+                            else
+                            {
+                                //definition
+
+                                writer.WriteRaw("<packagedElement xmi:type=\"uml:Class\" xmi:id=\"" + thing.Key + "\" name=\"" + thing.Value.name + "\"/>");
+                            }
                         }
+
+                        //definition
+
+                        //foreach (KeyValuePair<string, Thing> thing in things)
+                        //{
+
+                        //    writer.WriteRaw("<packagedElement xmi:type=\"uml:Class\" xmi:id=\"" + thing.Key + "\" name=\"" + thing.Value.name + "\"/>");
+                        //}
 
                         writer.WriteRaw(@"</packagedElement><profileApplication xmi:id=""_9R-3CdPyEeSa1bJT-ij9YA"">
                               <eAnnotations xmi:id=""_9R-3CtPyEeSa1bJT-ij9YA"" source=""http://www.eclipse.org/uml2/2.0.0/UML"">
