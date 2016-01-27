@@ -489,6 +489,7 @@ namespace EAWS.Core.SilverBullet
                             new string[] {"Resource", "SV-6"},
                             new string[] {"Rule", "SV-6"}, 
                             new string[] {"superSubtype", "SV-6"}, 
+                            new string[] {"OverlapType", "SV-6"},
 
                             //Inc. 1 - SvcV-6 - not dealing in all optionals for SvcV-6 since not required and NONE exist in the live data
                             new string[] {"Measure", "SvcV-6"},
@@ -503,6 +504,7 @@ namespace EAWS.Core.SilverBullet
                             new string[] {"Resource", "SvcV-6"},
                             new string[] {"Rule", "SvcV-6"}, 
                             new string[] {"superSubtype", "SvcV-6"}, 
+                            new string[] {"OverlapType", "SvcV-6"},
 
                             //Priority 2 - CV-2
                             new string[] {"Activity", "CV-2"},
@@ -554,6 +556,7 @@ namespace EAWS.Core.SilverBullet
                             new string[] {"Rule", "OV-2"}, 
                             new string[] {"superSubtype", "OV-2"}, 
                             new string[] {"WholePartType", "OV-2"},
+                            new string[] {"OverlapType", "OV-2"},
 
                             //Priority 2 - OV-4
                             new string[] {"Information", "OV-4"},
@@ -592,6 +595,7 @@ namespace EAWS.Core.SilverBullet
                             new string[] {"Rule", "OV-5b"}, 
                             new string[] {"superSubtype", "OV-5b"}, 
                             new string[] {"WholePartType", "OV-5b"},
+                            new string[] {"OverlapType", "OV-5b"},
 
                             //Priority 2 - OV-6c
                             new string[] {"activityPerformedByPerformer", "OV-6c"},
@@ -623,6 +627,7 @@ namespace EAWS.Core.SilverBullet
                             new string[] {"Resource", "SV-1"},
                             new string[] {"Rule", "SV-1"}, 
                             new string[] {"superSubtype", "SV-1"}, 
+                            new string[] {"OverlapType", "SV-1"},
 
                             //Priority 3 - SvcV-1 - not dealing in all optionals since not required and NONE exist in the live data
                             new string[] {"Measure", "SvcV-1"},
@@ -638,6 +643,7 @@ namespace EAWS.Core.SilverBullet
                             new string[] {"Resource", "SvcV-1"},
                             new string[] {"Rule", "SvcV-1"}, 
                             new string[] {"superSubtype", "SvcV-1"}, 
+                            new string[] {"OverlapType", "SvcV-1"},
 
                             //Priority 3 - SV-2 - Not dealing in all optionals since not required
                             new string[] {"Condition", "SV-2"},
@@ -651,6 +657,7 @@ namespace EAWS.Core.SilverBullet
                             new string[] {"Rule", "SV-2"}, 
                             new string[] {"superSubtype", "SV-2"}, 
                            // new string[] {"WholePartType", "SV-2"},
+                           new string[] {"OverlapType", "SV-2"},
 
                             //Priority 3 - SvcV-2 - Not dealing in all optionals since not required
                             new string[] {"Condition", "SvcV-2"},
@@ -665,6 +672,7 @@ namespace EAWS.Core.SilverBullet
                             new string[] {"System", "SvcV-2"}, 
                             new string[] {"superSubtype", "SvcV-2"}, 
                             //new string[] {"WholePartType", "SvcV-2"},
+                            new string[] {"OverlapType", "SvcV-2"},
 
                             //Priority 3 - SV-4 - Not dealing in all optionals since not required
                             new string[] {"Condition", "SV-4"},
@@ -677,6 +685,7 @@ namespace EAWS.Core.SilverBullet
                             new string[] {"Rule", "SV-4"}, 
                             new string[] {"superSubtype", "SV-4"}, 
                             //new string[] {"WholePartType", "SV-4"},
+                            new string[] {"OverlapType", "SV-4"},
 
                             //Priority 3 - SvcV-4 - Not dealing in all optionals since not required
                             new string[] {"Condition", "SvcV-4"},
@@ -690,6 +699,7 @@ namespace EAWS.Core.SilverBullet
                             new string[] {"System", "SvcV-4"},  
                             new string[] {"superSubtype", "SvcV-4"}, 
                             //new string[] {"WholePartType", "SvcV-4"},
+                            new string[] {"OverlapType", "SvcV-4"},
 
                             //Priority 4 - OV-6a
                             new string[] {"Condition", "OV-6a"},
@@ -1906,6 +1916,26 @@ namespace EAWS.Core.SilverBullet
                         value_type = "exemplar"
                     };
                 tuple_types = tuple_types.Concat(results.ToList());
+
+                results =
+                    from result in root.Elements(upia + current_lookup[0])
+                    where result.Attribute("producingTask") != null
+                    where result.Attribute("consumingTask") != null
+                    from result4 in root.Elements(uml + "Model").Descendants("packagedElement")
+                    where (string)result4.Attribute(xi + "id") == (string)result.Attribute("base_InformationFlow")
+                    //where result4.Attribute("coveyed") != null  //have to check this - the live data often has no conveyed data so no resource...
+                    select new Thing
+                    {
+                        type = "OverlapType",
+                        id = (string)result.Attribute(xi + "id") + "_3",
+                        name = (string)result.Attribute("exchangeId"),
+                        place1 = ((string)result.Attribute("producingTask")).Substring(0, 23),  //unknown length to this.  Live Data seems to allow many entries.  Need to handle at some point.
+                        place2 = ((string)result.Attribute("consumingTask")).Substring(0, 23),
+                        value = "$none$",
+                        foundation = "CoupleType",
+                        value_type = "exemplar"
+                    };
+                tuple_types = tuple_types.Concat(results.ToList());
             }
             //Now for activityproduces and consumes resource - from OV-5b - embedded in an activity diagram.  Ignoring the control flow, just using the information flow
             //First APR
@@ -1945,6 +1975,32 @@ namespace EAWS.Core.SilverBullet
                     foundation = "CoupleType",
                     value_type = "exemplar"
                 };
+            tuple_types = tuple_types.Concat(results.ToList());
+
+            results =
+                    from result in root.Elements(upia + "OperationalInformationFlow")
+
+                    from result3 in root.Elements(uml + "Model").Descendants("argument")
+                    where (string)result3.Parent.Attribute(xi + "type") == "uml:CallOperationAction"
+                    where (string)result3.Attribute("outgoing") == (string)result.Attribute("base_ObjectFlow")
+                    where result3.Attribute("type") != null  //have to check since there may be no moved object
+
+                    from result4 in root.Elements(uml + "Model").Descendants("argument")
+                    where (string)result4.Parent.Attribute(xi + "type") == "uml:CallOperationAction"
+                    where (string)result4.Attribute("incoming") == (string)result.Attribute("base_ObjectFlow")
+                    where result4.Attribute("type") != null  //have to check since there may be no moved object
+
+                    select new Thing
+                    {
+                        type = "OverlapType",
+                        id = (string)result3.Attribute(xi + "id") + (string)result4.Attribute(xi + "id"),
+                        name = (string)result3.Parent.Attribute("name") + "_" + (string)result4.Parent.Attribute("name"),
+                        place1 = (string)result3.Parent.Attribute("operation"),
+                        place2 = (string)result4.Parent.Attribute("operation"),
+                        value = "$none$",
+                        foundation = "CoupleType",
+                        value_type = "exemplar"
+                    };
             tuple_types = tuple_types.Concat(results.ToList());
 
             //Now for activityproduces and consumes resource - from SV-4 and SvcV-4 - embedded in an activity diagram.  Ignoring the control flow, just using the information flow
@@ -1987,6 +2043,31 @@ namespace EAWS.Core.SilverBullet
                 };
             tuple_types = tuple_types.Concat(results.ToList());
 
+            results =
+                   from result in root.Elements(upia + "SystemInformationFlow")
+
+                   from result3 in root.Elements(uml + "Model").Descendants("argument")
+                   where (string)result3.Parent.Attribute(xi + "type") == "uml:CallOperationAction"
+                   where (string)result3.Attribute("outgoing") == (string)result.Attribute("base_ObjectFlow")
+                   where result3.Attribute("type") != null  //have to check since there may be no moved object
+
+                   from result4 in root.Elements(uml + "Model").Descendants("argument")
+                   where (string)result4.Parent.Attribute(xi + "type") == "uml:CallOperationAction"
+                   where (string)result4.Attribute("incoming") == (string)result.Attribute("base_ObjectFlow")
+                   where result4.Attribute("type") != null  //have to check since there may be no moved object
+
+                   select new Thing
+                   {
+                       type = "OverlapType",
+                       id = (string)result3.Attribute(xi + "id") + (string)result4.Attribute(xi + "id"),
+                       name = (string)result3.Parent.Attribute("name") + "_" + (string)result4.Parent.Attribute("name"),
+                       place1 = (string)result3.Parent.Attribute("operation"),
+                       place2 = (string)result4.Parent.Attribute("operation"),
+                       value = "$none$",
+                       foundation = "CoupleType",
+                       value_type = "exemplar"
+                   };
+            tuple_types = tuple_types.Concat(results.ToList());
 
             //Task Invocation (basically an event trace event line)
             results =
