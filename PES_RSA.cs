@@ -226,8 +226,8 @@ namespace EAWS.Core.SilverBullet
                             new string[] {"DIV-1", "Class", "", "default"},
                             new string[] {"DIV-2", "Class", "", "default"},
                             new string[] {"PV-2", "Class", "", "default"},
-                            new string[] {"SV-6", "Freeform", "", "default"},
-                            new string[] {"SvcV-6", "Freeform", "", "default"},
+                            //new string[] {"SV-6", "Freeform", "", "default"},
+                            //new string[] {"SvcV-6", "Freeform", "", "default"},
                             //Priority 2
                             new string[] {"CV-2", "Class", "", "default"},
                             new string[] {"CV-2", "Freeform", "", "extra"},
@@ -269,6 +269,9 @@ namespace EAWS.Core.SilverBullet
                             new string[] {"Unmappedview5", "Topic", "", "default"},
                             //new string[] {"Unmappedview6", "Statemachine", "", "default"},
                             new string[] {"Unmappedview7", "Structure", "", "default"},
+                            new string[] {"OV-3", "OV-3", "", "default"},
+                            new string[] {"SV-6", "SV-6", "", "default"},
+                            new string[] {"SvcV-6", "SvcV-6", "", "default"},
                             };
 
         static string[][] Mandatory_Lookup = new string[][] { 
@@ -1602,15 +1605,19 @@ namespace EAWS.Core.SilverBullet
             {
                 //if (!diagrams.TryGetValue(thing.type, out temp))
                 //{
-                if (not_processed_diagrams.TryGetValue(thing.type, out temp))
+                foreach (string[] view in Not_Processed_View_Lookup)
                 {
-                    errors_list.Add("Diagram error," + thing.id + "," + thing.name + "," + temp + ", Type Not Allowed - Diagram Ignored: " + thing.type + "\r\n");
+                    //if (not_processed_diagrams.TryGetValue(thing.name, out temp))
+                    if (thing.name.Contains(view[1]))
+                    {
+                        errors_list.Add("Diagram error," + thing.id + "," + thing.name + "," + view[1] + ", Type Not Allowed - Diagram Ignored: " + thing.name + "\r\n");
+                    }
+                    //else
+                    //{
+                    //    errors_list.Add("Diagram error," + thing.id + "," + thing.name + ",Unknown, Type Not Allowed - Diagram Ignored: " + thing.type + "\r\n");
+                    //}
+                    //}
                 }
-                //else
-                //{
-                //    errors_list.Add("Diagram error," + thing.id + "," + thing.name + ",Unknown, Type Not Allowed - Diagram Ignored: " + thing.type + "\r\n");
-                //}
-                //}
             }
 
 
