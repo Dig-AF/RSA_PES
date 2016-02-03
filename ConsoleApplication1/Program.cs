@@ -17,13 +17,13 @@ namespace ConsoleApplication
             string errors = "";
             bool test;
 
-            input = @"C:\GitHub\test\RSA_out.xml";
+            //input = @"C:\GitHub\test\RSA_out.xml";
 
-            //input = @"C:\GitHub\test\PES_SampleData.emx";
+            input = @"C:\GitHub\test\PES_SampleData.emx";
 
-            //test = EAWS.Core.SilverBullet.PES_RSA.RSA2PES(File.ReadAllBytes(input), ref output, ref errors);
+            test = EAWS.Core.SilverBullet.PES_RSA.RSA2PES(File.ReadAllBytes(input), ref output, ref errors);
 
-            test = EAWS.Core.SilverBullet.PES_RSA.PES2RSA(File.ReadAllBytes(input),ref output, ref errors);
+            //test = EAWS.Core.SilverBullet.PES_RSA.PES2RSA(File.ReadAllBytes(input),ref output, ref errors);
             if (!test)
                 System.IO.File.WriteAllText(@"C:\GitHub\test\error2.csv", errors);
 

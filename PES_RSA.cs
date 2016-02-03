@@ -232,7 +232,7 @@ namespace EAWS.Core.SilverBullet
                             new string[] {"CV-2", "Class", "", "default"},
                             new string[] {"CV-2", "Freeform", "", "extra"},
                             new string[] {"DIV-3", "Class", "", "default"},
-                            new string[] {"OV-1", "Freeform", "", "default"},
+                            //new string[] {"OV-1", "Freeform", "", "default"},
                             new string[] {"OV-2", "Class", "", "default"},
                             new string[] {"OV-4", "Class", "", "default"},
                             new string[] {"OV-4", "Freeform", "", "extra"},
@@ -269,6 +269,7 @@ namespace EAWS.Core.SilverBullet
                             new string[] {"Unmappedview5", "Topic", "", "default"},
                             //new string[] {"Unmappedview6", "Statemachine", "", "default"},
                             new string[] {"Unmappedview7", "Structure", "", "default"},
+                            new string[] {"OV-1", "OV-1", "", "default"},
                             new string[] {"OV-3", "OV-3", "", "default"},
                             new string[] {"SV-6", "SV-6", "", "default"},
                             new string[] {"SvcV-6", "SvcV-6", "", "default"},
@@ -1987,7 +1988,7 @@ namespace EAWS.Core.SilverBullet
             results =
                     from result in root.Elements(upia + "OperationalInformationFlow")
 
-                    from result3 in root.Elements(uml + "Model").Descendants("argument")
+                    from result3 in root.Elements(uml + "Model").Descendants("result")
                     where (string)result3.Parent.Attribute(xi + "type") == "uml:CallOperationAction"
                     where (string)result3.Attribute("outgoing") == (string)result.Attribute("base_ObjectFlow")
                     where result3.Attribute("type") != null  //have to check since there may be no moved object
@@ -2053,7 +2054,7 @@ namespace EAWS.Core.SilverBullet
             results =
                    from result in root.Elements(upia + "SystemInformationFlow")
 
-                   from result3 in root.Elements(uml + "Model").Descendants("argument")
+                   from result3 in root.Elements(uml + "Model").Descendants("result")
                    where (string)result3.Parent.Attribute(xi + "type") == "uml:CallOperationAction"
                    where (string)result3.Attribute("outgoing") == (string)result.Attribute("base_ObjectFlow")
                    where result3.Attribute("type") != null  //have to check since there may be no moved object
