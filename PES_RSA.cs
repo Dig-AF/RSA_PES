@@ -1450,7 +1450,7 @@ namespace EAWS.Core.SilverBullet
         ////////////////////
         ////////////////////
 
-        public static bool RSA2PES(byte[] input, ref string output, ref string errors)
+        public static bool RSA2PES(byte[] input, ref string output, ref string errors, bool all_view_flag)
         {
             IEnumerable<Thing> things = new List<Thing>();
             IEnumerable<Thing> tuple_types = new List<Thing>();
@@ -3512,12 +3512,19 @@ namespace EAWS.Core.SilverBullet
                     mandatory_list = mandatory_list.OrderBy(x => x.type).ToList();
                     optional_list = optional_list.OrderBy(x => x.type).ToList();
 
-                    if (Proper_View(mandatory_list, view.First().name, view.First().type, view.First().place1, ref errors_list))
+                    if (all_view_flag)
+                    {
                         views.Add(new View { type = view.First().type, id = view.First().place1, name = view.First().name, mandatory = mandatory_list, optional = optional_list });
-                    //else
-                    //{
-                    //    test = false;
-                    //}
+                    }
+                    else
+                    {
+                        if (Proper_View(mandatory_list, view.First().name, view.First().type, view.First().place1, ref errors_list))
+                            views.Add(new View { type = view.First().type, id = view.First().place1, name = view.First().name, mandatory = mandatory_list, optional = optional_list });
+                        //else
+                        //{
+                        //    test = false;
+                        //}
+                    }
                 }
             }
 
